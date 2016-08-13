@@ -53,7 +53,7 @@
     "make": "enb make",
     "watch": "chokidar '*.blocks/**' -c 'npm run make'",
     "precommit": "npm run precommit:js && npm run precommit:css",
-    "test": "echo \"Error: guys you should setup tests! =)\" && exit 0",
+    "test": "echo \"Guys you should setup tests for testing =)\" && exit 0",
     "precommit:js": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.js$\" | xargs ./node_modules/.bin/eslint",
     "precommit:css": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.(css|styl)$\" | xargs ./node_modules/.bin/stylelint",
     "deploy": "pm2 deploy ecosystem.json production",
