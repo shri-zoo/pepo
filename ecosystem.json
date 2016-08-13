@@ -28,7 +28,7 @@
         "host": "128.199.47.176",
         "port": "22"
       },
-      "ref"  : "origin/feature-24",
+      "ref"  : "origin/master",
       "repo" : "git@github.com:shri-zoo/pepo.git",
       "path" : "/srv/pepo",
       "post-deploy" : "npm install && YENV=production npm run make && ./node_modules/.bin/pm2 startOrRestart ecosystem.json"
