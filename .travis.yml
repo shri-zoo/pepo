@@ -3,8 +3,6 @@ node_js:
   - '6'
 after_success:
   - echo -e "Host 128.199.47.176\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - openssl aes-256-cbc -K $encrypted_274cf600a8c3_key -iv $encrypted_274cf600a8c3_iv -in travis_deploy.enc -out ~\/.ssh/travis_deploy -d
-  - chmod 600 travis_deploy
-  - mv travis_deploy ~/.ssh/id_rsa
-  - cat ~/.ssh/id_rsa
+  - openssl aes-256-cbc -K $encrypted_274cf600a8c3_key -iv $encrypted_274cf600a8c3_iv -in travis_deploy.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa
   - "[[ $TRAVIS_BRANCH = \"feature-24\" ]] && npm run deploy"
