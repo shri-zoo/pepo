@@ -1,0 +1,37 @@
+{
+  /**
+   * Application configuration section
+   * http://pm2.keymetrics.io/docs/usage/application-declaration/
+   */
+  "apps" : [
+    {
+      "name"      : "pepo-node",
+      "script"    : "server/index.js",
+      "max_memory_restart": "100M",
+      "env" : {
+        "NODE_ENV": "production",
+        "PORT": "/srv/pepo/sock"
+      },
+      "out_file": "logs/pm2-stdout.log",
+      "error_file": "logs/pm2-stderr.log",
+      "log_date_format": "YYYY-MM-DD HH:mm Z"
+    }
+  ],
+  /**
+   * Deployment section
+   * http://pm2.keymetrics.io/docs/usage/deployment/
+   */
+  "deploy" : {
+    "production" : {
+      "user" : "srv",
+      "host" : {
+        "host": "128.199.47.176",
+        "port": "22"
+      },
+      "ref"  : "origin/master",
+      "repo" : "git@github.com:shri-zoo/pepo.git",
+      "path" : "/srv/pepo",
+      "post-deploy" : "npm install && YENV=production npm run make && ./node_modules/.bin/pm2 startOrRestart ecosystem.json"
+    }
+  }
+}
