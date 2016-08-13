@@ -1,5 +1,5 @@
-block('footer').content()(function() {
-    return [
-        'footer content'
-    ];
+block('footer').content()(function () {
+  return [
+    'footer content'
+  ];
 });

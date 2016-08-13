@@ -1,0 +1,5 @@
+.enb/**
+libs/*
+static/*
+desktop.bundles/**/*.*
+!desktop.bundles/**/*.bemdecl.js
