@@ -1,40 +1,37 @@
-# bem-express
+# PEPO
 
-Almost the same as [project-stub](https://github.com/bem/project-stub/) but with [BEMTREE](https://en.bem.info/technology/bemtree/) and [Express](http://expressjs.com/).
-
-## Installation
-
+#### Установка
 ```sh
 npm i
 enb make
 ```
 
-## Development
-
+#### Сервер разработки
 ```sh
 npm run watch
 nodemon
 ```
 
-## Production
-
+#### Сборка production-версии
 ```sh
 YENV=production enb make
 node server
 ```
 
-## Templating
+#### Ручной линтинг js и css
+```sh
+npm run lint
+```
 
-Templating starts in `root` block which replaces itself with `page` or any other context (if specified as argument to `render` function).
+#### Разворачивание на удаленном сервере (у вас должен быть настроен ssh-ключ для пользователя указанного в ecosystem.js)
+```sh
+npm run deploy
+```
 
-## Pro tips
-
-Run server in dev mode with `NODE_ENV=development` environment variable (`nodemon` will set it for you).
-
-In dev mode
-
-* Add `?json=1` to URL to see raw data
-* Add `?bemjson=1` to URL to see BEMJSON generated with BEMTREE templates.
+#### Откатывание последнего деплоя (у вас должен быть настроен ssh-ключ для пользователя указанного в ecosystem.js)
+```sh
+npm run deploy:revert
+```
 
 
 # SERVER
@@ -110,6 +107,12 @@ app.get('logger').info(module, 'Пользователь вошел', { user: 'P
 **Имя сервиса:** "bem"
 
 Сервис для рендеринга bem-tree
+Шаблонизация начинается в блоке `root`, который заменяет себя на `page` или любой другой переданный контекст (через аргемент функции `render`)
+
+В дев-режиме мы можем:
+* Добавив `?json=1` к URL посмотреть RAW данные
+* Добавив `?bemjson=1` к URL посмотреть BEMJSON сгенерированный из BEMTREE шаблонов
+
 
 **Возвращает:**
 Объект с двумя методами: `render(req, res, data, context)` и `clearCache()`
