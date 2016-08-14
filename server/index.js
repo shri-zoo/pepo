@@ -1,90 +1,56 @@
-Object.assign || (Object.assign = require('object-assign'));
+var fs = require('fs');
+var path = require('path');
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
+var morgan = require('morgan');
+var serveStatic = require('serve-static');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var passport = require('passport');
 
-var fs = require('fs'),
-    path = require('path'),
-    express = require('express'),
-    app = express(),
-    bodyParser = require('body-parser'),
-    favicon = require('serve-favicon'),
-    morgan = require('morgan'),
-    serveStatic = require('serve-static'),
-    cookieParser = require('cookie-parser'),
-    expressSession = require('express-session'),
-    slashes = require('connect-slashes'),
-    passport = require('passport'),
-    // LocalStrategy = require('passport-local').Strategy,
 
-    config = require('./config'),
-    staticFolder = config.staticFolder,
-
-    Render = require('./render'),
-    render = Render.render,
-    // dropCache = Render.dropCache,
-
-    port = process.env.PORT || config.defaultPort,
-    isSocket = isNaN(port),
-    isDev = process.env.NODE_ENV === 'development';
+var conf = require('./services/conf')(path.join(__dirname, 'configs'), app.get('env'));
+var logger = require('./services/logger');
+var PORT = process.env.PORT || conf.server.defaultPort;
+var isSocket = isNaN(PORT);
 
 app
+    .set('APP_ROOT', __dirname)
+    .set('conf', conf)
+    .set('logger', logger)
+    .set('isDev', app.get('env') === 'development')
+    .set('db', require('./services/db')(app))
+    .set('bem', require('./services/bem')(app))
+
+    // common setup
     .disable('x-powered-by')
     .enable('trust proxy')
-    .use(favicon(path.join(staticFolder, 'favicon.ico')))
-    .use(serveStatic(staticFolder))
+    .use(favicon(path.join(conf.server.staticFolder, 'favicon.ico')))
+    .use(serveStatic(conf.server.staticFolder))
     .use(morgan('combined'))
     .use(cookieParser())
+    .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
-    .use(expressSession({
-        resave: true,
-        saveUninitialized: true,
-        secret: config.sessionSecret
-    }))
+    .use(expressSession({ resave: true, saveUninitialized: true, secret: conf.sessions.secret }))
+    // end common setup
+
     .use(passport.initialize())
     .use(passport.session())
-    .use(slashes());
-    // TODO: csrf, gzip
+    .use(require('./routes')(app))
+    .use(require('./lib/error-handler')(app));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, JSON.stringify(user));
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function (user, done) {
     done(null, JSON.parse(user));
 });
 
-app.get('/ping/', function(req, res) {
-    res.send('ok');
-});
-
-app.get('/', function(req, res) {
-    render(req, res, {
-        view: 'index',
-        title: 'Main page',
-        meta: {
-            description: 'Page description',
-            og: {
-                url: 'https://site.com',
-                siteName: 'Site name'
-            }
-        }
-    })
-});
-
-app.get('*', function(req, res) {
-    res.status(404);
-    return render(req, res, { view: '404' });
-});
-
-if (isDev) {
-    app.get('/error/', function() {
-        throw new Error('Uncaught exception from /error');
-    });
-
-    app.use(require('errorhandler')());
-}
-
-isSocket && fs.existsSync(port) && fs.unlinkSync(port);
-
-app.listen(port, function() {
-    isSocket && fs.chmod(port, '0777');
-    console.log('server is listening on', this.address().port);
+isSocket && fs.existsSync(PORT) && fs.unlinkSync(PORT);
+app.listen(PORT, function () {
+    isSocket && fs.chmod(PORT, '0777');
+    logger.info(module, 'SERVER: is listening on %s', this.address().port);
 });
