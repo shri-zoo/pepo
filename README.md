@@ -121,5 +121,10 @@ app.get('logger').info(module, 'Пользователь вошел', { user: 'P
 ### База данных
 **Имя сервиса:** "db"
 
+Пример получения модели:
+```javascript
+app.get('db').model('User')
+``
 
 **Возвращает:**
+mongoose
