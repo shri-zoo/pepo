@@ -18,4 +18,6 @@ module.exports = function (app) {
 
     walk(path.join(app.get('APP_ROOT'), conf.db.modelsFolder), require);
     mongoose.connect(conf.db.uri, conf.db.options);
+
+    return mongoose;
 };
