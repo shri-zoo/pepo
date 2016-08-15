@@ -40,6 +40,7 @@ block('sandbox').content()(function() {
         block: 'username',
         content: 'Михаил Баранов' /* bold */
     },
+    ' ',
     {
         block: 'usernick',
         content: '_h4_' /* @_h4_ */
