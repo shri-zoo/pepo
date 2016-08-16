@@ -6,7 +6,8 @@ node_modules/
 npm-debug.log
 
 static/index.min.*
-
+server/configs/*.*
+!server/configs/global.js
 # bem
 .enb/tmp/
 libs/

@@ -1,37 +1,130 @@
-# bem-express
+# PEPO
 
-Almost the same as [project-stub](https://github.com/bem/project-stub/) but with [BEMTREE](https://en.bem.info/technology/bemtree/) and [Express](http://expressjs.com/).
-
-## Installation
-
+#### Установка
 ```sh
 npm i
 enb make
 ```
 
-## Development
-
+#### Сервер разработки
 ```sh
 npm run watch
 nodemon
 ```
 
-## Production
-
+#### Сборка production-версии
 ```sh
 YENV=production enb make
 node server
 ```
 
-## Templating
+#### Ручной линтинг js и css
+```sh
+npm run lint
+```
 
-Templating starts in `root` block which replaces itself with `page` or any other context (if specified as argument to `render` function).
+#### Разворачивание на удаленном сервере (у вас должен быть настроен ssh-ключ для пользователя указанного в ecosystem.js)
+```sh
+npm run deploy
+```
 
-## Pro tips
+#### Откатывание последнего деплоя (у вас должен быть настроен ssh-ключ для пользователя указанного в ecosystem.js)
+```sh
+npm run deploy:revert
+```
 
-Run server in dev mode with `NODE_ENV=development` environment variable (`nodemon` will set it for you).
 
-In dev mode
+# SERVER
 
-* Add `?json=1` to URL to see raw data
-* Add `?bemjson=1` to URL to see BEMJSON generated with BEMTREE templates.
+## Окружение:
+Окружение задается переменной окружения `NODE_ENV` и его можно получить с помощью `app.get('env')`. Окружением по-умолчанию является `development`. Существует хелпер для проверки того что текущим окружением является `development`: `app.get('isDev')`
+
+## Сервисы
+Доступ к сервисам можно получить с помощью метода express-приложения: `.get()`
+ 
+**Пример**:
+```javascript
+// Получаем сервис с именем "conf"
+var conf = app.get('conf');
+```
+
+
+### Конфигурация
+**Имя сервиса:** "conf"
+
+Все конфигурационные файлы расположены в `server/configs`. По-умолчанию там лежит только `global.json`. Это основной файл конфигурации.
+
+Также можно добавлять файлы конфигурации для различных окружений. 
+Файлы должны иметь название вида: `${env.toLowerCase()}.json`. Конфигурационные файлы не заменяют содержимое `global.json`, они объединяются с ним. Т.е. не обязательно перечислять все свойства для окружения из `global.json`, достаточно перечислить только те, которые вы хотите изменить.
+
+Существует также способ передачи параметров с помощью опций при запуске сервера, например: `node server --server.defaultPort=8080`. Данные свойста применяются в последнюю очередь и как можно заметить можно даже использовать вложенность с помощью точки.
+
+**Возвращает:**
+Построенный объект конфигурации.
+
+**Пример**:
+```javascript
+// Получаем сервис с именем "conf"
+var conf = app.get('conf');
+
+conf.server.defaultPort // 3000
+```
+
+
+### Логгирование
+**Имя сервиса:** "logger"
+
+Существует 4 уровня логирования: `debug`, `info`, `log`, `error`, с такими же именами методов
+
+**Возвращает:**
+Объект с методами для логгирования.
+
+**Пример**:
+```javascript
+// Первым параметром необходимо передавать контекст текущего модуля. Это необходимо для того чтобы в лог писался файл из которого прозошло логирование
+app.get('logger').error(module, 'Что-то пошло не так!');
+
+// вы можете передать инстанс Error вместо сообщения:
+...
+} catch (error) {
+    app.get('logger').error(module, error);
+}
+
+// В качестве сообщения может выступать printf-like строка
+logger.info(module, 'Hello %s, %d, %j', 'user', 2000, { userData: 'some'}, ['data', 'param']);
+
+// Последним параметром есть возможность передать какие-либо данные, которые тоже попадут в лог, предварительно пройдя через JSON.stringify. Ошибка тоже может быть передана в качестве данных, она будет правильно обработана.
+app.get('logger').info(module, 'Пользователь вошел', { user: 'Petya' });
+
+...
+} catch (err) {
+    logger.error(module, 'BEMTREE error', err);
+}
+```
+
+
+### Рендеринг bem
+**Имя сервиса:** "bem"
+
+Сервис для рендеринга bem-tree
+Шаблонизация начинается в блоке `root`, который заменяет себя на `page` или любой другой переданный контекст (через аргемент функции `render`)
+
+В дев-режиме мы можем:
+* Добавив `?json=1` к URL посмотреть RAW данные
+* Добавив `?bemjson=1` к URL посмотреть BEMJSON сгенерированный из BEMTREE шаблонов
+
+
+**Возвращает:**
+Объект с двумя методами: `render(req, res, data, context)` и `clearCache()`
+
+
+### База данных
+**Имя сервиса:** "db"
+
+Пример получения модели:
+```javascript
+app.get('db').model('User')
+``
+
+**Возвращает:**
+mongoose
