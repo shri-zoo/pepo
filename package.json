@@ -62,9 +62,9 @@
     "test": "echo \"Guys you should setup tests for testing =)\" && exit 0",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint .",
-    "lint:css": "stylelint \"*.blocks/**/*.+(css|styl)\"; exit 0",
+    "lint:css": "stylelint \"*.blocks/**/*.css\"; exit 0",
     "precommit:js": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.js$\" | xargs ./node_modules/.bin/eslint",
-    "precommit:css": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.(css|styl)$\" | xargs ./node_modules/.bin/stylelint",
+    "precommit:css": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.css$\" | xargs ./node_modules/.bin/stylelint",
     "deploy": "pm2 deploy ecosystem.json production",
     "deploy:revert": "pm2 deploy ecosystem.json production revert"
   },
