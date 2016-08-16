@@ -1,0 +1,7 @@
+.usernick {
+    color: gray;
+}
+
+.usernick::before {
+    content: "@";
+}
