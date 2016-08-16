@@ -5,7 +5,15 @@ module.exports = function (app) {
 
     authRoutes
         .get('/', function (req, res) {
-            res.end('auth: ' + app.get('conf').server.defaultPort);
+            res.json({
+                host: req.get('host'),
+                url: req.originalUrl,
+                conf: app.get('conf')
+            });
+        })
+        .get('/logout', function(req, res){
+            req.logout();
+            res.redirect('/');
         });
 
     return authRoutes;

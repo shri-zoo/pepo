@@ -8,11 +8,12 @@ var morgan = require('morgan');
 var serveStatic = require('serve-static');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
-var passport = require('passport');
-
+var MongoStore = require('connect-mongo')(expressSession);
+var passportService = require('./services/passport');
 
 var conf = require('./services/conf')(path.join(__dirname, 'configs'), app.get('env'));
 var logger = require('./services/logger');
+var db;
 var PORT = process.env.PORT || conf.server.defaultPort;
 var isSocket = isNaN(PORT);
 
@@ -21,7 +22,7 @@ app
     .set('conf', conf)
     .set('logger', logger)
     .set('isDev', app.get('env') === 'development')
-    .set('db', require('./services/db')(app))
+    .set('db', (db = require('./services/db')(app)))
     .set('bem', require('./services/bem')(app))
 
     // common setup
@@ -33,21 +34,17 @@ app
     .use(cookieParser())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
-    .use(expressSession({ resave: true, saveUninitialized: true, secret: conf.sessions.secret }))
+    .use(expressSession({
+        store: new MongoStore({ mongooseConnection: db.connection }),
+        resave: true,
+        saveUninitialized: true,
+        secret: conf.sessions.secret
+    }));
     // end common setup
 
-    .use(passport.initialize())
-    .use(passport.session())
+passportService(app, conf.auth, '/auth', '/login')
     .use(require('./routes')(app))
     .use(require('./lib/error-handler')(app));
-
-passport.serializeUser(function (user, done) {
-    done(null, JSON.stringify(user));
-});
-
-passport.deserializeUser(function (user, done) {
-    done(null, JSON.parse(user));
-});
 
 isSocket && fs.existsSync(PORT) && fs.unlinkSync(PORT);
 app.listen(PORT, function () {
