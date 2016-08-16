@@ -5,7 +5,7 @@ module.exports = function (app) {
     var apiRoutes = new Router();
 
     apiRoutes
-        .use('/auth', authRoutes(app))
+        .use('/auth', authRoutes(app));
 
     return apiRoutes;
 };

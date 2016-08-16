@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
     login: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        sparse: true
     },
     firstName: {
         type: String,
@@ -17,9 +17,26 @@ var UserSchema = new Schema({
     },
     avatar: String,
     description: String,
-    provider: String,
-    fb: {},
-    vk: {},
+    provider: {
+        type: String,
+        required: true
+    },
+    facebook: {
+        id: String,
+        raw: String
+    },
+    vkontakte: {
+        id: String,
+        raw: String
+    },
+    yandex: {
+        id: String,
+        raw: String
+    },
+    google: {
+        id: String,
+        raw: String
+    },
     subscribers: [Schema.Types.ObjectId]
 });
 
