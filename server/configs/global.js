@@ -27,36 +27,20 @@ module.exports = {
             {
                 name: 'facebook',
                 title: 'Facebook',
-                clientID: '***REMOVED***',
-                clientSecret: '***REMOVED***',
-                authURL: 'https://zoopark.top/api/auth/facebook',
-                callbackURL: 'https://zoopark.top/api/auth/facebook/callback',
                 scope: ['public_profile', 'email']
             },
             {
                 name: 'vkontakte',
                 title: 'Вконтакте',
-                clientID: '***REMOVED***',
-                clientSecret: '***REMOVED***',
-                authURL: 'https://zoopark.top/api/auth/vkontakte',
-                callbackURL: 'https://zoopark.top/api/auth/vkontakte/callback',
                 scope: ['email']
             },
             {
                 name: 'yandex',
-                title: 'Яндекс',
-                clientID: '***REMOVED***',
-                clientSecret: '***REMOVED***',
-                authURL: 'https://zoopark.top/api/auth/yandex',
-                callbackURL: 'https://zoopark.top/api/auth/yandex/callback'
+                title: 'Яндекс'
             },
             {
                 name: 'google',
                 title: 'Google',
-                clientID: '***REMOVED***',
-                clientSecret: '***REMOVED***',
-                authURL: 'https://zoopark.top/api/auth/google',
-                callbackURL: 'https://zoopark.top/api/auth/google/callback',
                 scope: [
                     'email',
                     'profile'
