@@ -1,5 +1,13 @@
 block('body').content()(function () {
   return [
-    'body content'
+    {
+        block: 'sandbox',
+    },
+    {
+        block: 'logout-link',
+        tag: 'a',
+        attrs: { href: '/api/auth/logout' },
+        content: 'Logout'
+    }
   ];
 });
