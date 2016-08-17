@@ -1,0 +1,63 @@
+login-padding = 30px;
+login-color-facebook = #3b5998;
+login-color-vkontakte = #507299;
+login-color-yandex = #fd0011;
+login-color-google = #4285f4;
+
+.login {
+    display: flex;
+    flex-direction: column;
+    padding: login-padding;
+    border-radius: 4px;
+
+    // TODO: stylus vars
+    border: 1px solid #bdbdbf;
+    background-color: #fff
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+
+    &__title {
+        margin: 0 0 login-padding 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 300;
+        text-align: center;
+    }
+
+    &__providers {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__provider-item {
+        display: flex;
+        align-items: center;
+
+        &:not(:first-child) {
+            margin-top: 10px;
+        }
+    }
+
+    &__provider-icon {
+        margin-right: 15px;
+
+        &_type_facebook {
+            fill: login-color-facebook;
+        }
+
+        &_type_vkontakte {
+            fill: login-color-vkontakte;
+        }
+
+        &_type_yandex {
+            fill: login-color-yandex;
+        }
+
+        &_type_google {
+            fill: login-color-google;
+        }
+    }
+
+    &__provider-button {
+        flex-grow: 1;
+    }
+}

@@ -28,7 +28,7 @@ module.exports = function (app) {
                 {
                     view: 'login',
                     authProviders: conf.auth.providers.map(function (provider) {
-                        return { title: provider.title, authURL: provider.authURL };
+                        return { name: provider.name, title: provider.title, authURL: provider.authURL };
                     })
                 }
             );
