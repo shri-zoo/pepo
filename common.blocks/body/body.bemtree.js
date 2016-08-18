@@ -4,6 +4,11 @@ block('body').content()(function () {
         block: 'sandbox',
     },
     {
+        block:'message-list',
+        mods:{ theme : 'islands', size : 's' , focused : true },
+        url:''
+    },
+    {
         block: 'logout-link',
         tag: 'a',
         attrs: { href: '/api/auth/logout' },
