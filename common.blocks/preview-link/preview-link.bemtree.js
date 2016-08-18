@@ -1,16 +1,20 @@
 block('preview-link')(
     content()(function () {
+        var link=this.ctx.url;
+        //generation image
+        var image="https://telegram.org/img/t_logo.png";
         return [
             {
                 block : 'link',
-                mods : { theme : 'islands', size : 'm' , focused : true },
-                url : this.ctx.url,
-                title:'',
+                mods : this.ctx.mods,
+                url : link,
+                title:this.ctx.title,
                 content : [
                     {
                         block : 'image',
-                        url :  'https://img-fotki.yandex.ru/get/16159/259818507.0/0_130be6_4116d8e7_S',
-                        title:''
+                        url :  image,
+                        title:this.ctx.title,
+                        mods:this.ctx.mods
                     },
                     'description'
                 ]

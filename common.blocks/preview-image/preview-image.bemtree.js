@@ -1,14 +1,18 @@
 block('preview-image')(
     content()(function () {
+        var link_image=this.ctx.url,
+            //generation page
+            link_page_image="";
     return [
         {
             block : 'link',
-            mods : { theme : 'islands', size : 'm' , focused : true },
-            url : this.ctx.url,
+            mods:this.ctx.mods,
+            url : link_page_image,
             content : {
                 block : 'image',
-                url :  this.ctx.url,
-                title : this.ctx.title
+                url :  link_image,
+                title : this.ctx.title,
+                mods:this.ctx.mods
             }
         }
     ];
