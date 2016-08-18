@@ -1,5 +1,5 @@
 ({
   shouldDeps: [
-    'sandbox'
+    'sandbox','message-list'
   ]
 });
