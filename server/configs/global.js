@@ -15,13 +15,13 @@ module.exports = {
                 socketOptions: {
                     keepAlive: 0
                 }
-            },
-            promiseLibrary: Promise
+            }
         }
     },
     auth: {
-        successRedirect: '/',
-        failureRedirect: '/login',
+        mainPageRedirect: '/',
+        loginPageRedirect: '/login',
+        selectUsernameRedirect: '/username-select',
         providers: [
             {
                 name: 'facebook',

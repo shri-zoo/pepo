@@ -50,8 +50,8 @@ module.exports = function (app) {
 
         app.get(parsedAuthURL.pathname, passport.authenticate.apply(passport, authenticateParams));
         app.get(parsedCalbackURL.pathname, passport.authenticate(provider.name, {
-            successRedirect: authConf.successRedirect,
-            failureRedirect: authConf.failureRedirect
+            successRedirect: authConf.mainPageRedirect,
+            failureRedirect: authConf.loginPageRedirect
         }));
     });
 

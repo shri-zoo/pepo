@@ -24,6 +24,8 @@ app
     .set('isDev', app.get('env') === 'development')
     .set('db', (db = require('./services/db')(app)))
     .set('bem', require('./services/bem')(app))
+    .set('middlewares', require('./middlewares'))
+    .set('helpers', require('./helpers'))
 
     // common setup
     .disable('x-powered-by')
