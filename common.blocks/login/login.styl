@@ -1,26 +1,8 @@
-login-padding = 30px;
-login-color-facebook = #3b5998;
-login-color-vkontakte = #507299;
-login-color-yandex = #fd0011;
-login-color-google = #4285f4;
+@import '../variables.styl';
 
 .login {
     display: flex;
     flex-direction: column;
-    padding: login-padding;
-    border-radius: 4px;
-
-    // TODO: stylus vars
-    border: 1px solid #bdbdbf;
-    background-color: #fff
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-
-    &__title {
-        margin: 0 0 login-padding 0;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: 300;
-        text-align: center;
-    }
 
     &__providers {
         margin: 0;
@@ -41,19 +23,19 @@ login-color-google = #4285f4;
         margin-right: 15px;
 
         &_type_facebook {
-            fill: login-color-facebook;
+            fill: oauth-providers-colors[facebook];
         }
 
         &_type_vkontakte {
-            fill: login-color-vkontakte;
+            fill: oauth-providers-colors[vkontakte];
         }
 
         &_type_yandex {
-            fill: login-color-yandex;
+            fill: oauth-providers-colors[yandex];
         }
 
         &_type_google {
-            fill: login-color-google;
+            fill: oauth-providers-colors[google];
         }
     }
 

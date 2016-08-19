@@ -1,10 +1,10 @@
 block('logo')(
-    content()(function () {
+    replace()(function () {
         var size = this.ctx.size || 96;
 
         return {
             block: 'link',
-            mix: { block: this.block, elem: 'link' },
+            mix: { block: this.block },
             url: '/',
             content: {
                 block: 'icon',

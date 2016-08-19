@@ -124,7 +124,51 @@ app.get('logger').info(module, 'Пользователь вошел', { user: 'P
 Пример получения модели:
 ```javascript
 app.get('db').model('User')
-``
+```
 
 **Возвращает:**
 mongoose
+
+
+### Middlewares
+**Имя сервиса:** "middlewares"
+
+**Пример**:
+```javascript
+// Получаем middleware проверяющий авторизованность пользователя
+var isAuth = app.get('middlewares').isAuth;
+// Получаем middleware проверяющий тип запроса: он разрешает только ajax
+var onlyAjax = app.get('middlewares').onlyAjax;
+
+// Используем их
+.get('/some-private-endpoint', isAuth, onlyAjax, handler)
+
+```
+
+**Возвращает:**
+Объект с middleware. Ключом выступает имя middleware.
+
+
+### Helpers
+**Имя сервиса:** "helpers"
+Тут лежит всякий вспомогательный код, который подразумевает его частое исползование в обработчиках запросов
+
+**Пример**:
+```javascript
+// Хэлпер правильно обрабатывающий ошибку в запросе
+var handleError = app.get('helpers').handleError;
+
+// например ошибку валидации
+var user = new User({ username: 'r2d2' });
+
+user
+    .save()
+    .then(...)
+    .catch(function () {
+        handleError(req, res, err);
+    })
+```
+
+
+**Возвращает:**
+Объект с хэлперами. Ключом выступает имя хэлпера.
