@@ -6,6 +6,48 @@ npm i
 enb make
 ```
 
+### Создание конфига для dev-окружения
+Создайте файл `/server/configs/development.js` и внесите туда следующие данные, ввёв свои секретные ключи и другую приватную информацию:
+```
+module.exports = {
+  db: {
+    uri: "MONGO_DB_CONNECTION_URI"
+  },
+  auth: {
+    providers: [
+      {
+        clientID: 'FACEBOOK_CLIENT_ID',
+        clientSecret: 'FACEBOOK_CLIENT_SECRET',
+        authURL: 'http://pepo.local:3000/api/auth/facebook',
+        callbackURL: 'http://pepo.local:3000/api/auth/facebook/callback'
+      },
+      {
+        clientID: 'VKONTAKTE_CLIENT_ID',
+        clientSecret: 'VKONTAKTE_CLIENT_SECRET',
+        authURL: 'http://127.0.0.1:3000/api/auth/vkontakte',
+        callbackURL: 'http://127.0.0.1:3000/api/auth/vkontakte/callback'
+      },
+      {
+        clientID: 'YANDEX_CLIENT_ID',
+        clientSecret: 'YANDEX_CLIENT_SECRET',
+        authURL: 'http://pepo.local:3000/api/auth/yandex',
+        callbackURL: 'http://pepo.local:3000/api/auth/yandex/callback'
+      },
+      {
+        clientID: 'GOOGLE_CLIENT_ID',
+        clientSecret: 'GOOGLE_CLIENT_SECRET',
+        authURL: 'http://127.0.0.1:3000/api/auth/google',
+        callbackURL: 'http://127.0.0.1:3000/api/auth/google/callback'
+      }
+    ]
+  }
+};
+```
+Т.к. некоторые oauth-провайдеры не поддерживают установку callbackURL c IP, рекомендуется добавить в `hosts`:
+```
+127.0.0.1 pepo.local
+```
+
 #### Сервер разработки
 ```sh
 npm run watch
