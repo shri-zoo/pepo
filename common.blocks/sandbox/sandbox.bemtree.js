@@ -20,17 +20,17 @@ block('sandbox').content()(function () {
         },
         {
             block: 'userpic',
-            mods: {size: 'profile'},
+            mods: { size: 'profile' },
             image: 'https://pbs.twimg.com/profile_images/709630036601655296/04r1Rh4g_400x400.jpg'
         },
         {
             block: 'userpic',
-            mods: {size: 'profile'},
+            mods: { size: 'profile' },
             image: 'http://www.3wap.fota.mota.ru/mini/201109/19.jpg'
         },
         {
             block: 'userpic',
-            mods: {size: 'profile'},
+            mods: { size: 'profile' },
             image: 'http://cs312427.vk.me/v312427102/48fc/o4C5cpKMxYA.jpg'
         },
         {
