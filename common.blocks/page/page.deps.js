@@ -6,13 +6,16 @@
             }
         },
         {
+            block: 'layout',
+            mods: {
+                type: 'main'
+            }
+        },
+        {
             block: 'header'
         },
         {
             block: 'body'
-        },
-        {
-            block: 'footer'
         }
     ]
 })
