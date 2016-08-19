@@ -5,7 +5,7 @@ block('body').content()(function () {
     },
     {
         block:'message-list',
-        mods:{ theme : 'islands', size : 's' , focused : true },
+        mods:{ theme : 'islands', size : 'm' },
         url:''
     },
     {

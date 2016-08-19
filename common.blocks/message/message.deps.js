@@ -1,4 +1,4 @@
 ({
-    shouldDeps: ['image','link','preview-link','preview-image']
+    shouldDeps: ['image','link','preview-link','preview-image','message-text','message-header']
 });
 
