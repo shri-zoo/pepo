@@ -1,13 +1,16 @@
 block('page').content()(function () {
-    return [
-        {
-            block: 'header'
+    return {
+        block: 'layout',
+        mods: {
+            type: 'main'
         },
-        {
-            block: 'body'
-        },
-        {
-            block: 'footer'
-        }
-    ];
+        content: [
+            {
+                block: 'header'
+            },
+            {
+                block: 'body'
+            }
+        ]
+    };
 });
