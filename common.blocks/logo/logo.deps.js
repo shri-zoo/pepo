@@ -3,7 +3,9 @@
         'link',
         {
             block: 'icon',
-            mods: { type: 'logo' }
+            mods: {
+                type: 'logo'
+            }
         }
     ]
 });

@@ -1,7 +1,7 @@
 block('header').content()(function () {
-  return [
-    {
-      block: 'logo'
-    }
-  ];
+    return [
+        {
+            block: 'logo'
+        }
+    ];
 });
