@@ -19,7 +19,8 @@ module.exports = function (app) {
                         url: 'https://site.com',
                         siteName: 'Site name'
                     }
-                }
+                },
+                user: req.user
             })
         })
         .get(conf.auth.loginPageRedirect, isAuth, function (req , res) {

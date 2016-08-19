@@ -1,4 +1,8 @@
 block('sandbox').content()(function () {
+    var user = this.data.user;
+    var fullname = user.firstName + ' ' + user.lastName;
+    var username = user.username;
+
     return [
         {
             block: 'userpic',
@@ -38,12 +42,12 @@ block('sandbox').content()(function () {
         },
         {
             block: 'username',
-            content: 'Михаил Баранов' /* bold */
+            content: fullname /* bold */
         },
         ' ',
         {
             block: 'usernick',
-            content: '_h4_' /* @_h4_ */
+            content: username
         },
         {
             block:'message-list',
