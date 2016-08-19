@@ -1,3 +1,3 @@
 ({
-  shouldDeps: 'page'
+    shouldDeps: 'page'
 });

@@ -1,14 +1,14 @@
 var Router = require('express').Router;
 var apiRoutes = require('./api');
-var isAuth = require('../middlewares/is-auth');
 
 module.exports = function (app) {
     var rootRoutes = new Router();
+    var isAuth = app.get('middlewares').isAuth;
     var conf = app.get('conf');
     var render = app.get('bem').render;
 
     rootRoutes
-        .use('/api', apiRoutes(app))
+        .use('/api', isAuth, apiRoutes(app))
         .get('/', isAuth, function (req, res) {
             req.app.get('bem').render(req, res, {
                 view: 'index',
@@ -19,10 +19,15 @@ module.exports = function (app) {
                         url: 'https://site.com',
                         siteName: 'Site name'
                     }
-                }
+                },
+                user: req.user
             })
         })
-        .get('/login', function (req ,res) {
+        .get(conf.auth.loginPageRedirect, isAuth, function (req , res) {
+            if (req.isAuthenticated()) {
+                return res.redirect(conf.auth.mainPageRedirect);
+            }
+
             render(req,
                 res,
                 {
@@ -32,6 +37,13 @@ module.exports = function (app) {
                     })
                 }
             );
+        })
+        .get(conf.auth.selectUsernameRedirect, isAuth, function (req, res) {
+            if (req.user.username) {
+                return res.redirect(conf.auth.mainPageRedirect);
+            }
+
+            render(req, res, { view: 'username-select', userId: req.user._id });
         })
         .use(function (req, res) {
             req.app.get('bem').render(req, res.status(404), {view: '404'});

@@ -3,11 +3,6 @@ block('login').content()(function () {
 
     return [
         {
-            elem: 'title',
-            tag: 'h2',
-            content: 'Авторизоваться через:'
-        },
-        {
             elem: 'providers',
             tag: 'ul',
             content: [
@@ -24,14 +19,21 @@ block('login').content()(function () {
                                 mix: {
                                     block: _this.block,
                                     elem: 'provider-icon',
-                                    elemMods: { type: providerName }
+                                    elemMods: {
+                                        type: providerName
+                                    }
                                 },
                                 size: 24,
-                                mods: { type : providerName }
+                                mods: {
+                                    type: providerName
+                                }
                             },
                             {
                                 block: 'button',
-                                mix: { block: _this.block, elem: 'provider-button' },
+                                mix: {
+                                    block: _this.block,
+                                    elem: 'provider-button'
+                                },
                                 mods: {
                                     theme: 'islands',
                                     size: 'xl',

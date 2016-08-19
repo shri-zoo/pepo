@@ -1,8 +1,8 @@
 block('userpic')(
-    tag()(function() {
+    tag()(function () {
         return this.ctx.nick ? 'a' : 'span';
     }),
-    attrs()(function() {
+    attrs()(function () {
         var attrs = applyNext() || {};
 
         if (this.ctx.nick) {
@@ -11,7 +11,7 @@ block('userpic')(
 
         return attrs;
     }),
-    content()(function() {
+    content()(function () {
         return {
             elem: 'image',
             attrs: {

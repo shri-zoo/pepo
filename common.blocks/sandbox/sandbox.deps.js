@@ -1,11 +1,14 @@
 ({
-  shouldDeps: [
-    {
-        block: 'userpic',
-        mods: { size: 'profile' }
-    },
-    'userpic',
-    'username',
-    'usernick'
-  ]
+    shouldDeps: [
+        {
+            block: 'userpic',
+            mods: {
+                size: 'profile'
+            }
+        },
+        'userpic',
+        'username',
+        'usernick',
+        'message-list'
+    ]
 });

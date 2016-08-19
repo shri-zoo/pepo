@@ -2,7 +2,11 @@
     shouldDeps: [
         {
             block: 'button',
-            mods: { theme: 'islands', size: 'xl', type: 'link' }
+            mods: {
+                theme: 'islands',
+                size: 'xl',
+                type: 'link'
+            }
         },
         {
             block: 'icon',
