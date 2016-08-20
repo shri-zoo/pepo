@@ -1,19 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
-var LOGIN = /^[a-zA-Z0-9]{4,}$/;
+var usernameValidator = require('../../isomorphic/validators/username');
 
 var UserSchema = new Schema({
     username: {
         type: String,
         unique: true,
         sparse: true,
-        validate: {
-            validator: function (value) {
-                return LOGIN.test(value);
-            },
-            message: 'Имя пользователя может состоять только из букв латинского алфавита и цифр и должно содержать минимум 4 символа'
-        }
+        validate: usernameValidator
     },
     firstName: {
         type: String,
