@@ -1,9 +1,5 @@
-block('form-username-select')(
-    tag()('form'),
+block('form').mod('type', 'username-select')(
     js()(true),
-    attrs()({
-        action: '#'
-    }),
     content()(function () {
         var block = this.block;
 
@@ -59,5 +55,3 @@ block('form-username-select')(
         ]
     })
 );
-
-// { modName: 'focused', modVal: true }
