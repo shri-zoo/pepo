@@ -59,3 +59,5 @@ block('form-username-select')(
         ]
     })
 );
+
+// { modName: 'focused', modVal: true }

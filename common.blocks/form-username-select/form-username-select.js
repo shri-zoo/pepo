@@ -1,8 +1,8 @@
 modules
     .define(
         'form-username-select',
-        ['conf', 'validator', 'i-bem__dom', 'i-bem__internal', 'jquery', 'functions__debounce'],
-        function (provide, conf, validator, BEMDOM, BEMINTERNAL, $, debounce) {
+        ['conf', 'validator', 'i-bem__dom', 'BEMHTML', 'jquery', 'functions__debounce'],
+        function (provide, conf, validator, BEMDOM, BEMHTML, $, debounce) {
             var blockName = this.name;
 
             provide(BEMDOM.decl({ block: blockName },
@@ -86,17 +86,21 @@ modules
                             return;
                         }
 
-                        var messageCn = BEMINTERNAL.buildClass(blockName, 'error');
+                        var errorsJson = Object.keys(errors).map(function (key) {
+                            return {
+                                block: blockName,
+                                elem: 'error',
+                                content: errors[key]
+                            };
+                        });
 
-                        BEMDOM.update(this.errors, Object.keys(errors).map(function (key) {
-                            return '<li class="' + messageCn + '">' + errors[key] + '</li>';
-                        }));
+                        BEMDOM.update(this.errors, BEMHTML.apply(errorsJson));
                     },
-                    _isAlredyRequested: function () {
+                    _isAlreadyRequested: function () {
                         return this._requested;
                     },
                     _checkUniqueness: function (username) {
-                        if (this._isAlredyRequested()) {
+                        if (this._isAlreadyRequested()) {
                             return;
                         }
 

@@ -1,4 +1,6 @@
 modules.define('validator', ['validator__username'], function (provide, username) {
+
+
     provide({
         validate: validate,
         rules: {
