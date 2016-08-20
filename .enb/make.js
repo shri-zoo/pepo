@@ -65,7 +65,8 @@ module.exports = function(config) {
             [techs.bemhtml, {
                 target: '?.browser.bemhtml.js',
                 filesTarget: '?.tmpl.files',
-                sourceSuffixes: ['bemhtml', 'bemhtml.js']
+                sourceSuffixes: ['bemhtml', 'bemhtml.js'],
+                forceBaseTemplates: true
             }],
 
             // js
