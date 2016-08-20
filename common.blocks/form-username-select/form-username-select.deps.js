@@ -42,7 +42,7 @@
             elem: 'debounce'
         },
         {
-            block: 'validator'
+            'block': 'validator'
         }
     ]
 })

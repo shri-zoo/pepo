@@ -17,8 +17,7 @@
             }
         },
         {
-            block: 'form',
-            mods: { type: 'username-select' }
+            block: 'form-username-select'
         }
     ]
 })

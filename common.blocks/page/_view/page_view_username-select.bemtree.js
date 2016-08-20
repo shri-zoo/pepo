@@ -17,8 +17,7 @@ block('page').mod('view', 'username-select')(
                         shadowed: true
                     },
                     content: {
-                        block: 'form',
-                        mods: { type: 'username-select' },
+                        block: 'form-username-select',
                         js: { userId: this.data.userId }
                     }
                 }
