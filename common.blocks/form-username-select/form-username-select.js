@@ -1,11 +1,11 @@
 modules
     .define(
-        'form_type_username-select',
+        'form-username-select',
         ['conf', 'validator', 'i-bem__dom', 'BEMHTML', 'jquery', 'functions__debounce'],
         function (provide, conf, validator, BEMDOM, BEMHTML, $, debounce) {
-            var blockName = 'form';
+            var blockName = this.name;
 
-            provide(BEMDOM.decl({ block: blockName, modName: 'type', modVal: 'username-select' },
+            provide(BEMDOM.decl({ block: blockName },
                 {
                     onSetMod: {
                         js: {
