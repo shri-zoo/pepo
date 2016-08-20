@@ -1,11 +1,13 @@
-@import '../variables.styl';
+@import '../../variables.styl';
 
-.form-username-select {
+.form {
     half-common-padding = common-padding / 2;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    &_type_username-select {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     &__username-input {
         margin-bottom: half-common-padding;
