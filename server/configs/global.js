@@ -8,6 +8,7 @@ module.exports = {
     },
     db: {
         modelsFolder: 'models',
+        logRequests: false,
         options: {
             server: {
                 reconnectTries: Number.MAX_VALUE,
@@ -16,6 +17,10 @@ module.exports = {
                     keepAlive: 0
                 }
             }
+        },
+        limits: {
+            users: 20,
+            messages: 20
         }
     },
     auth: {
