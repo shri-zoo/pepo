@@ -8,6 +8,7 @@ module.exports = {
     },
     db: {
         modelsFolder: 'models',
+        logRequests: false,
         options: {
             server: {
                 reconnectTries: Number.MAX_VALUE,
