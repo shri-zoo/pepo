@@ -7,6 +7,8 @@ module.exports = function (app) {
 
     usersRoutes
         .get('/check-uniqueness', onlyAjax, usersController.getCheckUniqueness)
+        .get('/', onlyAjax, usersController.getLoadList)
+        .get('/:id', onlyAjax, usersController.getLoadOne)
         .put('/:id', onlyAjax, usersController.putUpdate);
 
     return usersRoutes;

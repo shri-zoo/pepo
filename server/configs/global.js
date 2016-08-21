@@ -17,6 +17,10 @@ module.exports = {
                     keepAlive: 0
                 }
             }
+        },
+        limits: {
+            users: 20,
+            messages: 20
         }
     },
     auth: {
