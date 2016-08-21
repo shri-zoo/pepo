@@ -3,20 +3,22 @@
 .form-username-select {
     half-common-padding = common-padding / 2;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     &__username-input {
         margin-bottom: half-common-padding;
 
-        &_busy,
-        &_busy.input_focused {
+        &_busy&_busy,
+        &_busy&_busy.input_focused {
             box-shadow: 0 0 0 1px theme-error, inset 0 0 0 1px theme-error;
         }
 
-        &_free,
-        &_free.input_focused {
+        &_free&_free,
+        &_free&_free.input_focused {
             box-shadow: 0 0 0 1px theme-success, inset 0 0 0 1px theme-success;
         }
     }
@@ -47,7 +49,7 @@
         color: theme-error;
     }
 
-    &__submit-button {
+    &__submit-button&__submit-button {
         margin-top: half-common-padding;
         width: 100%;
     }

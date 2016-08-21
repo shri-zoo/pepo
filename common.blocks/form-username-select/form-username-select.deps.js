@@ -1,5 +1,25 @@
 ({
-    mustDeps: [
+    shouldDeps: [
+        {
+            block: 'conf'
+        },
+        {
+            block: 'i-bem',
+            elems: ['dom', 'internal']
+        },
+        {
+            block: 'jquery'
+        },
+        {
+            block: 'functions',
+            elem: 'debounce'
+        },
+        {
+            block: 'validator'
+        },
+        {
+            block: 'form'
+        },
         {
             block: 'input',
             mods: {
@@ -24,25 +44,6 @@
                 size: 'xl',
                 type: 'submit'
             }
-        }
-    ],
-    shouldDeps: [
-        {
-            block: 'conf'
-        },
-        {
-            block: 'i-bem',
-            elems: ['dom', 'internal']
-        },
-        {
-            block: 'jquery'
-        },
-        {
-            block: 'functions',
-            elem: 'debounce'
-        },
-        {
-            'block': 'validator'
         }
     ]
 })
