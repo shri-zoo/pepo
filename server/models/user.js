@@ -1,51 +1,51 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
-var LOGIN = /^[a-zA-Z0-9]{4,}$/;
+var mongoosePaginate = require('mongoose-paginate');
+var usernameValidator = require('../../isomorphic/validators/username');
 
 var UserSchema = new Schema({
-    username: {
-        type: String,
-        unique: true,
-        sparse: true,
-        validate: {
-            validator: function (value) {
-                return LOGIN.test(value);
-            },
-            message: 'Имя пользователя может состоять только из букв латинского алфавита и цифр и должно содержать минимум 4 символа'
-        }
+        username: {
+            type: String,
+            unique: true,
+            sparse: true,
+            validate: usernameValidator
+        },
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
+        avatar: String,
+        description: String,
+        provider: {
+            type: String,
+            required: true
+        },
+        facebook: {
+            id: String,
+            raw: { type: String, select: false }
+        },
+        vkontakte: {
+            id: String,
+            raw: { type: String, select: false }
+        },
+        yandex: {
+            id: String,
+            raw: { type: String, select: false }
+        },
+        google: {
+            id: String,
+            raw: { type: String, select: false }
+        },
+        subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }]
     },
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true
-    },
-    avatar: String,
-    description: String,
-    provider: {
-        type: String,
-        required: true
-    },
-    facebook: {
-        id: String,
-        raw: String
-    },
-    vkontakte: {
-        id: String,
-        raw: String
-    },
-    yandex: {
-        id: String,
-        raw: String
-    },
-    google: {
-        id: String,
-        raw: String
-    },
-    subscribers: [Schema.Types.ObjectId]
-});
+    {
+        timestamps: true
+    }
+);
 
+UserSchema.plugin(mongoosePaginate);
 mongoose.model('User', UserSchema);
