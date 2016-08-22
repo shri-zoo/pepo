@@ -1,0 +1,7 @@
+({
+    shouldDeps: [
+        'userpic',
+        'username',
+        'usernick'
+    ]
+});
