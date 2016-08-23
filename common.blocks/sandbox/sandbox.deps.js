@@ -9,6 +9,7 @@
         'userpic',
         'username',
         'usernick',
+        'user-info',
         'message-list'
     ]
 });
