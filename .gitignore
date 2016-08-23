@@ -15,3 +15,4 @@ libs/
 !*bundles*/*/*.bemdecl.js
 *bundles*/*/*.tmpl.bemdecl.js
 !*bundles*/.bem/*
+common.blocks/page/_view/.page_view_404.bemtree.js.swp
