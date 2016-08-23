@@ -11,6 +11,7 @@ module.exports = function (app) {
     rootRoutes
         .use('/api/auth', authRoutes(app))
         .use('/api/users', isAuth, userRoutes(app))
+        .get('/search-user',isAuth, mainController.getSearchPage)
         .get('/', isAuth, mainController.getIndex)
         .get(conf.auth.loginPageRedirect, isAuth, mainController.getLogin)
         .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsername)

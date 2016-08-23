@@ -1,0 +1,45 @@
+@import '../variables.styl';
+
+.login {
+    display: flex;
+    flex-direction: column;
+
+    &__providers {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    &__provider-item {
+        display: flex;
+        align-items: center;
+
+        &:not(:first-child) {
+            margin-top: 10px;
+        }
+    }
+
+    &__provider-icon {
+        margin-right: 15px;
+
+        &_type_facebook {
+            fill: oauth-providers-colors[facebook];
+        }
+
+        &_type_vkontakte {
+            fill: oauth-providers-colors[vkontakte];
+        }
+
+        &_type_yandex {
+            fill: oauth-providers-colors[yandex];
+        }
+
+        &_type_google {
+            fill: oauth-providers-colors[google];
+        }
+    }
+
+    &__provider-button {
+        flex-grow: 1;
+    }
+}

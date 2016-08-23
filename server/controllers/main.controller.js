@@ -13,6 +13,14 @@ exports.getIndex = function (req, res) {
     })
 };
 
+exports.getSearchPage = function(req,res){
+    req.app.get('bem').render(req,res,{
+        view:  'search-user',
+        title: 'Поиск в Pepo',
+        user: req.user
+    })
+};
+
 exports.getLogin = function (req , res) {
     var app = req.app;
     var conf = app.get('conf');
