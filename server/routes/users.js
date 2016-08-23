@@ -1,5 +1,5 @@
 var Router = require('express').Router;
-var usersController = require('../controllers/users.controllers');
+var usersController = require('../controllers/users.controller');
 
 module.exports = function (app) {
     var usersRoutes = new Router();
