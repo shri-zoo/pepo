@@ -1,7 +1,25 @@
 block('header').content()(function () {
-    return [
-        {
-            block: 'logo'
+  var links = ['home', 'messages', 'notifications', 'search', 'profile'];
+  var size = 32;
+  var viewBox = 56;
+  return [
+    {
+      block: 'navbar',
+      content: links.map(function (link) {
+        return {
+          block: 'link',
+          mix: {block: 'navbar', elem: 'link'},
+          url: '/' + link,
+          content: {
+            block: 'icon',
+            mods: {type: link},
+            mix: {block: 'navbar', elem: 'icon'},
+            name: link,
+            size: size,
+            viewBox: viewBox
+          }
         }
-    ];
+      })
+    }
+  ]
 });
