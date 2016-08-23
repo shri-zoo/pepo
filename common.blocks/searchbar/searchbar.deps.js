@@ -15,7 +15,7 @@
          elems:[
             {
                elem:'col',
-               mods: { mw: 12,sw: 11 }
+               mods: { mw: 10,sw: 11 }
             }
          ]
       },

@@ -6,7 +6,7 @@ block('searchbar').content()(function () {
          content:[
             {
                elem:'col',
-               elemMods: { mw: 12,sw: 11 },
+               elemMods: { mw: 10,sw: 11 },
                content:[
                   {
                      block : 'input',
