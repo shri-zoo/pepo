@@ -2,7 +2,7 @@
     shouldDeps: [
         {
             mods: {
-                view: ['404', 'login', 'username-select']
+                view: ['404', 'login', 'username-select','search-user']
             }
         },
         {
