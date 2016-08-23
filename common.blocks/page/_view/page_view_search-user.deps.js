@@ -12,6 +12,7 @@
         width: 'available',
         'has-clear': true
       }
-    }
+    },
+     'message-list'
   ]
 })
