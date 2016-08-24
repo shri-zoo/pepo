@@ -1,6 +1,7 @@
 var Router = require('express').Router;
 var authRoutes = require('./auth');
 var userRoutes = require('./users');
+var messageRoutes = require('./messages');
 var mainController = require('../controllers/main.controller');
 
 module.exports = function (app) {
@@ -11,6 +12,7 @@ module.exports = function (app) {
     rootRoutes
         .use('/api/auth', authRoutes(app))
         .use('/api/users', isAuth, userRoutes(app))
+        .use('/api/messages', isAuth, messageRoutes(app))
         .get('/', isAuth, mainController.getIndex)
         .get(conf.auth.loginPageRedirect, isAuth, mainController.getLogin)
         .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsername)

@@ -4,8 +4,9 @@ var mongoosePaginate = require('mongoose-paginate');
 
 var MessageSchema = new Schema({
         parentId: Schema.Types.ObjectId,
-        userId: {
+        user: {
             type: Schema.Types.ObjectId,
+            ref: 'User',
             required: true
         },
         text: {
