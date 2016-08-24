@@ -5,6 +5,7 @@ block('header').content()(function () {
   return [
     {
       block: 'navbar',
+      mix: { block: 'width-container' },
       content: links.map(function (link) {
         return {
           block: 'link',
