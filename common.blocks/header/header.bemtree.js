@@ -1,22 +1,27 @@
 block('header').content()(function () {
-  var links = ['home', 'messages', 'notifications', 'search', 'profile'];
+  var links = {
+    home: '/',
+    message: '/new-message',
+    search: '/search',
+    profile: '/profile'
+  };
   var size = 32;
-  var viewBox = 56;
+
   return [
     {
       block: 'navbar',
-      content: links.map(function (link) {
+      mix: { block: 'width-container' },
+      content: Object.keys(links).map(function (link) {
         return {
           block: 'link',
           mix: {block: 'navbar', elem: 'link'},
-          url: '/' + link,
+          url: links[link],
           content: {
             block: 'icon',
             mods: {type: link},
             mix: {block: 'navbar', elem: 'icon'},
             name: link,
-            size: size,
-            viewBox: viewBox
+            size: size
           }
         }
       })
