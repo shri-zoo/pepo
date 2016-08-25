@@ -58,23 +58,44 @@ module.exports = function(config) {
 
             // client templates
             [enbBemTechs.depsByTechToBemdecl, {
-                target: '?.tmpl.bemdecl.js',
+                target: '?.bemhtml-tmpl.bemdecl.js',
                 sourceTech: 'js',
                 destTech: 'bemhtml'
             }],
             [enbBemTechs.deps, {
-                target: '?.tmpl.deps.js',
-                bemdeclFile: '?.tmpl.bemdecl.js'
+                target: '?.bemhtml-tmpl.deps.js',
+                bemdeclFile: '?.bemhtml-tmpl.bemdecl.js'
             }],
             [enbBemTechs.files, {
-                depsFile: '?.tmpl.deps.js',
-                filesTarget: '?.tmpl.files',
-                dirsTarget: '?.tmpl.dirs'
+                depsFile: '?.bemhtml-tmpl.deps.js',
+                filesTarget: '?.bemhtml-tmpl.files',
+                dirsTarget: '?.bemhtml-tmpl.dirs'
             }],
             [techs.bemhtml, {
                 target: '?.browser.bemhtml.js',
-                filesTarget: '?.tmpl.files',
+                filesTarget: '?.bemhtml-tmpl.files',
                 sourceSuffixes: ['bemhtml', 'bemhtml.js'],
+                forceBaseTemplates: true
+            }],
+
+            [enbBemTechs.depsByTechToBemdecl, {
+                target: '?.bemtree-tmpl.bemdecl.js',
+                sourceTech: 'js',
+                destTech: 'bemtree'
+            }],
+            [enbBemTechs.deps, {
+                target: '?.bemtree-tmpl.deps.js',
+                bemdeclFile: '?.bemtree-tmpl.bemdecl.js'
+            }],
+            [enbBemTechs.files, {
+                depsFile: '?.bemtree-tmpl.deps.js',
+                filesTarget: '?.bemtree-tmpl.files',
+                dirsTarget: '?.bemtree-tmpl.dirs'
+            }],
+            [techs.bemtree, {
+                target: '?.browser.bemtree.js',
+                filesTarget: '?.bemtree-tmpl.files',
+                sourceSuffixes: ['bemtree', 'bemtree.js'],
                 forceBaseTemplates: true
             }],
 
@@ -82,7 +103,7 @@ module.exports = function(config) {
             [techs.browserJs, { includeYM: true }],
             [techs.fileMerge, {
                 target: '?.js',
-                sources: ['?.browser.js', '?.browser.bemhtml.js']
+                sources: ['?.browser.js', '?.browser.bemhtml.js', '?.browser.bemtree.js']
             }],
 
             // borschik

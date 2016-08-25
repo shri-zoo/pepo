@@ -31,7 +31,7 @@ exports.getLoadList = function (req, res) {
     var search = req.query.search;
 
     if (search) {
-        query.username = { $regex: new RegExp(search.replace(ONLY_ALLOWED_SYMBOLS, '')) };
+        query.username = { $regex: new RegExp(search.replace(ONLY_ALLOWED_SYMBOLS, ''),'i') };
     }
 
     helpers
