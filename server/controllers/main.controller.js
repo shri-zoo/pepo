@@ -16,7 +16,7 @@ exports.getIndex = function (req, res) {
 exports.getSearchPage = function(req,res){
     req.app.get('bem').render(req,res,{
         view:  'search',
-        title: 'Поиск в Pepo',
+        title: 'Поиск в Zoopark',
         user: req.user
     })
 };
