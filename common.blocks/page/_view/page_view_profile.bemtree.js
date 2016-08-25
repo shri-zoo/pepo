@@ -1,4 +1,4 @@
-block('page').content()(function () {
+block('page').mod('view', 'profile').content()(function () {
     return {
         block: 'layout',
         content: [
@@ -8,7 +8,7 @@ block('page').content()(function () {
             {
                 block: 'body',
                 content: {
-                    block: 'sandbox'
+                    block: 'user-description'
                 }
             }
         ]

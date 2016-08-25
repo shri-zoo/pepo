@@ -7,7 +7,7 @@
             block: 'header'
         },
         {
-            block: 'form-search'
+            block: 'user-description'
         },
         {
             block: 'body'
