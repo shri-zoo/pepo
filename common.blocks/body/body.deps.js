@@ -1,5 +1,10 @@
 ({
     shouldDeps: [
-        'sandbox'
+        {
+            block: 'panel',
+            mods: {
+                shadowed: true
+            }
+        }
     ]
-});
+})

@@ -1,15 +1,16 @@
 block('page').content()(function () {
     return {
         block: 'layout',
-        mods: {
-            type: 'main'
-        },
+        mods: { type: 'main' },
         content: [
             {
                 block: 'header'
             },
             {
-                block: 'body'
+                block: 'body',
+                content: {
+                    block: 'sandbox'
+                }
             }
         ]
     };
