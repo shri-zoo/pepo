@@ -1,3 +1,0 @@
-block('usernick')(
-    tag()('span')
-)

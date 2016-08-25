@@ -1,24 +1,30 @@
 block('userpic')(
     tag()(function () {
-        return this.ctx.nick ? 'a' : 'span';
+        return this.ctx.url ? 'a' : 'span';
     }),
     attrs()(function () {
         var attrs = applyNext() || {};
 
-        if (this.ctx.nick) {
-            attrs.href = 'link-to-user-profile/' + this.ctx.nick;
+        if (this.ctx.url) {
+            attrs.href = this.ctx.url;
         }
 
         return attrs;
     }),
     content()(function () {
+        var size = this.ctx.size || 32;
+        var sizePx = size + 'px';
+
         return {
-            elem: 'image',
-            attrs: {
-                src: this.ctx.image,
-                alt: this.ctx.nick || ''
-            }
+            block: 'image',
+            mix: {
+                block: 'userpic',
+                elem: 'image'
+            },
+            width: sizePx,
+            height: sizePx,
+            url: this.ctx.src,
+            alt: this.ctx.username
         }
-    }),
-    elem('image').tag()('img')
+    })
 );
