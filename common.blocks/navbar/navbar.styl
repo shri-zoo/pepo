@@ -1,27 +1,13 @@
 @import '../variables.styl';
 
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: stretch;
-
-  &__link {
-    header-icon-size = 32px;
-    half-header-height = (header-height - header-icon-size) / 2;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: half-header-height - 1 10px half-header-height; // 1px its bottom-border in header
-  }
-
-  &__icon {
-    position: relative;
-    display: block;
-    fill: #657786;
+.navbar__icon {
+    fill: navbar-icons-colors[normal];
 
     &:hover {
-      fill: #1DA1F2;
+        fill: navbar-icons-colors[active];
     }
-  }
+}
+
+.navbar .row {
+    height: header-height;
 }
