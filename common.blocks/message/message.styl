@@ -1,5 +1,11 @@
-.message
+@import '../variables.styl';
+
+.message {
   display: flex;
   flex-direction: column;
-  padding: 1rem .6rem;
-  border-bottom: 1px solid #e1e8ed;
+  padding: (common-padding / 2) 0;
+
+  & + .message {
+    border-top: 1px solid layout-border-color;
+  }
+}

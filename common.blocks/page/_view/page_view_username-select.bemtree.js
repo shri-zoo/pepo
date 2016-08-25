@@ -2,9 +2,7 @@ block('page').mod('view', 'username-select')(
     content()(function () {
         return {
             block: 'layout',
-            mods: {
-                type: 'center-block'
-            },
+            mods: { type: 'center-block' },
             content: [
                 {
                     block: 'logo',

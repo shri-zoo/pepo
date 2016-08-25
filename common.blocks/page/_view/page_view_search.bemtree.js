@@ -2,15 +2,23 @@ block('page').mod('view', 'search')(
     content()(function () {
         return {
             block: 'layout',
+            mods: {
+                type: 'main'
+            },
             content: [
                 {
-                    block:'navbar'
+                    block:'header'
                 },
                 {
-                    block: 'searchbar'
-                },
-                {
-                    block:'message-list'
+                    block: 'body',
+                    content: [
+                        {
+                            block: 'searchbar'
+                        },
+                        {
+                            block:'message-list'
+                        }
+                    ]
                 }
             ]
         };

@@ -1,9 +1,22 @@
 ({
     shouldDeps: [
         {
-            block: 'layout'
+            block: 'layout',
+            mods: {
+                type: 'main'
+            }
         },
-        {block:'navbar'},
-        {block:'searchbar'}
+        {
+            block: 'header'
+        },
+        {
+            block: 'searchbar'
+        },
+        {
+            block: 'message-list'
+        },
+        {
+            block: 'body'
+        }
     ]
 })
