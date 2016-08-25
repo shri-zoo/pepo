@@ -10,39 +10,45 @@
         {
             block: 'jquery'
         },
+
+
+
         {
-            block: 'functions',
-            elem: 'debounce'
+            block: 'form',
+            elems: ['label', 'row']
         },
         {
-            block: 'validator'
+            block: 'userpic'
         },
         {
-            block: 'form'
+            block: 'attach',
+            mods: {
+                theme: 'islands',
+                size: 'xl'
+            }
         },
         {
             block: 'input',
             mods: {
                 theme: 'islands',
                 size: 'xl',
-                width: 'available',
-                'has-clear': true
+                width: 'available'
             },
         },
         {
-            block: 'spin',
+            block: 'textarea',
             mods: {
                 theme: 'islands',
-                size: 'm',
-                visible: true
-            }
+                size: 'xl',
+                width: 'available'
+            },
         },
         {
             block: 'button',
             mods: {
+                type: 'submit',
                 theme: 'islands',
                 size: 'xl',
-                type: 'submit',
                 view: 'action'
             }
         }

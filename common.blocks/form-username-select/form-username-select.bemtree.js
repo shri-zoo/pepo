@@ -55,7 +55,8 @@ block('form-username-select')(
                     theme: 'islands',
                     size: 'xl',
                     disabled: true,
-                    type: 'submit'
+                    type: 'submit',
+                    view: 'action'
                 },
                 text: 'Продолжить'
             }

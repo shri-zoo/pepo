@@ -7,10 +7,10 @@
             block: 'header'
         },
         {
-            block: 'user-description'
+            block: 'body'
         },
         {
-            block: 'body'
+            block: 'form-settings'
         }
     ]
 })
