@@ -6,9 +6,10 @@ block('sandbox').content()(function () {
     return [
         {
             block: 'user-info',
-            usernick: username,
-            username: fullname,
-            userpic: 'https://pbs.twimg.com/profile_images/709630036601655296/04r1Rh4g_400x400.jpg'
+            username: username,
+            fullname: fullname,
+            src: 'https://pbs.twimg.com/profile_images/709630036601655296/04r1Rh4g_400x400.jpg',
+            url: '/profile/' + username
         },
         {
             block:'message-list',

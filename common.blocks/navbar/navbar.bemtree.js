@@ -38,7 +38,7 @@ block('navbar').content()(function () {
                 }
                     : {
                     block: 'userpic',
-                    image: _this.data.user.avatar
+                    src: _this.data.user.avatar
                 }
             }
         })
