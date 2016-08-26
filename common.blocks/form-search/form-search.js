@@ -18,34 +18,43 @@ modules
 
                                 this.bindTo(this.findBlockInside('input').elem('clear'), 'click', this._thisClearResults);
                                 this.bindTo(this.searchInput, 'input', debouncedOnChange);
+                                this._request();
                             }
                         }
                     },
 
                     _onInput: function (e) {
                         var value = e.target.value.trim();
-                        var _this = this;
 
                         if (this._isAlreadyRequested()) {
                             return;
                         }
 
                         if (!value.length) {
-                            _this._thisClearResults();
+                            this._thisClearResults();
                             return;
+                        }
+
+                        this._request(value);
+                    },
+                    _request: function(searchPhrase) {
+                        var _this = this;
+                        var url = conf.API + '/users';
+
+                        if (searchPhrase) {
+                            url += '?search=' + encodeURIComponent(searchPhrase);
                         }
 
                         this._onRequestStateChange(true);
 
                         $.ajax({
                             method: 'GET',
-                            url: conf.API + '/users?search=' + encodeURIComponent(value),
+                            url: url,
                             contentType: 'application/json',
                             dataType: 'json'
                         })
                             .done(function (data, status, jqXHR) {
                                 if (jqXHR.status === 200) {
-
                                     _this._onRequestStateChange(false);
                                     _this._renderResults(data.docs);
                                 }
@@ -55,7 +64,6 @@ modules
                                 _this._onRequestStateChange(false);
                             })
                     },
-
                     _onRequestStateChange: function (value) {
                         var _this = this;
 
@@ -88,16 +96,11 @@ modules
                         BEMDOM.update(this.results, BEMHTML.apply(BEMTREE.apply(resultsJson)));
                     },
                     _thisClearResults: function () {
-                        BEMDOM.update(this.results, '');
+                        this._request();
                     },
 
                     _isAlreadyRequested: function () {
                         return this._requested;
-                    }
-                },
-                {
-                    live: function () {
-                        this.liveInitOnBlockInsideEvent({ modName: 'focused', modVal: true }, 'input');
                     }
                 }
             ));
