@@ -31,7 +31,13 @@ exports.getLoadList = function (req, res) {
     var search = req.query.search;
 
     if (search) {
-        query.username = { $regex: new RegExp(search.replace(ONLY_ALLOWED_SYMBOLS, ''),'i') };
+        search = search.replace(ONLY_ALLOWED_SYMBOLS, '');
+
+        if (!search.length) {
+            return res.json({ docs: [], limit: 0, offset: 0, total: 0 });
+        }
+
+        query.username = { $regex: new RegExp(search,'i') };
     }
 
     helpers
