@@ -10,10 +10,7 @@
             block: 'header'
         },
         {
-            block: 'searchbar'
-        },
-        {
-            block: 'message-list'
+            block: 'form-search'
         },
         {
             block: 'body'

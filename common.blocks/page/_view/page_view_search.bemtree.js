@@ -13,10 +13,7 @@ block('page').mod('view', 'search')(
                     block: 'body',
                     content: [
                         {
-                            block: 'searchbar'
-                        },
-                        {
-                            block:'message-list'
+                            block: 'form-search'
                         }
                     ]
                 }
