@@ -1,4 +1,5 @@
 ([
+    // TODO Why we should separate this deps?
     {
         tech: 'js',
         shouldDeps: [
@@ -24,25 +25,19 @@
     {
         shouldDeps: [
             {
-                block: 'form'
-            },
-            {
                 block: 'i-bem',
                 elem: 'dom'
             },
             {
-                block: 'input',
-                mods: {
-                    theme: 'islands',
-                    size: 'xl',
-                    width: 'available',
-                    type: 'search',
-                    'has-clear': true
-                }
+                block: 'jquery'
+            },
+            {
+                block: 'functions',
+                elem: 'throttle'
             },
             {
                 block: 'spin',
-                mods: {
+                mods : {
                     theme: 'islands',
                     size: 'm',
                     visible: true
@@ -50,4 +45,4 @@
             }
         ]
     }
-]);
+])

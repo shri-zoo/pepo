@@ -10,6 +10,7 @@
         'username',
         'usernick',
         'user-info',
-        'message-list'
+        'list',
+        'message'
     ]
 });

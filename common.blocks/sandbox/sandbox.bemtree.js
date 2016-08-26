@@ -12,9 +12,19 @@ block('sandbox').content()(function () {
             url: '/profile/' + username
         },
         {
-            block:'message-list',
-            mods:{ theme : 'islands', size : 'm' , focused : true },
-            url:''
+            block:'list',
+            // TODO Ask how we can pass dynamically templates?
+            url: function () {
+                return '/api/users';
+            },
+            template: function (userData) {
+                return {
+                    block:'user-info',
+                    username: userData.username,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName
+                }
+            }
         }
     ];
 });

@@ -1,0 +1,3 @@
+block('list')(
+    js()(true)
+);

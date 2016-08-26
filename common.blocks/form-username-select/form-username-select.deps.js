@@ -5,7 +5,7 @@
         },
         {
             block: 'i-bem',
-            elems: ['dom', 'internal']
+            elem: 'dom'
         },
         {
             block: 'jquery'
