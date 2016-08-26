@@ -1,10 +1,7 @@
 ({
     shouldDeps: [
         {
-            block: 'layout',
-            mods: {
-                type: 'main'
-            }
+            block: 'layout'
         },
         {
             block: 'header'

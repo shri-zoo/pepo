@@ -1,0 +1,49 @@
+@import '../variables.styl';
+
+.form-settings {
+    half-common-padding = common-padding / 2;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    &__row-avatar {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-end;
+
+        @media (max-width: media[tablet]) {
+            flex-direction: column;
+            align-items: center;
+
+            // TODO подумать как можно сделать лучше
+            & .attach,
+            & .attach > .button {
+                width: 100%;
+            }
+        }
+    }
+
+    &__avatar {
+        margin-right: common-padding;
+
+        @media (max-width: media[tablet]) {
+            margin-right: 0;
+            margin-bottom: common-padding;
+        }
+    }
+
+    &__row-submit-button {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__submit-button {
+        @media (max-width: media[tablet]) {
+            width: 100%;
+        }
+    }
+}

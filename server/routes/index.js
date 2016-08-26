@@ -13,10 +13,11 @@ module.exports = function (app) {
         .use('/api/auth', authRoutes(app))
         .use('/api/users', isAuth, userRoutes(app))
         .use('/api/messages', isAuth, messageRoutes(app))
+        .get('/', isAuth, mainController.getIndexPage)
         .get('/search',isAuth, mainController.getSearchPage)
-        .get('/', isAuth, mainController.getIndex)
-        .get(conf.auth.loginPageRedirect, isAuth, mainController.getLogin)
-        .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsername)
+        .get('/settings', isAuth, mainController.getSettingsPage)
+        .get(conf.auth.loginPageRedirect, isAuth, mainController.getLoginPage)
+        .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsernamePage)
         .use(mainController.get404);
 
     return rootRoutes;

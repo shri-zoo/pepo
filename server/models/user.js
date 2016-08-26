@@ -18,7 +18,10 @@ var UserSchema = new Schema({
             type: String,
             required: true
         },
-        avatar: String,
+        avatar: {
+            type: String,
+            default: '/images/default-avatar.png'
+        },
         description: String,
         provider: {
             type: String,

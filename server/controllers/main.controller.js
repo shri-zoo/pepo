@@ -1,14 +1,15 @@
-exports.getIndex = function (req, res) {
+exports.getIndexPage = function (req, res) {
     req.app.get('bem').render(req, res, {
         view: 'index',
-        title: 'Main page',
-        meta: {
-            description: 'Page description',
-            og: {
-                url: 'https://site.com',
-                siteName: 'Site name'
-            }
-        },
+        title: 'Ваша лента',
+        user: req.user
+    })
+};
+
+exports.getSettingsPage = function (req, res) {
+    req.app.get('bem').render(req, res, {
+        view: 'settings',
+        title: 'Профиль пользователя',
         user: req.user
     })
 };
@@ -21,7 +22,7 @@ exports.getSearchPage = function(req,res){
     })
 };
 
-exports.getLogin = function (req , res) {
+exports.getLoginPage = function (req , res) {
     var app = req.app;
     var conf = app.get('conf');
     var render = app.get('bem').render;
@@ -41,7 +42,7 @@ exports.getLogin = function (req , res) {
     );
 };
 
-exports.getSelectUsername = function (req, res) {
+exports.getSelectUsernamePage = function (req, res) {
     var app = req.app;
     var conf = app.get('conf');
     var render = app.get('bem').render;
