@@ -1,38 +1,89 @@
-modules.define('list', ['BEMHTML','i-bem__dom','jquery'], function(provide,BEMHTML, BEMDOM){
-    var loading=false,
-        page=0;
-    provide(BEMDOM.decl(this.name,
-        {
-            onSetMod: {
-                'js': {
-                    // выполняется при первом DOM-событии "click"
-                    'inited': function () {
-                        this._load();
-                        this.bindToWin('scroll',this._onScroll);
+modules.define('list',
+    ['i-bem__dom', 'conf', 'BEMTREE', 'BEMHTML', 'jquery', 'functions__throttle'],
+    function(provide, BEMDOM, conf, BEMTREE, BEMHTML, $, throttle) {
+        provide(BEMDOM.decl(this.name,
+            {
+                onSetMod: {
+                    'js': {
+                        'inited': function () {
+                            this.content = this.elem('content');
+                            this.spinnerWrapper = this.elem('spinner-wrapper');
+
+                            this._requested = false;
+                            this._itemsLength = 0;
+                            this._total = 0;
+
+                            this.bindToWin('scroll', throttle(this._onScroll, 300));
+                            this._request();
+                        }
                     }
-                }
-            },
-            _onScroll: function () {
-                if(window.pageYOffset-1>(document.body.scrollHeight-document.body.scrollHeight/page)&&loading===false){
-                    this._load();
-                }
-            },
-            _load:function(){
-                loading=true;
-                var domLoading=BEMDOM.append(this.domElem,"<span>Loading</span>");
-                var domData=this._request();
-                page++;
-                BEMDOM.replace(domLoading,domData);
-                console.log(domData);
-                loading=false;
-            },
-            _request:function(){
+                },
+                _onScroll: function () {
+                    if (this._itemsLength >= this._total) {
+                        return;
+                    }
 
-                return '<div class="message"><div class="message-header"><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" role="link" tabindex="0"><img class="image" src="https://telegram.org/img/t_logo.png" height="60px"></a><a class="link link__control i-bem" data-bem="{&quot;link&quot;:{}}" role="link" href="https://telegram.org/img/t_logo.png">login</a></div><a class="message-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also</a><a class="preview-image" href="https://pp.vk.me/c630418/v630418888/42a0f/tQ5a0Cqyuek.jpg"><img class="image" src="https://pp.vk.me/c630418/v630418888/42a0f/tQ5a0Cqyuek.jpg" title="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also"></a><div class="preview-geo">Sevastopol</div><a class="preview-link" href="https://telegram.org/img/t_logo.png"><img class="image" src="https://telegram.org/img/t_logo.png"><span>description</span></a></div>';
+                    var pxToBottom = document.documentElement.scrollHeight - document.body.scrollTop - window.innerHeight;
+
+                    if (pxToBottom < 300 && !this._isAlreadyRequested()) {
+                        this._request();
+                    }
+                },
+                _request: function(){
+                    var _this = this;
+
+                    this._onRequestStateChange(true);
+                    $.ajax({
+                        method: 'GET',
+                        url: conf.API + '/users?offset=' + this._itemsLength,
+                        dataType: 'json'
+                    })
+                        .done(function (data, status, jqXHR) {
+                            if (jqXHR.status === 200) {
+                                _this._itemsLength += data.docs.length;
+                                _this._total = data.total;
+                                _this._onRequestStateChange(false);
+                                _this._appendItems(data.docs);
+                            }
+                        })
+                        .fail(function (err) {
+                            _this._onRequestStateChange(false);
+                            console.error(err);
+                        });
+                },
+                _appendItems: function(items){
+                    var itemsBemjson = items.map(function (user) {
+                        return {
+                            block: 'user-info',
+                            mix: { block: 'form-search', elem: 'result-item' },
+                            username: user.username,
+                            fullname: user.firstName + ' ' + user.lastName,
+                            src: user.avatar,
+                            url: '/profile/' + user.username
+                        };
+                    });
+
+                    BEMDOM.append(this.content, BEMHTML.apply(BEMTREE.apply(itemsBemjson)));
+                },
+                _onRequestStateChange: function (value) {
+                    var _this = this;
+
+                    this._requested = value;
+
+                    if (value) {
+                        this.setMod(this.spinnerWrapper, 'visible', value);
+                    } else {
+                        // delay for spin animation
+                        setTimeout(function () {
+                            _this.setMod(_this.spinnerWrapper, 'visible', value);
+                        }, 300);
+                    }
+
+                },
+                _isAlreadyRequested: function () {
+                    return this._requested;
+                }
             }
-        },
-        {
-        }
-    ));
-
-});
+        ));
+    }
+);
