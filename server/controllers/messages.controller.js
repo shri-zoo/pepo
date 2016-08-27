@@ -20,6 +20,7 @@ exports.getLoadList = function (req, res) {
     var app = req.app;
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
+    var bem = helpers.bem;
     var mongoose = app.get('db');
     var Message = mongoose.model('Message');
     var userId = req.query.userId;
@@ -29,7 +30,6 @@ exports.getLoadList = function (req, res) {
             .status(400)
             .json({ error: 'You MUST pass "userId" param in query params' });
     }
-
 
     helpers
         .checkPaginationParams(req, res, app.get('conf').db.limits.messages)
@@ -45,7 +45,24 @@ exports.getLoadList = function (req, res) {
                     }
                 )
                 .then(function (result) {
-                    res.json(result);
+                    if (!req.query.hasOwnProperty('html')) {
+                        return res.json(result);
+                    }
+
+                    res.json({
+                        total: result.total,
+                        limit: result.limit,
+                        offset: result.offset,
+                        html: result.docs.map(function (message) {
+                            return bem.applyHtml(bem.applyTree({
+                                block: 'message',
+                                content: {
+                                    login: message.user.username,
+                                    text: message.text
+                                }
+                            }));
+                        }).join()
+                    });
                 })
                 .catch(function (err) {
                     handleError(req, res, err);
