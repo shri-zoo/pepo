@@ -5,7 +5,7 @@ modules
         function (provide, conf, BEMDOM, BEMTREE, BEMHTML, $, debounce) {
             var blockName = this.name;
 
-            provide(BEMDOM.decl({ block: blockName },
+            provide(BEMDOM.decl({block: blockName},
                 {
                     onSetMod: {
                         js: {
@@ -37,7 +37,7 @@ modules
 
                         this._request(value);
                     },
-                    _request: function(searchPhrase) {
+                    _request: function (searchPhrase) {
                         var _this = this;
                         var url = conf.API + '/users';
 
@@ -48,11 +48,11 @@ modules
                         this._onRequestStateChange(true);
 
                         $.ajax({
-                            method: 'GET',
-                            url: url,
-                            contentType: 'application/json',
-                            dataType: 'json'
-                        })
+                                method: 'GET',
+                                url: url,
+                                contentType: 'application/json',
+                                dataType: 'json'
+                            })
                             .done(function (data, status, jqXHR) {
                                 if (jqXHR.status === 200) {
                                     _this._onRequestStateChange(false);
@@ -85,11 +85,12 @@ modules
                         var resultsJson = results.map(function (user) {
                             return {
                                 block: 'user-info',
-                                mix: { block: 'form-search', elem: 'result-item' },
+                                mix: {block: 'form-search', elem: 'result-item'},
                                 username: user.username,
                                 fullname: user.firstName + ' ' + user.lastName,
                                 src: user.avatar,
-                                url: '/profile/' + user.username
+                                url: '/u/' + user.username,
+                                subscribe:'https://bem.info/'
                             };
                         });
 
