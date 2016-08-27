@@ -22,6 +22,13 @@ block('user-info').content()(function () {
         {
             elem: 'fullname',
             content: ctx.fullname
+        },
+        this.ctx.subscribe && {
+            block : 'button',
+            mix: {block: 'user-info', elem:'button'},
+            mods : { theme : 'islands', size : 'm', type : 'link' },
+            url : this.ctx.subscribe,
+            text : 'подписаться'
         }
 
     ];
