@@ -7,10 +7,10 @@ block('profile').content()(function () {
             block: 'user-info',
             username: username,
             fullname: fullname,
-            mods : { theme : 'islands', size : 'l'},
             src:  user&& user.avatar,
             url: '/u/' + username,
-            size:70
+            size:70,
+            mods : { theme : 'islands', size : 'l'}
         }
     ]
 };

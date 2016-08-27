@@ -3,6 +3,7 @@ block('user-info').content()(function () {
     var ctx = this.ctx;
     var url = ctx.url;
     var username = ctx.username;
+    var mods=ctx.mods;
 
     return [
         {
