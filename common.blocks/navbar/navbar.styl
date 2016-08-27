@@ -1,13 +1,40 @@
 @import '../variables.styl';
 
-.navbar__icon {
-    fill: navbar-icons-colors[normal];
+.navbar {
+    &__icon {
+        fill: navbar-icons-colors[normal];
 
-    &:hover {
-        fill: navbar-icons-colors[active];
+        &:hover {
+            fill: navbar-icons-colors[active];
+        }
+    }
+
+    &__link {
+        padding: 5px 10px;
+        outline: none;
+    }
+
+    & .row {
+        height: header-height;
     }
 }
 
-.navbar .row {
-    height: header-height;
+.dropdown-menu {
+    font-family: layout-font-family;
+    width: dropdown-menu-width;
+
+    & .button {
+        background: none;
+        color: navbar-icons-colors[normal];
+        border: none;
+        display: block;
+        margin: 5px;
+    }
+
+    & .user-info-area {
+        text-align: right;
+        border-bottom: 1px solid layout-border-color;
+        padding: 5px;
+        padding-right: 15px;
+    }
 }
