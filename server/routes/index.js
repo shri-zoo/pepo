@@ -2,6 +2,7 @@ var Router = require('express').Router;
 var authRoutes = require('./auth');
 var userRoutes = require('./users');
 var messageRoutes = require('./messages');
+var profileRoutes = require('./profile');
 var mainController = require('../controllers/main.controller');
 
 module.exports = function (app) {
@@ -13,6 +14,7 @@ module.exports = function (app) {
         .use('/api/auth', authRoutes(app))
         .use('/api/users', isAuth, userRoutes(app))
         .use('/api/messages', isAuth, messageRoutes(app))
+        .use('/u', isAuth, profileRoutes(app))
         .get('/', isAuth, mainController.getIndexPage)
         .get('/search',isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
