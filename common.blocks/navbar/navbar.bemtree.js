@@ -2,7 +2,7 @@ block('navbar').content()(function () {
     var _this = this;
     var links = [
         { type: 'home', url: '/' },
-        { type: 'message', url: '/new-message' },
+        { type: 'message', url: '/create-message' },
         { type: 'search', url: '/search' },
         { type: 'profile' },
     ];
@@ -38,7 +38,7 @@ block('navbar').content()(function () {
                 }
                     : {
                     block: 'userpic',
-                    src: _this.data.user.avatar
+                    src: _this.data.user && _this.data.user.avatar
                 }
             }
         })

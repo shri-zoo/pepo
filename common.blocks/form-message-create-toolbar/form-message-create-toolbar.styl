@@ -1,0 +1,18 @@
+@import '../variables.styl';
+
+.form-message-create-toolbar {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    width: 120px;
+
+    &__icon {
+        fill: create-message-icons-colors[normal];
+
+        &:hover {
+            fill: create-message-icons-colors[active];
+        }
+    }
+}
