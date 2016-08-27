@@ -16,9 +16,9 @@ module.exports = function (app) {
         .get('/', isAuth, mainController.getIndexPage)
         .get('/search',isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
+        .get('/create-message', isAuth, mainController.getCreateMessage)
         .get(conf.auth.loginPageRedirect, isAuth, mainController.getLoginPage)
         .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsernamePage)
-        .get(conf.auth.createMessageRedirect, isAuth, mainController.getCreateMessage)
         .use(mainController.get404);
 
     return rootRoutes;

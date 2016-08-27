@@ -26,7 +26,6 @@ module.exports = {
     auth: {
         mainPageRedirect: '/',
         loginPageRedirect: '/login',
-        createMessageRedirect: '/create-message',
         selectUsernameRedirect: '/username-select',
         providers: [
             {

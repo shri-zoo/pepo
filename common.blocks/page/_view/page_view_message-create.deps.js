@@ -1,17 +1,16 @@
 ({
     shouldDeps: [
         {
-            block: 'layout',
-            mods: {
-                type: 'center-block'
-            }
+            block: 'layout'
         },
         {
-            block: 'logo'
+            block: 'header'
+        },
+        {
+            block: 'body'
         },
         {
             block: 'panel',
-            elems: ['header'],
             mods: {
                 shadowed: true
             }

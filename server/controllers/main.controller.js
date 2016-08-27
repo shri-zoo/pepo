@@ -6,6 +6,13 @@ exports.getIndexPage = function (req, res) {
     })
 };
 
+exports.getCreateMessage = function (req, res) {
+    var app = req.app;
+    var render = app.get('bem').render;
+
+    render(req, res, { view: 'message-create', user: req.user });
+};
+
 exports.getSettingsPage = function (req, res) {
     req.app.get('bem').render(req, res, {
         view: 'settings',
@@ -52,13 +59,6 @@ exports.getSelectUsernamePage = function (req, res) {
     }
 
     render(req, res, { view: 'username-select', userId: req.user._id });
-};
-
-exports.getCreateMessage = function (req, res) {
-    var app = req.app;
-    var render = app.get('bem').render;
-
-    render(req, res, { view: 'message-create', userId: req.user._id });
 };
 
 exports.get404 = function (req, res) {
