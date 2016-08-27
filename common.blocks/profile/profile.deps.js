@@ -1,0 +1,3 @@
+({
+    shouldDeps: ['user-info','button']
+})
