@@ -3,7 +3,6 @@ block('user-info').content()(function () {
     var ctx = this.ctx;
     var url = ctx.url;
     var username = ctx.username;
-    var mods=ctx.mods;
 
     return [
         {
@@ -12,7 +11,7 @@ block('user-info').content()(function () {
             username: username,
             src: ctx.src,
             url: url,
-            size: 48
+            size: this.ctx.size || 48
         },
         {
             block: 'username',
@@ -25,11 +24,11 @@ block('user-info').content()(function () {
             content: ctx.fullname
         },
         this.ctx.subscribe && {
-            block : 'button',
-            mix: {block: 'user-info', elem:'button'},
-            mods : { theme : 'islands', size : 'm', type : 'link' },
-            url : this.ctx.subscribe,
-            text : 'подписаться'
+            block: 'button',
+            mix: { block: 'user-info', elem: 'button' },
+            mods: { theme: 'islands', size: 'm', type: 'link', view: 'action' },
+            url: this.ctx.subscribe,
+            text: 'подписаться'
         }
 
     ];
