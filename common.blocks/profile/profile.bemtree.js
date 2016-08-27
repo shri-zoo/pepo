@@ -9,13 +9,8 @@ block('profile').content()(function () {
             fullname: fullname,
             mods : { theme : 'islands', size : 'l'},
             src:  user&& user.avatar,
-            url: '/profile/' + username
-        },
-        {
-            block : 'button',
-            mods : { theme : 'islands', size : 'm', type : 'link' },
-            url : 'https://bem.info/',
-            text : 'Подписатся'
+            url: '/u/' + username,
+            size:70
         }
     ]
-});
+};
