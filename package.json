@@ -51,8 +51,7 @@
     "nodemon": "^1.9.2",
     "pm2": "^1.1.3",
     "sharps": "^3.0.3",
-    "stylelint": "^7.1.0",
-    "stylelint-config-standard": "^12.0.0",
+    "stylint": "^1.5.6",
     "ym": "^0.1.2"
   },
   "scripts": {
@@ -61,13 +60,13 @@
     "deps": "bower i",
     "make": "enb make",
     "watch": "chokidar \"*.blocks/**\" -c \"npm run make\"",
-    "precommit": "npm run precommit:js && npm run precommit:css",
+    "precommit": "npm run precommit:js && npm run precommit:styles",
     "test": "echo \"Guys you should setup tests for testing =)\" && exit 0",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint": "npm run lint:js && npm run lint:styles",
     "lint:js": "eslint .",
-    "lint:css": "stylelint \"*.blocks/**/*.css\"; exit 0",
-    "precommit:js": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.js$\" | xargs ./node_modules/.bin/eslint",
-    "precommit:css": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.css$\" | xargs ./node_modules/.bin/stylelint",
+    "lint:styles": "stylint *.blocks",
+    "precommit:js": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.js$\" | xargs -r $(npm bin)/eslint",
+    "precommit:styles": "git diff-index --cached HEAD --name-only --diff-filter ACMR | grep -E \"\\.styl$\" | xargs -r $(npm bin)/stylint",
     "deploy": "pm2 deploy ecosystem.json production",
     "deploy:revert": "pm2 deploy ecosystem.json production revert"
   },
