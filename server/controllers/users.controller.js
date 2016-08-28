@@ -25,6 +25,7 @@ exports.getLoadList = function (req, res) {
     var app = req.app;
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
+    var bem = helpers.bem;
     var User = app.get('db').model('User');
 
     var query = {};
@@ -53,7 +54,26 @@ exports.getLoadList = function (req, res) {
                         sort: 'createdAt'
                     })
                 .then(function (result) {
-                    res.json(result);
+                    if (!req.query.hasOwnProperty('html')) {
+                        return res.json(result);
+                    }
+
+                    res.json({
+                        total: result.total,
+                        limit: result.limit,
+                        offset: result.offset,
+                        html: result.docs.map(function (user) {
+                            return bem.applyHtml(bem.applyTree({
+                                block: 'user-info',
+                                mix: { block: 'form-search', elem: 'result-item' },
+                                username: user.username,
+                                fullname: user.firstName + ' ' + user.lastName,
+                                src: user.avatar,
+                                url: '/u/' + user.username,
+                                subscribe: 'https://bem.info/'
+                            }));
+                        }).join()
+                    });
                 })
                 .catch(function (err) {
                     handleError(req, res, err);

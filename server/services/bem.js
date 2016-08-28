@@ -1,12 +1,7 @@
-var path = require('path');
-var bundleName = 'index';
-var pathToBundle = path.resolve('desktop.bundles', bundleName);
-var BEMTREE = require(path.join(pathToBundle, bundleName + '.bemtree.js')).BEMTREE;
-var BEMHTML = require(path.join(pathToBundle, bundleName + '.bemhtml.js')).BEMHTML;
-
 module.exports = function (app) {
     var cache = {};
     var conf = app.get('conf');
+    var bem = app.get('helpers').bem;
     var logger = app.get('logger');
     var isDev = app.get('isDev');
     var useCache = !isDev;
@@ -38,7 +33,7 @@ module.exports = function (app) {
         };
 
         try {
-            var bemjson = BEMTREE.apply(bemtreeCtx);
+            var bemjson = bem.applyTree(bemtreeCtx);
         } catch (err) {
             logger.error(module, 'BEMTREE error', err);
             return res.status(500).end(isDev ? ['BEMTREE error', err.stack].join('\n') : '');
@@ -49,7 +44,7 @@ module.exports = function (app) {
         }
 
         try {
-            var html = BEMHTML.apply(bemjson);
+            var html = bem.applyHtml(bemjson);
         } catch (err) {
             logger.error(module, 'BEMHTML error', err);
             return res.status(500).end(isDev ? ['BEMHTML error', err.stack].join('\n') : '');

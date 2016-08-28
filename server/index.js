@@ -22,10 +22,10 @@ app
     .set('conf', conf)
     .set('logger', logger)
     .set('isDev', app.get('env') === 'development')
+    .set('helpers', require('./helpers'))
     .set('db', (db = require('./services/db')(app)))
     .set('bem', require('./services/bem')(app))
     .set('middlewares', require('./middlewares'))
-    .set('helpers', require('./helpers'))
 
     // common setup
     .disable('x-powered-by')
