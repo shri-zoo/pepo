@@ -43,6 +43,7 @@
     "enb-js": "^1.1.0",
     "enb-stylus": "^2.3.2",
     "eslint": "^3.3.0",
+    "eslint-config-airbnb-es5": "psdcoder/eslint-config-airbnb-es5#79e0a26d6faa97390557a5fad779d3c3bbd06039",
     "eslint-config-pedant": "^0.7.0",
     "eslint-plugin-bem-xjst": "^2.0.0",
     "eslint-plugin-import": "^1.13.0",

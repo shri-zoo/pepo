@@ -1,5 +1,8 @@
 {
-  "extends": "pedant",
+  "extends": [
+    "airbnb-es5",
+    "pedant"
+  ],
   "globals": {
     "modules": false
   },
@@ -17,6 +20,25 @@
     "bem-xjst"
   ],
   "rules": {
-    "no-unused-expressions": "off"
+    "comma-dangle": [2, "never"],
+    "no-trailing-spaces": [1, { "skipBlankLines": true }],
+    "no-use-before-define": [2, {"functions": false}],
+    "no-underscore-dangle": [0],
+    "no-unused-expressions": "off",
+    "no-param-reassign": "off",
+    "func-names": [2, "never"],
+    "space-before-function-paren": [2, { "anonymous": "always", "named": "never" }],
+    "no-shadow": [0],
+    "indent": [2, 4, {
+      "SwitchCase": 1,
+      "VariableDeclarator": 1
+    }],
+    "max-len": [2, 120],
+    "object-curly-spacing": [2, "always", {
+      "objectsInObjects": false,
+      "arraysInObjects": false
+    }],
+    "consistent-return": [0]
   }
 }
+

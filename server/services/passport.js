@@ -37,10 +37,11 @@ module.exports = function (app) {
         var authenticateParams = [provider.name];
 
         if (provider.scope) {
-            authenticateParams.push({scope: provider.scope});
+            authenticateParams.push({ scope: provider.scope });
         }
 
-        passport.use(new passportStrategies[provider.name]({
+        passport.use(new passportStrategies[provider.name](
+            {
                 clientID: provider.clientID,
                 clientSecret: provider.clientSecret,
                 callbackURL: provider.callbackURL
@@ -192,7 +193,9 @@ function expandProjection(projection) {
                 remainingLength = path.length;
 
                 if (!remainingLength) {
-                    currentPath[subKey] = _.isObject(projection[key]) ? expandProjection(projection[key]) : projection[key];
+                    currentPath[subKey] = _.isObject(projection[key])
+                        ? expandProjection(projection[key])
+                        : projection[key];
                 } else {
                     currentPath[subKey] = {};
                 }
