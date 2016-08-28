@@ -11,6 +11,7 @@
         'usernick',
         'user-info',
         'list',
-        'message'
+        'message',
+        'profile'
     ]
 });
