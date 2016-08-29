@@ -31,12 +31,7 @@
             }
         },
         {
-            block: 'spin',
-            mods: {
-                theme: 'islands',
-                size: 'm',
-                visible: true
-            }
+            block: 'spinner'
         },
         {
             block: 'button',

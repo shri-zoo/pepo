@@ -23,6 +23,7 @@
         ]
     },
     {
+        mustDeps: 'stylus-vars',
         shouldDeps: [
             {
                 block: 'i-bem',
@@ -36,13 +37,8 @@
                 elem: 'throttle'
             },
             {
-                block: 'spin',
-                mods : {
-                    theme: 'islands',
-                    size: 'm',
-                    visible: true
-                }
+                block: 'spinner'
             }
         ]
     }
-])
+]);

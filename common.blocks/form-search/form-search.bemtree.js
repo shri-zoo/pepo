@@ -8,7 +8,7 @@ block('form-search')(
                 block: block,
                 elem: 'content'
             }
-        }
+        };
     }),
     elem('content').content()(function () {
         var block = this.block;
@@ -35,15 +35,10 @@ block('form-search')(
                 mods: { sac: true },
                 content: [
                     {
-                        block: block,
-                        elem: 'spinner-wrapper',
-                        content: {
-                            block: 'spin',
-                            mods: {
-                                theme: 'islands',
-                                size: 'm',
-                                visible: true
-                            }
+                        block: 'spinner',
+                        mix: {
+                            block: block,
+                            elem: 'spinner'
                         }
                     }
                 ]
@@ -52,6 +47,6 @@ block('form-search')(
                 block: 'form-search',
                 elem: 'results'
             }
-        ]
+        ];
     })
 );

@@ -2,13 +2,7 @@
   font-size: 1rem;
   text-align: center;
 
-  &__spinner-wrapper {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height .15s ease-out;
-
-    &_visible {
-      max-height: 28px;
-    }
+  &__spinner.spinner_visible {
+    margin-top: common-padding;
   }
 }

@@ -1,15 +1,13 @@
 .form-search {
   half-common-padding = common-padding / 2;
 
-  &__spinner-wrapper {
-    margin-top : common-padding
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height .15s ease-out;
+  &__spinner.spinner_visible {
+    margin-top: common-padding;
+    margin-bottom: common-padding;
+  }
 
-    &_visible {
-      max-height: 28px;
-    }
+  &__results {
+    margin-top: common-padding;
   }
 
   &__result-item + &__result-item {

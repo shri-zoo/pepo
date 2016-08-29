@@ -8,7 +8,7 @@ block('form-username-select')(
                 block: block,
                 elem: 'content'
             }
-        }
+        };
     }),
     elem('content').content()(function () {
         var block = this.block;
@@ -34,18 +34,6 @@ block('form-username-select')(
                 name: 'username'
             },
             {
-                block: block,
-                elem: 'spinner-wrapper',
-                content: {
-                    block: 'spin',
-                    mods : {
-                        theme: 'islands',
-                        size: 'm',
-                        visible: true
-                    }
-                }
-            },
-            {
                 block: 'button',
                 mix: {
                     block: block,
@@ -59,7 +47,14 @@ block('form-username-select')(
                     view: 'action'
                 },
                 text: 'Продолжить'
+            },
+            {
+                block: 'spinner',
+                mix: {
+                    block: block,
+                    elem: 'spinner'
+                }
             }
-        ]
+        ];
     })
 );

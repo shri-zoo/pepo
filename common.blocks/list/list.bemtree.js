@@ -6,11 +6,10 @@ block('list').content()(function () {
         {
             elem: 'spinner-wrapper',
             content: {
-                block: 'spin',
-                mods : {
-                    theme: 'islands',
-                    size: 'm',
-                    visible: true
+                block: 'spinner',
+                mix: {
+                    block: 'list',
+                    elem: 'spinner'
                 }
             }
         }
