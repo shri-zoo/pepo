@@ -31,21 +31,10 @@ block('form-search')(
                 name: 'search'
             },
             {
-                block: 'row',
-                mods: { sac: true },
-                content: [
-                    {
-                        block: 'spinner',
-                        mix: {
-                            block: block,
-                            elem: 'spinner'
-                        }
-                    }
-                ]
-            },
-            {
-                block: 'form-search',
-                elem: 'results'
+                block: 'infinite-list',
+                mix: { block: block, elem: 'infinite-list' },
+                mods: { type: 'users-search' },
+                js: { url: '/users?html' }
             }
         ];
     })

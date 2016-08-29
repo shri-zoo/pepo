@@ -1,6 +1,6 @@
-modules.define('list',
-    ['i-bem__dom', 'conf', 'BEMTREE', 'BEMHTML', 'jquery', 'functions__throttle'],
-    function (provide, BEMDOM, conf, BEMTREE, BEMHTML, $, throttle) {
+modules.define('infinite-list',
+    ['i-bem__dom', 'conf', 'url', 'BEMTREE', 'BEMHTML', 'jquery', 'functions__throttle'],
+    function (provide, BEMDOM, conf, url, BEMTREE, BEMHTML, $, throttle) {
         provide(BEMDOM.decl(this.name,
             {
                 onSetMod: {
@@ -9,16 +9,31 @@ modules.define('list',
                             this.content = this.elem('content');
                             this.spinner = this.findBlockInside('spinner');
 
+                            this.bindToWin('resize', throttle(this._onResize, 300));
+                            this.bindToWin('scroll', throttle(this._onScroll, 300));
+
+                            this._url = url(conf.API + this.params.url);
                             this._requested = false;
                             this._itemsLength = 0;
                             this._total = 0;
 
-                            this.bindToWin('resize', throttle(this._onResize, 300));
-                            this.bindToWin('scroll', throttle(this._onScroll, 300));
+                            this._reset();
                             this._onResize();
                             this._request();
                         }
                     }
+                },
+                _reset: function () {
+                    if (this._requested) {
+                        this._onRequestStateChange(false);
+                    }
+
+                    if (this._itemsLength) {
+                        BEMDOM.update(this.content, '');
+                    }
+
+                    this._itemsLength = 0;
+                    this._total = 0;
                 },
                 _onResize: function () {
                     this._windowHeight = window.innerHeight;
@@ -36,41 +51,36 @@ modules.define('list',
                         this._request();
                     }
                 },
+                _buildUrl: function () {
+                    if (this._url.hasQuery('offset')) {
+                        this._url.removeQuery('offset');
+                    }
+
+                    this._url.addQuery('offset', this._itemsLength);
+
+                    return this._url;
+                },
                 _request: function () {
                     var _this = this;
 
                     this._onRequestStateChange(true);
                     $.ajax({
                         method: 'GET',
-                        url: conf.API + '/users?offset=' + this._itemsLength,
+                        url: this._buildUrl(),
                         dataType: 'json'
                     })
-                        .done(function (data, status, jqXHR) {
-                            if (jqXHR.status === 200) {
-                                _this._itemsLength += data.docs.length;
-                                _this._total = data.total;
-                                _this._onRequestStateChange(false);
-                                _this._appendItems(data.docs);
-                            }
-                        })
-                        .fail(function (err) {
+                    .done(function (data, status, jqXHR) {
+                        if (jqXHR.status === 200) {
+                            _this._itemsLength += data.count;
+                            _this._total = data.total;
                             _this._onRequestStateChange(false);
-                            console.error(err); // eslint-disable-line no-console
-                        });
-                },
-                _appendItems: function (items) {
-                    var itemsBemjson = items.map(function (user) {
-                        return {
-                            block: 'user-info',
-                            mix: { block: 'form-search', elem: 'result-item' },
-                            username: user.username,
-                            fullname: user.firstName + ' ' + user.lastName,
-                            src: user.avatar,
-                            url: '/profile/' + user.username
-                        };
+                            BEMDOM.append(_this.content, data.html);
+                        }
+                    })
+                    .fail(function (err) {
+                        _this._onRequestStateChange(false);
+                        console.error(err); // eslint-disable-line no-console
                     });
-
-                    BEMDOM.append(this.content, BEMHTML.apply(BEMTREE.apply(itemsBemjson)));
                 },
                 _onRequestStateChange: function (value) {
                     this._requested = value;

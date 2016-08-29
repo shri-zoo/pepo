@@ -22,7 +22,7 @@ modules
 
                     // delay for spin animation
                     setTimeout(function () {
-                        _this.setMod(_this.spinnerWrapper, 'visible', false);
+                        _this.setMod('visible', false);
                     }, delay);
                 }
             }

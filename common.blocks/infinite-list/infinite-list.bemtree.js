@@ -1,4 +1,6 @@
-block('list').content()(function () {
+block('infinite-list').content()(function () {
+    var block = this.block;
+
     return [
         {
             elem: 'content'
@@ -8,7 +10,7 @@ block('list').content()(function () {
             content: {
                 block: 'spinner',
                 mix: {
-                    block: 'list',
+                    block: block,
                     elem: 'spinner'
                 }
             }
