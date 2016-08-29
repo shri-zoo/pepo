@@ -38,21 +38,19 @@ exports.getLoadList = function (req, res) {
             return res.json({ docs: [], limit: 0, offset: 0, total: 0 });
         }
 
-        query.username = { $regex: new RegExp(search,'i') };
+        query.username = { $regex: new RegExp(search, 'i') };
     }
 
     helpers
         .checkPaginationParams(req, res, app.get('conf').db.limits.users)
         .then(function (pagination) {
             User
-                .paginate(
-                    query,
-                    {
-                        populate: 'subscribers',
-                        offset: pagination.offset,
-                        limit: pagination.limit,
-                        sort: 'createdAt'
-                    })
+                .paginate(query, {
+                    populate: 'subscribers',
+                    offset: pagination.offset,
+                    limit: pagination.limit,
+                    sort: 'createdAt'
+                })
                 .then(function (result) {
                     if (!req.query.hasOwnProperty('html')) {
                         return res.json(result);
@@ -60,27 +58,26 @@ exports.getLoadList = function (req, res) {
 
                     res.json({
                         total: result.total,
+                        count: result.docs.length,
                         limit: result.limit,
                         offset: result.offset,
                         html: result.docs.map(function (user) {
                             return bem.applyHtml(bem.applyTree({
                                 block: 'user-info',
-                                mix: { block: 'form-search', elem: 'result-item' },
+                                mix: { block: 'infinite-list', elem: 'item' },
                                 username: user.username,
                                 fullname: user.firstName + ' ' + user.lastName,
                                 src: user.avatar,
                                 url: '/u/' + user.username,
                                 subscribe: 'https://bem.info/'
                             }));
-                        }).join()
+                        }).join('')
                     });
                 })
                 .catch(function (err) {
                     handleError(req, res, err);
-                })
+                });
         });
-
-
 };
 
 exports.getLoadOne = function (req, res) {
@@ -120,7 +117,7 @@ exports.putUpdate = function (req, res) {
             User
                 .findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
                 .then(function (user) {
-                    req.login(user, function(err) {
+                    req.login(user, function (err) {
                         if (err) {
                             return handleError(req, res, err);
                         }

@@ -3,7 +3,7 @@ exports.getIndexPage = function (req, res) {
         view: 'index',
         title: 'Ваша лента',
         user: req.user
-    })
+    });
 };
 
 exports.getCreateMessage = function (req, res) {
@@ -18,18 +18,18 @@ exports.getSettingsPage = function (req, res) {
         view: 'settings',
         title: 'Профиль пользователя',
         user: req.user
-    })
+    });
 };
 
-exports.getSearchPage = function(req,res){
-    req.app.get('bem').render(req,res,{
-        view:  'search',
+exports.getSearchPage = function (req, res) {
+    req.app.get('bem').render(req, res, {
+        view: 'search',
         title: 'Поиск в Zoopark',
         user: req.user
-    })
+    });
 };
 
-exports.getLoginPage = function (req , res) {
+exports.getLoginPage = function (req, res) {
     var app = req.app;
     var conf = app.get('conf');
     var render = app.get('bem').render;
@@ -62,5 +62,5 @@ exports.getSelectUsernamePage = function (req, res) {
 };
 
 exports.get404 = function (req, res) {
-    req.app.get('bem').render(req, res.status(404), {view: '404'});
+    req.app.get('bem').render(req, res.status(404), { view: '404' });
 };

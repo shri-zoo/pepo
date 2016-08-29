@@ -35,15 +35,12 @@ exports.getLoadList = function (req, res) {
         .checkPaginationParams(req, res, app.get('conf').db.limits.messages)
         .then(function (pagination) {
             Message
-                .paginate(
-                    { user: userId },
-                    {
-                        populate: 'replies user',
-                        offset: pagination.offset,
-                        limit: pagination.limit,
-                        sort: '-createdAt'
-                    }
-                )
+                .paginate({ user: userId }, {
+                    populate: 'replies user',
+                    offset: pagination.offset,
+                    limit: pagination.limit,
+                    sort: '-createdAt'
+                })
                 .then(function (result) {
                     if (!req.query.hasOwnProperty('html')) {
                         return res.json(result);
@@ -51,25 +48,26 @@ exports.getLoadList = function (req, res) {
 
                     res.json({
                         total: result.total,
+                        count: result.docs.length,
                         limit: result.limit,
                         offset: result.offset,
                         html: result.docs.map(function (message) {
                             return bem.applyHtml(bem.applyTree({
                                 block: 'message',
+                                // TODO Подумать как можно сделать красивее
+                                mix: { block: 'infinite-list', elem: 'item' },
                                 content: {
                                     login: message.user.username,
                                     text: message.text
                                 }
                             }));
-                        }).join()
+                        }).join('')
                     });
                 })
                 .catch(function (err) {
                     handleError(req, res, err);
-                })
+                });
         });
-
-
 };
 
 exports.getLoadOne = function (req, res) {
