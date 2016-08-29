@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
             block: 'conf'
@@ -10,9 +11,6 @@
         {
             block: 'jquery'
         },
-
-
-
         {
             block: 'form',
             elems: ['label', 'row']
@@ -33,7 +31,7 @@
                 theme: 'islands',
                 size: 'xl',
                 width: 'available'
-            },
+            }
         },
         {
             block: 'textarea',
@@ -41,7 +39,7 @@
                 theme: 'islands',
                 size: 'xl',
                 width: 'available'
-            },
+            }
         },
         {
             block: 'button',
@@ -53,4 +51,4 @@
             }
         }
     ]
-})
+});

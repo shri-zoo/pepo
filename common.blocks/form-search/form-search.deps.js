@@ -22,6 +22,7 @@
         ]
     },
     {
+        mustDeps: 'stylus-vars',
         shouldDeps: [
             {
                 block: 'form'

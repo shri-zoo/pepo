@@ -1,3 +1,7 @@
 ({
-    shouldDeps: ['user-info','button']
-})
+    mustDeps: 'stylus-vars',
+    shouldDeps: [
+        'user-info',
+        'button'
+    ]
+});

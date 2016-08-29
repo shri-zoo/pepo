@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
             block: 'button',
@@ -20,4 +21,4 @@
             }
         }
     ]
-})
+});

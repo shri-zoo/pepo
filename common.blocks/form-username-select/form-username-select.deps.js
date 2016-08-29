@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
             block: 'conf'
@@ -27,7 +28,7 @@
                 size: 'xl',
                 width: 'available',
                 'has-clear': true
-            },
+            }
         },
         {
             block: 'spin',
@@ -47,4 +48,4 @@
             }
         }
     ]
-})
+});
