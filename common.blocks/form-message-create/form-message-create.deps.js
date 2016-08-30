@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         'form',
         'form-message-create-toolbar',
@@ -8,8 +9,8 @@
                 theme: 'islands',
                 size: 'xl',
                 width: 'available',
-                focused : true
-            },
+                focused: true
+            }
         },
         {
             block: 'button',
@@ -22,4 +23,4 @@
             ]
         }
     ]
-})
+});

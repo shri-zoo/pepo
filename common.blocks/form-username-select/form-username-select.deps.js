@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
             block: 'conf'
@@ -27,15 +28,10 @@
                 size: 'xl',
                 width: 'available',
                 'has-clear': true
-            },
+            }
         },
         {
-            block: 'spin',
-            mods: {
-                theme: 'islands',
-                size: 'm',
-                visible: true
-            }
+            block: 'spinner'
         },
         {
             block: 'button',
@@ -47,4 +43,4 @@
             }
         }
     ]
-})
+});

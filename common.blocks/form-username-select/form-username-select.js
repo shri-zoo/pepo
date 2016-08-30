@@ -13,13 +13,13 @@ modules
                                 var debouncedOnChange = debounce(this._onInput, 250);
 
                                 this.usernameInput = this.elem('username-input');
-                                this.spinnerWrapper = this.elem('spinner-wrapper');
                                 this.errors = this.elem('errors');
+                                this.spinner = this.findBlockInside('spinner');
                                 this.submitButton = this.findBlockInside('button');
 
                                 this.bindTo(this.usernameInput, 'input', debouncedOnChange);
                                 this.bindTo(this.findBlockInside('input').elem('clear'), 'click', this._onInputClear);
-                                this.bindTo('submit', this._onSubmit)
+                                this.bindTo('submit', this._onSubmit);
                             }
                         }
                     },
@@ -41,35 +41,24 @@ modules
                         e.preventDefault();
 
                         $.ajax({
-                                method: 'PUT',
-                                url: conf.API + '/users/' + this.params.userId,
-                                contentType: 'application/json',
-                                dataType: 'json',
-                                data: JSON.stringify({ username: e.target.elements['username'].value })
-                            })
-                            .done(function (data, status, jqXHR) {
-                                if (jqXHR.status === 200) {
-                                    window.location.replace('/');
-                                }
-                            })
-                            .fail(function (err) {
-                                console.error(err);
-                            })
+                            method: 'PUT',
+                            url: conf.API + '/users/' + this.params.userId,
+                            contentType: 'application/json',
+                            dataType: 'json',
+                            data: JSON.stringify({ username: e.target.elements.username.value })
+                        })
+                        .done(function (data, status, jqXHR) {
+                            if (jqXHR.status === 200) {
+                                window.location.replace('/');
+                            }
+                        })
+                        .fail(function (err) {
+                            console.error(err); // eslint-disable-line no-console
+                        });
                     },
                     _onRequestStateChange: function (value) {
-                        var _this = this;
-
                         this._requested = value;
-
-                        if (value) {
-                            this.setMod(this.spinnerWrapper, 'visible', value);
-                        } else {
-                            // delay for spin animation
-                            setTimeout(function () {
-                                _this.setMod(_this.spinnerWrapper, 'visible', value);
-                            }, 300);
-                        }
-
+                        value ? this.spinner.show() : this.spinner.hide();
                     },
                     _setValidity: function (isValid, errors) {
                         this.setMod(this.usernameInput, 'free', isValid);
@@ -108,7 +97,7 @@ modules
 
                         this._onRequestStateChange(true);
 
-                        $.ajax({ url: conf.API + '/users/check-uniqueness', data: { username: username } })
+                        $.ajax({ url: conf.API + '/users/check-uniqueness', data: { username: username }})
                             .done(function (data) {
                                 var isAvailable = data.available;
 
@@ -119,13 +108,13 @@ modules
                                 );
                             })
                             .fail(function (err) {
-                                console.error(err);
+                                console.error(err); // eslint-disable-line no-console
                                 _this._onRequestStateChange(false);
                             });
                     }
                 },
                 {
-                    live: function() {
+                    live: function () {
                         this.liveInitOnBlockInsideEvent({ modName: 'focused', modVal: true }, 'input');
                     }
                 }

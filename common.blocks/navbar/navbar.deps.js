@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
             block: 'link'
@@ -41,4 +42,4 @@
             block: 'dropdown-menu'
         }
     ]
-})
+});

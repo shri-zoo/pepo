@@ -1,20 +1,7 @@
-@import '../variables.styl';
-
 .form-search {
   half-common-padding = common-padding / 2;
 
-  &__spinner-wrapper {
-    margin-top : common-padding
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height .15s ease-out;
-
-    &_visible {
-      max-height: 28px;
-    }
-  }
-
-  &__result-item + &__result-item {
-    margin-top: half-common-padding;
+  &__infinite-list {
+    margin-top: common-padding;
   }
 }

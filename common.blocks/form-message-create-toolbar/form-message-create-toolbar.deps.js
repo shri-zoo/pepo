@@ -1,4 +1,5 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
             block: 'icon',
@@ -7,4 +8,4 @@
             }
         }
     ]
-})
+});
