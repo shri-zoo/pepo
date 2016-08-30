@@ -11,6 +11,9 @@
         {
             block: 'i-bem',
             elem: 'dom'
+        },
+        {
+            block: 'vow'
         }
     ]
 });

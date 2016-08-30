@@ -73,8 +73,9 @@ modules.define('infinite-list',
                         if (jqXHR.status === 200) {
                             _this._itemsLength += data.count;
                             _this._total = data.total;
-                            _this._onRequestStateChange(false);
-                            BEMDOM.append(_this.content, data.html);
+                            _this._onRequestStateChange(false).then(function () {
+                                BEMDOM.append(_this.content, data.html);
+                            });
                         }
                     })
                     .fail(function (err) {
@@ -84,7 +85,7 @@ modules.define('infinite-list',
                 },
                 _onRequestStateChange: function (value) {
                     this._requested = value;
-                    value ? this.spinner.show() : this.spinner.hide();
+                    return value ? this.spinner.show() : this.spinner.hide();
                 },
                 _isAlreadyRequested: function () {
                     return this._requested;
