@@ -6,6 +6,10 @@ block('infinite-list').content()(function () {
             elem: 'content'
         },
         {
+            elem: 'empty',
+            content: this.ctx.onEmpty || 'Нет ни одной записи'
+        },
+        {
             elem: 'spinner-wrapper',
             content: {
                 block: 'spinner',

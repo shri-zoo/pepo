@@ -28,7 +28,7 @@ modules
                         // delay for spin animation
                         setTimeout(function () {
                             _this.setMod('visible', false);
-                            setTimeout(resolve, _this.animationEndDuration);
+                            setTimeout(resolve, _this.animationEndDuration + 100);
                         }, delay);
                     });
                 }
