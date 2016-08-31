@@ -15,7 +15,11 @@
             block: 'body'
         },
         {
-            block: 'sandbox'
+            block: 'link',
+            mods: {
+                theme: 'islands',
+                size: 'l'
+            }
         }
     ]
 });

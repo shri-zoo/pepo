@@ -58,7 +58,7 @@ modules
                     },
                     _onRequestStateChange: function (value) {
                         this._requested = value;
-                        value ? this.spinner.show() : this.spinner.hide();
+                        return value ? this.spinner.show() : this.spinner.hide();
                     },
                     _setValidity: function (isValid, errors) {
                         this.setMod(this.usernameInput, 'free', isValid);
@@ -101,11 +101,12 @@ modules
                             .done(function (data) {
                                 var isAvailable = data.available;
 
-                                _this._onRequestStateChange(false);
-                                _this._setValidity(
-                                    isAvailable,
-                                    !isAvailable ? { username: 'Данное имя пользователя занято' } : null
-                                );
+                                _this._onRequestStateChange(false).then(function () {
+                                    _this._setValidity(
+                                        isAvailable,
+                                        !isAvailable ? { username: 'Данное имя пользователя занято' } : null
+                                    );
+                                });
                             })
                             .fail(function (err) {
                                 console.error(err); // eslint-disable-line no-console

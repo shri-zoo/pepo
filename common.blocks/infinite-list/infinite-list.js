@@ -7,6 +7,7 @@ modules.define('infinite-list',
                     js: {
                         inited: function () {
                             this.content = this.elem('content');
+                            this.empty = this.elem('empty');
                             this.spinner = this.findBlockInside('spinner');
 
                             this.bindToWin('resize', throttle(this._onResize, 300));
@@ -73,8 +74,15 @@ modules.define('infinite-list',
                         if (jqXHR.status === 200) {
                             _this._itemsLength += data.count;
                             _this._total = data.total;
-                            _this._onRequestStateChange(false);
-                            BEMDOM.append(_this.content, data.html);
+                            _this._onRequestStateChange(false).then(function () {
+                                console.log(_this._itemsLength);
+                                if (_this._itemsLength) {
+                                    BEMDOM.append(_this.content, data.html);
+                                } else {
+                                    console.log(_this.empty);
+                                    _this.setMod(_this.empty, 'visible', true);
+                                }
+                            });
                         }
                     })
                     .fail(function (err) {
@@ -84,7 +92,7 @@ modules.define('infinite-list',
                 },
                 _onRequestStateChange: function (value) {
                     this._requested = value;
-                    value ? this.spinner.show() : this.spinner.hide();
+                    return value ? this.spinner.show() : this.spinner.hide();
                 },
                 _isAlreadyRequested: function () {
                     return this._requested;

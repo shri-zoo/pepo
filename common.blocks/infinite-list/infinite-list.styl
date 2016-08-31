@@ -2,6 +2,21 @@
     font-size: 1rem;
     text-align: center;
 
+    &__empty {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .15s ease-out;
+
+        &_visible {
+            color: theme-muted;
+            font-family: layout-font-family;
+            font-size: 15px;
+            line-height: 20px;
+            max-height: 20px; // :( Hardcoded...
+            text-align: center;
+        }
+    }
+
     &__spinner.spinner_visible {
         margin-top: common-padding;
     }

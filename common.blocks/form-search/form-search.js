@@ -10,7 +10,7 @@ modules
                     onSetMod: {
                         js: {
                             inited: function () {
-                                var debouncedOnChange = debounce(this._onInput, 250);
+                                var debouncedOnChange = debounce(this._onInput, 500);
 
                                 this.infiniteList = this.findBlockInside('infinite-list');
 
