@@ -4,7 +4,7 @@ block('page').mod('view', 'search')(
             block: 'layout',
             content: [
                 {
-                    block:'header'
+                    block: 'header'
                 },
                 {
                     block: 'body',

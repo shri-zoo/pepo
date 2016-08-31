@@ -16,11 +16,12 @@ module.exports = function (app) {
         .use('/api/users', isAuth, userRoutes(app))
         .use('/api/messages', isAuth, messageRoutes(app))
         .use('/api/uploader', isAuth, uploaderRoutes(app))
-        .use('/u', isAuth, profileRoutes(app))
         .get('/', isAuth, mainController.getIndexPage)
         .get('/search', isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
         .get('/create-message', isAuth, mainController.getCreateMessage)
+        .use('/u', isAuth, profileRoutes(app))
+        .use('/m/:id', isAuth, mainController.getMessage)
         .get(conf.auth.loginPageRedirect, isAuth, mainController.getLoginPage)
         .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsernamePage)
         .use(mainController.get404);

@@ -2,7 +2,7 @@
     shouldDeps: [
         {
             mods: {
-                view: ['404', 'login', 'username-select', 'message-create', 'search', 'settings', 'profile']
+                view: ['404', 'login', 'username-select', 'message-create', 'message', 'search', 'settings', 'profile']
             }
         },
         {
@@ -15,11 +15,7 @@
             block: 'body'
         },
         {
-            block: 'link',
-            mods: {
-                theme: 'islands',
-                size: 'l'
-            }
+            block: 'sandbox'
         }
     ]
 });
