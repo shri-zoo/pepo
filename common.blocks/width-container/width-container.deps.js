@@ -1,0 +1,3 @@
+({
+    mustDeps: 'stylus-vars'
+});
