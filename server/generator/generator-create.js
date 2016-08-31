@@ -12,15 +12,18 @@ program
 
 if (!_.isNumber(program.users) || !_.isNumber(program.messages)) {
     console.error('-u, --users AND -m, --messages params is mandatory, and it must be integer values');
-    process.exit(1);
+    process.exit(1); // eslint-disable-line no-process-exit
 }
 
 
 db.connect(function (err, mongoose) {
     if (err) {
         console.error('error on db connection', err.stack);
-        process.exit(1);
+        process.exit(1); // eslint-disable-line no-process-exit
     }
+
+    var startDate = new Date();
+    console.log('Generation started: ' + startDate.toISOString());
 
     var User = mongoose.model('User');
     var Message = mongoose.model('Message');
@@ -29,7 +32,7 @@ db.connect(function (err, mongoose) {
     var messages = [];
 
     for (var i = 0; i < program.users; i++) {
-        users.push(generateUserData(users))
+        users.push(generateUserData(users));
     }
     process.on('SIGINT', db.disconnect);
 
@@ -41,21 +44,21 @@ db.connect(function (err, mongoose) {
         .then(function (insertedUsers) {
             var subscribesCount = Math.floor(Math.sqrt(program.users));
 
-            insertedUsers.forEach(function(user) {
+            insertedUsers.forEach(function (user) {
                 var randomUser;
 
                 for (var j = 0; j < subscribesCount; j++) {
                     randomUser = getRandomItem(insertedUsers);
 
                     if (user !== randomUser) {
-                        randomUser.subscribers.push(user._id);
+                        randomUser.subscribedTo.push(user._id);
                     }
                 }
             });
 
             return transactionUpdate(insertedUsers, function (user) {
                 return User.findByIdAndUpdate(user._id, _.omit(user, ['_id']), { new: true });
-            })
+            });
         })
         .then(function (updatedUsers) {
             users = updatedUsers;
@@ -75,7 +78,7 @@ db.connect(function (err, mongoose) {
         .then(function (insertedMessages) {
             var repliesCount = Math.ceil(Math.sqrt(program.messages) / 3);
 
-            insertedMessages.forEach(function(message) {
+            insertedMessages.forEach(function (message) {
                 var randomMessage;
                 var otherUsersMessages = insertedMessages.filter(function (m) {
                     return m.user !== message.user;
@@ -91,16 +94,20 @@ db.connect(function (err, mongoose) {
 
             return transactionUpdate(insertedMessages, function (message) {
                 return Message.findByIdAndUpdate(message._id, _.omit(message, ['_id']), { new: true });
-            })
+            });
         })
         .then(function () {
+            var endDate = new Date();
+
+            console.log('Generation completed: ' + endDate.toISOString());
+            console.log('Generation time: ' + (endDate.getTime() - startDate.getTime()) / 1000 + ' s');
             console.log('All work successfully done. Bye!');
             db.disconnect();
-            process.exit(0);
+            process.exit(0); // eslint-disable-line no-process-exit
         })
         .catch(function (usersInsertErr) {
             console.error('Error on creating users: ', usersInsertErr.stack);
-            process.exit(1);
+            process.exit(1); // eslint-disable-line no-process-exit
         });
 });
 
@@ -108,7 +115,7 @@ function getUniqueUsername(allUsers) {
     var username;
 
     do {
-        username = (faker.internet.userName() + Math.random().toString(36).substr(0, 8)).replace(/[^\da-zA-Z]/g,'');
+        username = (faker.internet.userName() + Math.random().toString(36).substr(0, 8)).replace(/[^\da-zA-Z]/g, '');
     } while (_.find(allUsers, { username: username }));
 
     return username;
@@ -127,7 +134,7 @@ function transactionUpdate(dataArray, promiseFn) {
             return promiseFn(item).then(function (data) {
                 results.push(data);
             });
-        })
+        });
     });
 
     return transaction.then(function () {
@@ -142,11 +149,11 @@ function generateUserData(allUsers) {
         lastName: faker.name.lastName(),
         avatar: faker.image.avatar(),
         provider: ['facebook', 'vkontakte', 'yandex', 'google'][Math.floor(Math.random() * 4)],
-        subscribers: [],
+        subscribedTo: [],
         facebook: {
             id: faker.random.number()
         }
-    }
+    };
 }
 
 function generateMessageData(userId) {
@@ -155,5 +162,5 @@ function generateMessageData(userId) {
         parentId: null,
         text: faker.lorem.sentence(),
         replies: []
-    }
+    };
 }
