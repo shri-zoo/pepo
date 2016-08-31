@@ -4,7 +4,7 @@
         {
             block: 'icon',
             mods: {
-                type: ['photo', 'link', 'location']
+                type: ['photo', 'location']
             }
         }
     ]

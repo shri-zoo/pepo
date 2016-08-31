@@ -1,5 +1,6 @@
 block('form-message-create')(
     js()(true),
+    tag()('form'),
     elem('errors').tag()('ul'),
-    elem('header').tag()('h2')
+    elem('title').tag()('h2')
 );

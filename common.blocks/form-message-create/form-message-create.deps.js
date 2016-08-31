@@ -1,7 +1,18 @@
 ({
-    mustDeps: 'stylus-vars',
+    mustDeps: [
+        'stylus-vars',
+        {
+            block: 'button',
+            mods: [
+                {
+                    theme: 'islands',
+                    size: ['xl', 'm'],
+                    type: ['submit', 'link']
+                }
+            ]
+        }
+    ],
     shouldDeps: [
-        'form',
         'form-message-create-toolbar',
         {
             block: 'textarea',
@@ -11,16 +22,6 @@
                 width: 'available',
                 focused: true
             }
-        },
-        {
-            block: 'button',
-            mods: [
-                {
-                    theme: 'islands',
-                    size: 'xl',
-                    type: ['submit', 'link']
-                }
-            ]
         }
     ]
 });
