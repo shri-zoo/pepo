@@ -18,3 +18,6 @@ libs/
 *bundles*/*/*.bemtree-tmpl.bemdecl.js
 !*bundles*/.bem/*
 common.blocks/page/_view/.page_view_404.bemtree.js.swp
+uploads/avatars
+uploads/images
+!.gitkeep

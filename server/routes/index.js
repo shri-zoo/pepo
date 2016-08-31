@@ -3,6 +3,7 @@ var authRoutes = require('./auth');
 var userRoutes = require('./users');
 var messageRoutes = require('./messages');
 var profileRoutes = require('./profile');
+var uploaderRoutes = require('./uploader');
 var mainController = require('../controllers/main.controller');
 
 module.exports = function (app) {
@@ -14,9 +15,10 @@ module.exports = function (app) {
         .use('/api/auth', authRoutes(app))
         .use('/api/users', isAuth, userRoutes(app))
         .use('/api/messages', isAuth, messageRoutes(app))
+        .use('/api/uploader', isAuth, uploaderRoutes(app))
         .use('/u', isAuth, profileRoutes(app))
         .get('/', isAuth, mainController.getIndexPage)
-        .get('/search',isAuth, mainController.getSearchPage)
+        .get('/search', isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
         .get('/create-message', isAuth, mainController.getCreateMessage)
         .get(conf.auth.loginPageRedirect, isAuth, mainController.getLoginPage)
