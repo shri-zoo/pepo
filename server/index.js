@@ -15,10 +15,12 @@ var conf = require('./services/conf')(path.join(__dirname, 'configs'), app.get('
 var logger = require('./services/logger');
 var db;
 var PORT = process.env.PORT || conf.server.defaultPort;
+var UPLOADS_ROOT = path.resolve(__dirname, '..', 'uploads');
 var isSocket = isNaN(PORT);
 
 app
     .set('APP_ROOT', __dirname)
+    .set('UPLOADS_ROOT', UPLOADS_ROOT)
     .set('conf', conf)
     .set('logger', logger)
     .set('isDev', app.get('env') === 'development')
@@ -32,6 +34,7 @@ app
     .enable('trust proxy')
     .use(favicon(path.join(conf.server.staticFolder, 'favicon.ico')))
     .use(serveStatic(conf.server.staticFolder))
+    .use(serveStatic(path.resolve(UPLOADS_ROOT, '..')))
     .use(morgan('combined'))
     .use(cookieParser())
     .use(bodyParser.json())

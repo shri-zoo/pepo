@@ -12,19 +12,29 @@ block('userpic')(
         return attrs;
     }),
     content()(function () {
-        var size = this.ctx.size || 32;
-        var sizePx = size + 'px';
-
         return {
-            block: 'image',
-            mix: {
-                block: 'userpic',
-                elem: 'image'
-            },
-            width: sizePx,
-            height: sizePx,
-            url: this.ctx.src,
-            alt: this.ctx.username
-        }
-    })
+            block: this.block,
+            elem: 'image-wrapper',
+            size: this.ctx.size,
+            content: {
+                block: 'image',
+                mix: {
+                    block: 'userpic',
+                    elem: 'image'
+                },
+                url: this.ctx.src,
+                alt: this.ctx.username
+            }
+        };
+    }),
+    elem('image-wrapper')(
+        tag()('span'),
+        attrs()(function () {
+            var attrs = applyNext() || {};
+            var size = this.ctx.size || 32;
+
+            attrs.style = 'width: ' + size + 'px; height: ' + size + 'px;';
+            return attrs;
+        })
+    )
 );

@@ -8,7 +8,8 @@ block('page').mod('view', 'settings').content()(function () {
             {
                 block: 'body',
                 content: {
-                    block: 'form-settings'
+                    block: 'form-settings',
+                    js: { user: this.data.user }
                 }
             }
         ]

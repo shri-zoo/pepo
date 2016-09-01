@@ -3,6 +3,32 @@ module.exports = {
         defaultPort: 3000,
         staticFolder: 'static'
     },
+    uploads: {
+        avatar: {
+            path: 'avatars',
+            mimetypes: [
+                'image/png',
+                'image/jpeg',
+                'image/jpg',
+                'image/gif',
+                'image/webp'
+            ],
+            size: 10485760,
+            resizeTo: [128]
+        },
+        image: {
+            path: 'images',
+            mimetypes: [
+                'image/png',
+                'image/jpeg',
+                'image/jpg',
+                'image/gif',
+                'image/webp'
+            ],
+            size: 10485760,
+            resizeTo: [1024]
+        }
+    },
     templates: {
         cacheTTL: 30000
     },

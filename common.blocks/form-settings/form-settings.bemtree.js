@@ -8,14 +8,12 @@ block('form-settings')(
                 block: block,
                 elem: 'content'
             }
-        }
+        };
     }),
     elem('content').content()(function () {
         var block = this.block;
         var blockForm = 'form';
         var userData = this.data.user;
-
-        console.log(userData);
 
         return [
             {
@@ -36,14 +34,29 @@ block('form-settings')(
                         src: userData.avatar
                     },
                     {
-                        block: 'attach',
-                        mods: {
-                            theme: 'islands',
-                            size: 'xl'
+                        block: block,
+                        elem: 'avatar-input',
+                        value: userData.avatar
+                    },
+                    {
+                        block: 'uploader',
+                        mix: {
+                            block: block,
+                            elem: 'uploader'
                         },
-                        id: 'avatar',
-                        name: 'avatar',
-                        button : 'Выберите аватар'
+                        js: { type: 'avatar' },
+                        template: {
+                            block: 'button',
+                            mods: {
+                                theme: 'islands',
+                                size: 'xl'
+                            },
+                            mix: {
+                                block: block,
+                                elem: 'uploader-button'
+                            },
+                            text: 'Обновить аватар'
+                        }
                     }
                 ]
             },
@@ -64,6 +77,10 @@ block('form-settings')(
                             theme: 'islands',
                             size: 'xl',
                             width: 'available'
+                        },
+                        mix: {
+                            block: block,
+                            elem: 'first-name'
                         },
                         id: 'firstName',
                         name: 'firstName',
@@ -88,6 +105,10 @@ block('form-settings')(
                             theme: 'islands',
                             size: 'xl',
                             width: 'available'
+                        },
+                        mix: {
+                            block: block,
+                            elem: 'last-name'
                         },
                         id: 'lastName',
                         name: 'lastName',
@@ -115,6 +136,10 @@ block('form-settings')(
                         attrs: {
                             rows: 4
                         },
+                        mix: {
+                            block: block,
+                            elem: 'description'
+                        },
                         id: 'description',
                         name: 'description',
                         val: userData.description
@@ -129,6 +154,13 @@ block('form-settings')(
                     elem: 'row-submit-button'
                 },
                 content: [
+                    {
+                        block: 'spinner',
+                        mix: {
+                            block: block,
+                            elem: 'spinner'
+                        }
+                    },
                     {
                         block: 'button',
                         mix: {

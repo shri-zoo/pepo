@@ -2,16 +2,6 @@
     mustDeps: 'stylus-vars',
     shouldDeps: [
         {
-            block: 'conf'
-        },
-        {
-            block: 'i-bem',
-            elems: ['dom', 'internal']
-        },
-        {
-            block: 'jquery'
-        },
-        {
             block: 'form',
             elems: ['label', 'row']
         },
@@ -19,7 +9,10 @@
             block: 'userpic'
         },
         {
-            block: 'attach',
+            block: 'uploader'
+        },
+        {
+            block: 'button',
             mods: {
                 theme: 'islands',
                 size: 'xl'
@@ -40,6 +33,9 @@
                 size: 'xl',
                 width: 'available'
             }
+        },
+        {
+            block: 'spinner'
         },
         {
             block: 'button',
