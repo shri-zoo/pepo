@@ -24,18 +24,24 @@ exports.getLoadList = function (req, res) {
     var mongoose = app.get('db');
     var Message = mongoose.model('Message');
     var userId = req.query.userId;
+    var query = {};
 
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-        return res
-            .status(400)
-            .json({ error: 'You MUST pass "userId" param in query params' });
+    if (userId) {
+        if (mongoose.Types.ObjectId.isValid(userId)) {
+            query.user = userId;
+        } else {
+            return res.status(400).json({ error: '"userId" param must be valid ObjectId' });
+        }
+    } else {
+        query.parentId = null;
+        query.user = { $in: req.user.subscribedTo };
     }
 
     helpers
         .checkPaginationParams(req, res, app.get('conf').db.limits.messages)
         .then(function (pagination) {
             Message
-                .paginate({ user: userId }, {
+                .paginate(query, {
                     populate: 'replies user',
                     offset: pagination.offset,
                     limit: pagination.limit,
@@ -54,7 +60,6 @@ exports.getLoadList = function (req, res) {
                         html: result.docs.map(function (message) {
                             return bem.applyHtml(bem.applyTree({
                                 block: 'message',
-                                // TODO Подумать как можно сделать красивее
                                 mix: { block: 'infinite-list', elem: 'item' },
                                 content: {
                                     login: message.user.username,
