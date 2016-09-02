@@ -2,13 +2,14 @@ var Router = require('express').Router;
 var authRoutes = require('./auth');
 var userRoutes = require('./users');
 var messageRoutes = require('./messages');
-var profileRoutes = require('./profile');
 var uploaderRoutes = require('./uploader');
 var mainController = require('../controllers/main.controller');
 
 module.exports = function (app) {
     var rootRoutes = new Router();
-    var isAuth = app.get('middlewares').isAuth;
+    var middlewares = app.get('middlewares');
+    var isAuth = middlewares.isAuth;
+    var isValidId = middlewares.isValidId;
     var conf = app.get('conf');
 
     rootRoutes
@@ -19,9 +20,10 @@ module.exports = function (app) {
         .get('/', isAuth, mainController.getIndexPage)
         .get('/search', isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
-        .get('/create-message', isAuth, mainController.getCreateMessage)
-        .use('/u', isAuth, profileRoutes(app))
-        .use('/m/:id', isAuth, mainController.getMessage)
+        .get('/write', isAuth, mainController.getWrite)
+        .use('/u/:username', isAuth, mainController.getUserProfile)
+        .get('/m/:id/reply', isAuth, isValidId, mainController.getReply)
+        .use('/m/:id', isAuth, isValidId, mainController.getMessage)
         .get(conf.auth.loginPageRedirect, isAuth, mainController.getLoginPage)
         .get(conf.auth.selectUsernameRedirect, isAuth, mainController.getSelectUsernamePage)
         .use(mainController.get404);

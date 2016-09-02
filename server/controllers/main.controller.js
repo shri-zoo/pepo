@@ -6,32 +6,86 @@ exports.getIndexPage = function (req, res) {
     });
 };
 
-exports.getCreateMessage = function (req, res) {
+exports.getWrite = function (req, res) {
     var app = req.app;
     var render = app.get('bem').render;
 
-    render(req, res, { view: 'message-create', user: req.user });
+    render(req, res, { view: 'write', user: req.user });
 };
 
-exports.getMessage = function (req, res) {
+exports.getReply = function (req, res, next) {
     var app = req.app;
-    var helpers = app.get('helpers');
-    var handleError = helpers.handleError;
+    var handleError = app.get('helpers').handleError;
     var render = app.get('bem').render;
-    // var id = req.params.id;
     var Message = app.get('db').model('Message');
 
     return Message.findOne({ _id: req.params.id })
         .populate('replies user')
         .then(function (message) {
             if (message === null) {
-                return res.sendStatus(404);
+                return next();
+            }
+
+            render(req, res, {
+                view: 'reply',
+                user: req.user,
+                message: message
+            });
+        })
+        .catch(function (err) {
+            handleError(req, res, err);
+        });
+};
+
+exports.getMessage = function (req, res, next) {
+    var app = req.app;
+    var helpers = app.get('helpers');
+    var handleError = helpers.handleError;
+    var render = app.get('bem').render;
+    var Message = app.get('db').model('Message');
+
+    return Message.findOne({ _id: req.params.id })
+        .populate('replies user')
+        .then(function (message) {
+            if (message === null) {
+                return next();
             }
 
             render(req, res, {
                 view: 'message',
                 user: req.user,
                 message: message
+            });
+        })
+        .catch(function (err) {
+            handleError(req, res, err);
+        });
+};
+
+exports.getUserProfile = function (req, res, next) {
+    var app = req.app;
+    var helpers = app.get('helpers');
+    var handleError = helpers.handleError;
+    var User = app.get('db').model('User');
+    var sessionUser = req.user;
+
+    User
+        .findOne({ username: req.params.username })
+        .populate('subscribers')
+        .then(function (user) {
+            if (!user) {
+                next();
+                return;
+            }
+
+            var isOwnProfile = sessionUser._id.toString() === user._id.toString();
+
+            req.app.get('bem').render(req, res, {
+                view: 'profile',
+                title: isOwnProfile ? 'Ваш профиль' : 'Профиль пользователя ' + user.username,
+                user: req.user,
+                isOwnProfile: isOwnProfile,
+                profileUser: user
             });
         })
         .catch(function (err) {

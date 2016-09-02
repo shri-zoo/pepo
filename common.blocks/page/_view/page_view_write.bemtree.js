@@ -1,4 +1,4 @@
-block('page').mod('view', 'message-create')(
+block('page').mod('view', 'write')(
     content()(function () {
         return {
             block: 'layout',
@@ -8,7 +8,6 @@ block('page').mod('view', 'message-create')(
                 },
                 {
                     block: 'body',
-                    mix: { block: 'panel', mods: { shadowed: true }},
                     content: {
                         block: 'form-message-create',
                         js: { userId: this.data.userId }
