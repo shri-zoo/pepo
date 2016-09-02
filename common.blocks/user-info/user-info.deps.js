@@ -1,18 +1,7 @@
-([
-    {
-        tech: 'js',
-        shouldDeps: [
-            {
-                block:'button',
-                mods : { theme : 'islands', size : 'm', type : 'link' },
-                tech:'bemhtml'
-            }
-        ]
-    },
-    {
-        shouldDeps: [
-            'userpic',
-            'username'
-        ]
-    }
-]);
+({
+    mustDeps: 'stylus-vars',
+    shouldDeps: [
+        'userpic',
+        'username'
+    ]
+});

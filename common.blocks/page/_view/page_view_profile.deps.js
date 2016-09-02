@@ -1,9 +1,11 @@
 ({
+    mustDeps: 'stylus-vars',
     shouldDeps: [
         'layout',
         'header',
         'body',
-        'profile',
+        'user-info',
+        'username',
         {
             block: 'infinite-list',
             mods: { type: 'user-messages' }

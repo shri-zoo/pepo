@@ -2,20 +2,12 @@ block('userpic')(
     tag()(function () {
         return this.ctx.url ? 'a' : 'span';
     }),
-    attrs()(function () {
-        var attrs = applyNext() || {};
-
-        if (this.ctx.url) {
-            attrs.href = this.ctx.url;
-        }
-
-        return attrs;
-    }),
     content()(function () {
+        this.size = this.ctx.size || 32;
+
         return {
             block: this.block,
             elem: 'image-wrapper',
-            size: this.ctx.size,
             content: {
                 block: 'image',
                 mix: {
@@ -27,13 +19,22 @@ block('userpic')(
             }
         };
     }),
+    attrs()(function () {
+        var attrs = applyNext() || {};
+
+        if (this.ctx.url) {
+            attrs.href = this.ctx.url;
+        }
+
+        return attrs;
+    }),
     elem('image-wrapper')(
         tag()('span'),
         attrs()(function () {
             var attrs = applyNext() || {};
-            var size = this.ctx.size || 32;
 
-            attrs.style = 'width: ' + size + 'px; height: ' + size + 'px;';
+            attrs.style = 'width: ' + this.size + 'px; height: ' + this.size + 'px;';
+
             return attrs;
         })
     )

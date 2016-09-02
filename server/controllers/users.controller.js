@@ -27,8 +27,14 @@ exports.getLoadList = function (req, res) {
     var handleError = helpers.handleError;
     var bem = helpers.bem;
     var User = app.get('db').model('User');
+    var sessionUser = req.user;
 
-    var query = {};
+    var query = {
+        username: {
+            $exists: true,
+            $ne: sessionUser.username
+        }
+    };
     var search = req.query.search;
 
     if (search) {
@@ -38,7 +44,7 @@ exports.getLoadList = function (req, res) {
             return res.json({ docs: [], limit: 0, offset: 0, total: 0 });
         }
 
-        query.username = { $regex: new RegExp(search, 'i') };
+        query.username.$regex = new RegExp(search, 'i');
     }
 
     helpers
@@ -64,12 +70,14 @@ exports.getLoadList = function (req, res) {
                         html: result.docs.map(function (user) {
                             return bem.applyHtml(bem.applyTree({
                                 block: 'user-info',
-                                mix: { block: 'infinite-list', elem: 'item' },
-                                username: user.username,
-                                fullname: user.firstName + ' ' + user.lastName,
-                                src: user.avatar,
-                                url: '/u/' + user.username,
-                                subscribe: 'https://bem.info/'
+                                mods: { subscribe: true },
+                                mix: {
+                                    block: 'infinite-list',
+                                    elem: 'item'
+                                },
+                                user: user,
+                                js: { userId: user._id },
+                                subscribed: sessionUser.subscribedTo.indexOf(user._id.toString()) !== -1
                             }));
                         }).join('')
                     });
