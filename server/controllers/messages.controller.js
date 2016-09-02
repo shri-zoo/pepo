@@ -33,6 +33,7 @@ exports.getLoadList = function (req, res) {
             return res.status(400).json({ error: '"userId" param must be valid ObjectId' });
         }
     } else {
+        console.log(req.user.subscribedTo);
         query.parentId = null;
         query.user = { $in: req.user.subscribedTo };
     }
