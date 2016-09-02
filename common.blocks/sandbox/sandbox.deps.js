@@ -1,6 +1,0 @@
-({
-    shouldDeps: [
-        'profile',
-        'infinite-list'
-    ]
-});
