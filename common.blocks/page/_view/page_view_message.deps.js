@@ -10,7 +10,7 @@
             block: 'body'
         },
         {
-            block: 'message-single'
+            block: 'message'
         }
     ]
 });

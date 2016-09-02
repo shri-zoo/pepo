@@ -1,5 +1,13 @@
 .infinite-list_type_user-messages {
+    half-common-padding = (common-padding / 2);
+
     .infinite-list__item + .infinite-list__item {
-        margin-top: common-padding;
+        margin-top: (common-padding + half-common-padding);
+
+        @media (max-width: media[tablet]) {
+            margin-top: half-common-padding;
+            padding-top: half-common-padding;
+            border-top: 1px solid layout-border-light-color ;
+        }
     }
 }

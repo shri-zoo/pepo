@@ -52,7 +52,7 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             User
                 .paginate(query, {
-                    populate: 'subscribers',
+                    populate: ['subscribers'],
                     offset: pagination.offset,
                     limit: pagination.limit,
                     sort: 'createdAt'
@@ -99,7 +99,7 @@ exports.getLoadOne = function (req, res) {
         .then(function () {
             User
                 .findOne({ _id: req.params.id })
-                .populate('subscribers')
+                .populate(['subscribers'])
                 .then(function (user) {
                     if (user === null) {
                         return res.sendStatus(404);

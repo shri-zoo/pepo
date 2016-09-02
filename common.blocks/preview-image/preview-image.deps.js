@@ -1,4 +1,0 @@
-({
-    shouldDeps: ['image','link']
-});
-

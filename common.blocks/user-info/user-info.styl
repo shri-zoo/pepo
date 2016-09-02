@@ -12,10 +12,6 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-
-        @media (max-width: media[tablet]) {
-            margin-bottom: (common-padding / 2);
-        }
     }
 
     &__userpic {
@@ -26,6 +22,7 @@
         font-family: layout-font-family;
         margin-bottom: auto;
         flex-shrink: 100;
+        text-align: left;
 
         @media (max-width: media[tablet]) {
             margin-bottom: 0;
@@ -33,13 +30,13 @@
     }
 
     &__fullname {
+        margin-right: 10px;
         font-weight: bold;
         font-size: 16px
         color: theme-text-main;
     }
 
     &__username {
-        margin-left: 10px;
-        font-size: 13px
+        font-size: 13px;
     }
 }

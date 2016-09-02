@@ -1,4 +1,4 @@
-modules.define('conf', [], function (provide) {
+modules.define('conf', function (provide) {
     var location = window.location;
 
     provide({
