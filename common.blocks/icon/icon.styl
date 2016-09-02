@@ -1,4 +1,18 @@
 .icon {
+    fill: icon-color[normal];
+
+    &:hover {
+        fill: icon-color[hover];
+    }
+
+    &:focus {
+        fill: icon-color[hover];
+    }
+
+    &:active {
+        fill: icon-color[active]
+    }
+
     & > svg {
         margin: 0;
     }

@@ -45,7 +45,8 @@ var UserSchema = new Schema({
     },
     subscribedTo: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 }, {
-    timestamps: true
+    timestamps: true,
+    toObject: { getters: true, virtuals: true }
 });
 
 UserSchema.plugin(mongoosePaginate);

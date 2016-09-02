@@ -22,6 +22,7 @@
     "express-session": "^1.13.0",
     "lodash": "^4.15.0",
     "minimist": "^1.2.0",
+    "moment": "^2.14.1",
     "mongoose": "^4.5.8",
     "mongoose-paginate": "^5.0.0",
     "morgan": "^1.7.0",

@@ -28,10 +28,16 @@ block('navbar').content()(function () {
                 },
                 switcher: {
                     block: 'link',
-                    mix: {
-                        block: block,
-                        elem: 'item'
-                    },
+                    mix: [
+                        {
+                            block: block,
+                            elem: 'item'
+                        },
+                        {
+                            block: block,
+                            elem: 'item_profile'
+                        }
+                    ],
                     content: {
                         block: 'userpic',
                         size: itemSize,

@@ -33,7 +33,6 @@ exports.getLoadList = function (req, res) {
             return res.status(400).json({ error: '"userId" param must be valid ObjectId' });
         }
     } else {
-        console.log(req.user.subscribedTo);
         query.parentId = null;
         query.user = { $in: req.user.subscribedTo };
     }
@@ -43,7 +42,7 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             Message
                 .paginate(query, {
-                    populate: 'replies user',
+                    populate: ['replies', 'user'],
                     offset: pagination.offset,
                     limit: pagination.limit,
                     sort: '-createdAt'
@@ -62,10 +61,7 @@ exports.getLoadList = function (req, res) {
                             return bem.applyHtml(bem.applyTree({
                                 block: 'message',
                                 mix: { block: 'infinite-list', elem: 'item' },
-                                content: {
-                                    login: message.user.username,
-                                    text: message.text
-                                }
+                                message: message
                             }));
                         }).join('')
                     });
@@ -87,7 +83,7 @@ exports.getLoadOne = function (req, res) {
         .then(function () {
             Message
                 .findOne({ _id: req.params.id })
-                .populate('replies user')
+                .populate(['replies', 'user'])
                 .then(function (message) {
                     if (message === null) {
                         return res.sendStatus(404);
