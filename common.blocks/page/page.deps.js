@@ -13,9 +13,6 @@
         },
         {
             block: 'body'
-        },
-        {
-            block: 'sandbox'
         }
     ]
 });
