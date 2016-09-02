@@ -47,14 +47,14 @@ modules
                             dataType: 'json',
                             data: JSON.stringify({ username: e.target.elements.username.value })
                         })
-                        .done(function (data, status, jqXHR) {
-                            if (jqXHR.status === 200) {
-                                window.location.replace('/');
-                            }
-                        })
-                        .fail(function (err) {
-                            console.error(err); // eslint-disable-line no-console
-                        });
+                            .done(function (data, status, jqXHR) {
+                                if (jqXHR.status === 200) {
+                                    window.location.replace('/');
+                                }
+                            })
+                            .fail(function (err) {
+                                console.error(err); // eslint-disable-line no-console
+                            });
                     },
                     _onRequestStateChange: function (value) {
                         this._requested = value;

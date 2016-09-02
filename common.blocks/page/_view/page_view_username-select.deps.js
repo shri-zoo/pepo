@@ -20,4 +20,4 @@
             block: 'form-username-select'
         }
     ]
-})
+});

@@ -33,19 +33,19 @@ modules
                         contentType: false,
                         processData: false
                     })
-                    .done(function (data) {
-                        _this.emit('uploading-success', data.url);
-                    })
-                    .fail(function (err) {
-                        if (err.status === 400) {
-                            return _this.emit('uploading-failed', err.responseJSON.errors);
-                        }
+                        .done(function (data) {
+                            _this.emit('uploading-success', data.url);
+                        })
+                        .fail(function (err) {
+                            if (err.status === 400) {
+                                return _this.emit('uploading-failed', err.responseJSON.errors);
+                            }
 
-                        _this.emit('uploading-failed', err.responseJSON.errors);
-                    })
-                    .always(function () {
-                        _this.fileInput.val('');
-                    });
+                            _this.emit('uploading-failed', err.responseJSON.errors);
+                        })
+                        .always(function () {
+                            _this.fileInput.val('');
+                        });
                 }
             }
         ));

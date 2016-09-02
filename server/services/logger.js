@@ -2,10 +2,10 @@ var chalk = require('chalk');
 var isObject = require('lodash').isObject;
 var format = require('util').format;
 var levels = {
-    debug: { method: 'log', color: 'yellow'},
-    info: { method: 'log', color: 'cyan'},
-    log: { method: 'log', color: 'green'},
-    error: { method: 'error', color: 'red'}
+    debug: { method: 'log', color: 'yellow' },
+    info: { method: 'log', color: 'cyan' },
+    log: { method: 'log', color: 'green' },
+    error: { method: 'error', color: 'red' }
 };
 var FORMAT_PLACEHOLDERS = /(%s|%d|%j)/g;
 
@@ -50,8 +50,6 @@ function _log(level, module, message, data) {
         messageToLog = chalk[mainColor](message);
     }
 
-
-
     var messageArray = [
         chalk[mainColor](getLogDate()),
         chalk[mainColor](level),
@@ -67,7 +65,7 @@ function _log(level, module, message, data) {
         }
     }
 
-    console[levels[level].method](messageArray.join('\t'));
+    console[levels[level].method](messageArray.join('\t')); // eslint-disable-line no-console
 }
 
 function getLogDate() {

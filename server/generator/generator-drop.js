@@ -4,8 +4,8 @@ var db = require('./common');
 
 db.connect(function (err, mongoose) {
     if (err) {
-        console.error('error on db connection', err.stack);
-        process.exit(1);
+        console.error('error on db connection', err.stack); // eslint-disable-line no-console
+        process.exit(1); // eslint-disable-line no-process-exit
     }
 
     Promise
@@ -17,7 +17,7 @@ db.connect(function (err, mongoose) {
                     }
 
                     reject(messagesError);
-                })
+                });
             }),
             new Promise(function (resolve, reject) {
                 mongoose.connection.collections.users.drop(function (usersError) {
@@ -26,18 +26,18 @@ db.connect(function (err, mongoose) {
                     }
 
                     reject(usersError);
-                })
+                });
             })
         ])
         .then(function () {
-            console.log('Collections successfully dropped');
+            console.log('Collections successfully dropped'); // eslint-disable-line no-console
             db.disconnect();
-            process.exit(0);
+            process.exit(0); // eslint-disable-line no-process-exit
         })
         .catch(function (dropError) {
-            console.error(dropError.stack);
+            console.error(dropError.stack); // eslint-disable-line no-console
             db.disconnect();
-            process.exit(1);
+            process.exit(1); // eslint-disable-line no-process-exit
         });
 
     process.on('SIGINT', db.disconnect);

@@ -4,6 +4,6 @@ block('layout')(
             elem: 'inner',
             mix: { block: 'width-container' },
             content: this.ctx.content
-        }
+        };
     })
 );

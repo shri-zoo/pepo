@@ -24,16 +24,16 @@ modules.define('user-info', ['conf', 'jquery'], function (provide, conf, $, User
                 url: conf.API + '/users/' + this.params.userId + '/subscribe',
                 dataType: 'json'
             })
-            .done(function () {
-                _this.toggleMod(_this.subscribeBtn, 'hidden');
-                _this.toggleMod(_this.unsubscribeBtn, 'hidden');
-            })
-            .fail(function (err) {
-                console.error(err); // eslint-disable-line no-console
-            })
-            .always(function () {
-                _this.setMod(activeButton, 'requested', false);
-            });
+                .done(function () {
+                    _this.toggleMod(_this.subscribeBtn, 'hidden');
+                    _this.toggleMod(_this.unsubscribeBtn, 'hidden');
+                })
+                .fail(function (err) {
+                    console.error(err); // eslint-disable-line no-console
+                })
+                .always(function () {
+                    _this.setMod(activeButton, 'requested', false);
+                });
         }
     }));
 });

@@ -11,19 +11,19 @@ program
     .parse(process.argv);
 
 if (!_.isNumber(program.users) || !_.isNumber(program.messages)) {
-    console.error('-u, --users AND -m, --messages params is mandatory, and it must be integer values');
+    console.error('-u, --users AND -m, --messages params is mandatory, and it must be integer values'); // eslint-disable-line no-console, max-len
     process.exit(1); // eslint-disable-line no-process-exit
 }
 
 
 db.connect(function (err, mongoose) {
     if (err) {
-        console.error('error on db connection', err.stack);
+        console.error('error on db connection', err.stack); // eslint-disable-line no-console
         process.exit(1); // eslint-disable-line no-process-exit
     }
 
     var startDate = new Date();
-    console.log('Generation started: ' + startDate.toISOString());
+    console.log('Generation started: ' + startDate.toISOString()); // eslint-disable-line no-console
 
     var User = mongoose.model('User');
     var Message = mongoose.model('Message');
@@ -38,7 +38,7 @@ db.connect(function (err, mongoose) {
 
     User.collection.insert(users)
         .then(function (data) {
-            console.log('Users successfully inserted. Count: %d', data.result.n);
+            console.log('Users successfully inserted. Count: %d', data.result.n); // eslint-disable-line no-console
             return data.ops;
         })
         .then(function (insertedUsers) {
@@ -72,7 +72,7 @@ db.connect(function (err, mongoose) {
             return Message.collection.insert(messages);
         })
         .then(function (data) {
-            console.log('Messages successfully inserted. Count: %d', data.result.n);
+            console.log('Messages successfully inserted. Count: %d', data.result.n); // eslint-disable-line no-console
             return data.ops;
         })
         .then(function (insertedMessages) {
@@ -99,14 +99,14 @@ db.connect(function (err, mongoose) {
         .then(function () {
             var endDate = new Date();
 
-            console.log('Generation completed: ' + endDate.toISOString());
-            console.log('Generation time: ' + (endDate.getTime() - startDate.getTime()) / 1000 + ' s');
-            console.log('All work successfully done. Bye!');
+            console.log('Generation completed: ' + endDate.toISOString()); // eslint-disable-line no-console
+            console.log('Generation time: ' + (endDate.getTime() - startDate.getTime()) / 1000 + ' s'); // eslint-disable-line no-console, max-len
+            console.log('All work successfully done. Bye!'); // eslint-disable-line no-console
             db.disconnect();
             process.exit(0); // eslint-disable-line no-process-exit
         })
         .catch(function (usersInsertErr) {
-            console.error('Error on creating users: ', usersInsertErr.stack);
+            console.error('Error on creating users: ', usersInsertErr.stack); // eslint-disable-line no-console
             process.exit(1); // eslint-disable-line no-process-exit
         });
 });

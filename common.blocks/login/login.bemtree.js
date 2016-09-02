@@ -49,5 +49,4 @@ block('login').content()(function () {
             ]
         }
     ];
-
 });

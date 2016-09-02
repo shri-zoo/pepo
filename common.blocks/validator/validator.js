@@ -1,6 +1,4 @@
 modules.define('validator', ['validator__username'], function (provide, username) {
-
-
     provide({
         validate: validate,
         rules: {
@@ -21,7 +19,7 @@ modules.define('validator', ['validator__username'], function (provide, username
                 if (!validationResult.isValid) {
                     errors.push(validationResult.message);
                 }
-            })
+            });
         } else {
             validationResult = _validateRule(value, rules);
 

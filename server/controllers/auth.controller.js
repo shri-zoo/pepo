@@ -1,4 +1,4 @@
-exports.getLogout = function(req, res){
+exports.getLogout = function (req, res) {
     req.logout();
     res.redirect('/');
 };

@@ -4,4 +4,4 @@
             elems: ['username']
         }
     ]
-})
+});
