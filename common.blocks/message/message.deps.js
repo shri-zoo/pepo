@@ -9,15 +9,7 @@
             block: 'link',
             mods: {
                 theme: 'islands',
-                size: 'l'
-            }
-        },
-        {
-            block: 'button',
-            mods: {
-                theme: 'islands',
-                size: 'xl',
-                view: 'plain'
+                size: ['l', 'xl']
             }
         },
         {

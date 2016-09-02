@@ -10,13 +10,10 @@
             block: 'body'
         },
         {
-            block: 'panel',
-            mods: {
-                shadowed: true
-            }
+            block: 'message'
         },
         {
-            block: 'form-message-create'
+            block: 'form-message-write'
         }
     ]
-})
+});

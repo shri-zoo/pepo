@@ -4,7 +4,7 @@ block('navbar').content()(function () {
     var links = {
         navbar: [
             { type: 'home', url: '/' },
-            { type: 'message', url: '/create-message' },
+            { type: 'message', url: '/write' },
             { type: 'search', url: '/search' },
             { type: 'profile' }
         ],

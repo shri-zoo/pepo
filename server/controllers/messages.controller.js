@@ -78,21 +78,17 @@ exports.getLoadOne = function (req, res) {
     var handleError = helpers.handleError;
     var Message = app.get('db').model('Message');
 
-    helpers
-        .isValidEntityId(req, res)
-        .then(function () {
-            Message
-                .findOne({ _id: req.params.id })
-                .populate(['replies', 'user'])
-                .then(function (message) {
-                    if (message === null) {
-                        return res.sendStatus(404);
-                    }
+    Message
+        .findOne({ _id: req.params.id })
+        .populate(['replies', 'user'])
+        .then(function (message) {
+            if (message === null) {
+                return res.sendStatus(404);
+            }
 
-                    return res.json(message);
-                })
-                .catch(function (err) {
-                    handleError(req, res, err);
-                });
+            return res.json(message);
+        })
+        .catch(function (err) {
+            handleError(req, res, err);
         });
 };

@@ -27,14 +27,14 @@ block('message').content()(function () {
                             content: message.createdAtAgo
                         },
                         {
-                            block: 'button',
+                            block: 'link',
                             mix: { block: block, elem: 'reply' },
                             mods: {
                                 theme: 'islands',
-                                size: 'xl',
-                                view: 'plain'
+                                size: 'xl'
                             },
-                            icon: {
+                            url: '/m/' + message._id + '/reply',
+                            content: {
                                 block: 'icon',
                                 size: 32,
                                 mods: { type: 'reply' }

@@ -94,22 +94,18 @@ exports.getLoadOne = function (req, res) {
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
 
-    helpers
-        .isValidEntityId(req, res)
-        .then(function () {
-            User
-                .findOne({ _id: req.params.id })
-                .populate(['subscribers'])
-                .then(function (user) {
-                    if (user === null) {
-                        return res.sendStatus(404);
-                    }
+    User
+        .findOne({ _id: req.params.id })
+        .populate(['subscribers'])
+        .then(function (user) {
+            if (user === null) {
+                return res.sendStatus(404);
+            }
 
-                    return res.json(user);
-                })
-                .catch(function (err) {
-                    handleError(req, res, err);
-                });
+            return res.json(user);
+        })
+        .catch(function (err) {
+            handleError(req, res, err);
         });
 };
 
@@ -119,23 +115,19 @@ exports.putUpdate = function (req, res) {
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
 
-    helpers
-        .isValidEntityId(req, res)
-        .then(function () {
-            User
-                .findOneAndUpdate({ _id: req.user._id }, req.body, { new: true, runValidators: true })
-                .then(function (user) {
-                    req.login(user, function (err) {
-                        if (err) {
-                            return handleError(req, res, err);
-                        }
+    User
+        .findOneAndUpdate({ _id: req.user._id }, req.body, { new: true, runValidators: true })
+        .then(function (user) {
+            req.login(user, function (err) {
+                if (err) {
+                    return handleError(req, res, err);
+                }
 
-                        res.json(user);
-                    });
-                })
-                .catch(function (err) {
-                    handleError(req, res, err);
-                });
+                res.json(user);
+            });
+        })
+        .catch(function (err) {
+            handleError(req, res, err);
         });
 };
 
@@ -144,34 +136,31 @@ exports.postSubscribe = function (req, res) {
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
+    var userId = req.params.id;
 
-    helpers
-        .isValidEntityId(req, res)
-        .then(function (userId) {
-            var updateQuery = {};
-            var subscribed;
+    var updateQuery = {};
+    var subscribed;
 
-            if (req.user.subscribedTo.indexOf(userId) === -1) {
-                updateQuery.$push = { subscribedTo: userId };
-                subscribed = true;
-            } else {
-                updateQuery.$pull = { subscribedTo: { $in: [userId]}};
-                subscribed = false;
-            }
+    if (req.user.subscribedTo.indexOf(userId) === -1) {
+        updateQuery.$push = { subscribedTo: userId };
+        subscribed = true;
+    } else {
+        updateQuery.$pull = { subscribedTo: { $in: [userId]}};
+        subscribed = false;
+    }
 
-            User
-                .findOneAndUpdate({ _id: req.user._id }, updateQuery, { new: true, runValidators: true })
-                .then(function (user) {
-                    req.login(user, function (err) {
-                        if (err) {
-                            return handleError(req, res, err);
-                        }
+    User
+        .findOneAndUpdate({ _id: req.user._id }, updateQuery, { new: true, runValidators: true })
+        .then(function (user) {
+            req.login(user, function (err) {
+                if (err) {
+                    return handleError(req, res, err);
+                }
 
-                        res.json({ subscribed: subscribed });
-                    });
-                })
-                .catch(function (err) {
-                    handleError(req, res, err);
-                });
+                res.json({ subscribed: subscribed });
+            });
+        })
+        .catch(function (err) {
+            handleError(req, res, err);
         });
 };
