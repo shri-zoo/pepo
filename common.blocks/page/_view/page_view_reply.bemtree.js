@@ -14,8 +14,8 @@ block('page').mod('view', 'reply')(
                             message: this.data.message
                         },
                         {
-                            block: 'form-message-create',
-                            js: { userId: this.data.userId }
+                            block: 'form-message-write',
+                            js: { userId: this.data.user._id }
                         }
                     ]
                 }

@@ -9,8 +9,8 @@ block('page').mod('view', 'write')(
                 {
                     block: 'body',
                     content: {
-                        block: 'form-message-create',
-                        js: { userId: this.data.userId }
+                        block: 'form-message-write',
+                        js: { userId: this.data.user._id }
                     }
                 }
             ]

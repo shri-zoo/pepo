@@ -1,0 +1,34 @@
+.form-message-write {
+    half-common-padding = (common-padding / 2)
+
+    &__textarea&__textarea {
+        min-height: (22px * 5 + common-padding + 2); // 5 lines + padding + borders
+        padding: half-common-padding;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: half-common-padding;
+    }
+
+    &__action + &__action {
+        margin-left: half-common-padding;
+    }
+
+    &__symbols-counter {
+        margin-left: auto;
+        margin-right: half-common-padding;
+        font-family: layout-font-family;
+        color: theme-muted;
+
+        &_style_attention {
+            color: theme-main;
+        }
+
+        &_style_error {
+            color: theme-error;
+        }
+    }
+}

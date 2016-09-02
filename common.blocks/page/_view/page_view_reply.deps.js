@@ -13,7 +13,7 @@
             block: 'message'
         },
         {
-            block: 'form-message-create'
+            block: 'form-message-write'
         }
     ]
 });

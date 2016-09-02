@@ -1,4 +1,4 @@
-modules.define('form-message-create', ['i-bem__dom'], function (provide, BEMDOM) {
+modules.define('form-message-write', ['i-bem__dom'], function (provide, BEMDOM) {
     var MESSAGE_MAX_LENGTH = 140;
     var MESSAGE_ATTENTION_LENGTH = 10;
 
