@@ -9,6 +9,7 @@ module.exports = function (app) {
         .get('/check-uniqueness', onlyAjax, usersController.getCheckUniqueness)
         .get('/', onlyAjax, usersController.getLoadList)
         .get('/:id', onlyAjax, usersController.getLoadOne)
+        .post('/:id/subscribe', onlyAjax, usersController.postSubscribe)
         .put('/:id', onlyAjax, usersController.putUpdate);
 
     return usersRoutes;

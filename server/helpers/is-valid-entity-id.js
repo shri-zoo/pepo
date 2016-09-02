@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports = function(req, res) {
+module.exports = function (req, res) {
     return new Promise(function (resolve, reject) {
         if (!req.params.id || !mongoose.Types.ObjectId.isValid(req.params.id)) {
             res.status(400).json({
@@ -10,6 +10,6 @@ module.exports = function(req, res) {
             reject();
         }
 
-        resolve();
+        resolve(req.params.id);
     });
 };
