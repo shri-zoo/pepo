@@ -1,18 +1,20 @@
 block('form-message-create-toolbar')(
     content()(function () {
         var links = [
-                { type: 'photo', url: '/' }, // url - диалог выбора картинки
-                { type: 'link', url: '/' },  // url - диалог вставки ссылки
-                { type: 'location', url: '/' } // url - геопозиция
-            ],
-            block = this.block;
+                { type: 'photo', title: 'Загрузить фото', url: '/' }, // url - диалог выбора картинки
+                { type: 'location', title: 'Местоположение', url: '/' } // url - геопозиция
+        ];
+        var block = this.block;
 
         return links.map(function (link) {
             return {
-                block: 'link',
+                block: 'button',
+                mods: { type: 'link' },
                 url: link.url,
-                content: {
+                title: link.title,
+                icon: {
                     block: 'icon',
+
                     mix: { block: block, elem: 'icon' },
                     mods: { type: link.type },
                     size: 32

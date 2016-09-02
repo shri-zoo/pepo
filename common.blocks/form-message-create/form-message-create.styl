@@ -1,21 +1,27 @@
 .form-message-create {
     position: relative;
     border: solid layout-border-color 1px;
+    padding: 0 10px 10px 10px;
 
-    &__toolbar-action {
+    &__header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
     }
 
-    &__message-textarea
-    {
+    &__close-button {
+        border-top-color: white;
+        border-left: none;
+
+        margin: 5px 5px 5px 0;
+    }
+
+    &__message-textarea {
         height: 60vh;
     }
 
-    &__header
-    {
+    &__title {
         margin: 0;
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
@@ -41,8 +47,18 @@
     }
 
     &__symbol-counter {
+
+        width: 3em;
+        text-align: right;
+
+        &_attention {
+            color: red;
+        }
+    }
+
+    &__submit-button {
         position: absolute;
         bottom: 10px;
-        right: 6px;
+        right: 7px;
     }
 }
