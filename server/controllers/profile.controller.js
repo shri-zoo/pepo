@@ -3,7 +3,7 @@ exports.getUserProfile = function (req, res, next) {
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
-
+    var sessionUser = req.user;
 
     User
         .findOne({ username: req.params.username })
@@ -14,10 +14,14 @@ exports.getUserProfile = function (req, res, next) {
                 return;
             }
 
-            req.app.get('bem').render(req,res,{
-                view:  'profile',
-                title: 'Профиль',
-                user: user
+            var isOwnProfile = sessionUser._id.toString() === user._id.toString();
+
+            req.app.get('bem').render(req, res, {
+                view: 'profile',
+                title: isOwnProfile ? 'Ваш профиль' : 'Профиль пользователя ' + user.username,
+                user: req.user,
+                isOwnProfile: isOwnProfile,
+                profileUser: user
             });
         })
         .catch(function (err) {
