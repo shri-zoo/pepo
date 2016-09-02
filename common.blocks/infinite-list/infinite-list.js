@@ -64,6 +64,7 @@ modules.define('infinite-list',
                 _request: function () {
                     var _this = this;
 
+                    _this.setMod(_this.empty, 'visible', false);
                     this._onRequestStateChange(true);
                     $.ajax({
                         method: 'GET',
@@ -75,11 +76,9 @@ modules.define('infinite-list',
                             _this._itemsLength += data.count;
                             _this._total = data.total;
                             _this._onRequestStateChange(false).then(function () {
-                                console.log(_this._itemsLength);
                                 if (_this._itemsLength) {
                                     BEMDOM.append(_this.content, data.html);
                                 } else {
-                                    console.log(_this.empty);
                                     _this.setMod(_this.empty, 'visible', true);
                                 }
                             });
