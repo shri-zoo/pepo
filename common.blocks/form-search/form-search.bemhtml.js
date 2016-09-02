@@ -1,3 +1,3 @@
 block('form-search')(
-  js()(true)
+    js()(true)
 );

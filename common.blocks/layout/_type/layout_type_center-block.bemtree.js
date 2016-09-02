@@ -4,5 +4,5 @@ block('layout')
         return {
             elem: 'inner',
             content: this.ctx.content
-        }
+        };
     });

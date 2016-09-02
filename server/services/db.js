@@ -20,7 +20,7 @@ module.exports = function (app) {
         logger.error(module, 'DB: error', err);
     });
 
-    connection.once('open',function() {
+    connection.once('open', function () {
         logger.info(module, 'DB: connected to %s', confDb.uri);
     });
 

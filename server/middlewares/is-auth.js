@@ -6,9 +6,9 @@ module.exports = function (req, res, next) {
     if (req.xhr) {
         if (!isAuth) {
             return res.sendStatus(401);
-        } else {
-            return next();
         }
+
+        return next();
     }
 
     if (isAuth && originalUrl !== authConf.selectUsernameRedirect && !req.user.username) {

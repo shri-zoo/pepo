@@ -29,7 +29,7 @@ modules
                     _onSubmit: function (e) {
                         e.preventDefault();
                         var _this = this;
-                        var data =  _this.form.domElem.serializeArray().reduce(function (acc, item) {
+                        var data = _this.form.domElem.serializeArray().reduce(function (acc, item) {
                             acc[item.name] = item.value;
                             return acc;
                         }, {});
@@ -43,12 +43,12 @@ modules
                             dataType: 'json',
                             data: JSON.stringify(data)
                         })
-                        .fail(function (err) {
-                            console.error(err); // eslint-disable-line no-console
-                        })
-                        .always(function () {
-                            _this.spinner.hide();
-                        });
+                            .fail(function (err) {
+                                console.error(err); // eslint-disable-line no-console
+                            })
+                            .always(function () {
+                                _this.spinner.hide();
+                            });
                     }
                 }
             ));

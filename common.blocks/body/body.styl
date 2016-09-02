@@ -1,11 +1,11 @@
 .body {
-    margin-top: header-height + common-padding;
+    margin-top: (header-height + common-padding);
     margin-bottom: common-padding;
 
-    @media (max-width: layout-width + 16px) {
+    @media (max-width: (layout-width + 16)) {
         small-padding = (common-padding / 3);
 
-        margin-top: header-height + (small-padding * 2);
+        margin-top: (header-height + small-padding * 2);
         margin-left: small-padding;
         margin-right: small-padding;
         margin-bottom: small-padding;

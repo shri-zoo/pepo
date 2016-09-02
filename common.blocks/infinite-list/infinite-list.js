@@ -71,23 +71,23 @@ modules.define('infinite-list',
                         url: this._buildUrl(),
                         dataType: 'json'
                     })
-                    .done(function (data, status, jqXHR) {
-                        if (jqXHR.status === 200) {
-                            _this._itemsLength += data.count;
-                            _this._total = data.total;
-                            _this._onRequestStateChange(false).then(function () {
-                                if (_this._itemsLength) {
-                                    BEMDOM.append(_this.content, data.html);
-                                } else {
-                                    _this.setMod(_this.empty, 'visible', true);
-                                }
-                            });
-                        }
-                    })
-                    .fail(function (err) {
-                        _this._onRequestStateChange(false);
-                        console.error(err); // eslint-disable-line no-console
-                    });
+                        .done(function (data, status, jqXHR) {
+                            if (jqXHR.status === 200) {
+                                _this._itemsLength += data.count;
+                                _this._total = data.total;
+                                _this._onRequestStateChange(false).then(function () {
+                                    if (_this._itemsLength) {
+                                        BEMDOM.append(_this.content, data.html);
+                                    } else {
+                                        _this.setMod(_this.empty, 'visible', true);
+                                    }
+                                });
+                            }
+                        })
+                        .fail(function (err) {
+                            _this._onRequestStateChange(false);
+                            console.error(err); // eslint-disable-line no-console
+                        });
                 },
                 _onRequestStateChange: function (value) {
                     this._requested = value;
