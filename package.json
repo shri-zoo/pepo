@@ -35,7 +35,8 @@
     "serve-favicon": "^2.3.0",
     "serve-static": "^1.10.2",
     "sharp": "^0.16.0",
-    "urijs": "^1.18.1"
+    "urijs": "^1.18.1",
+    "xss": "^0.2.13"
   },
   "devDependencies": {
     "bower": "^1.7.9",

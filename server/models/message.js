@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
+var xss = require('xss');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
 var postEntity = require('post-entity');
@@ -61,6 +62,9 @@ mongoose.model('Message', MessageSchema);
 function textSetter(value) {
     return postEntity
         .process(value, postEntityTypes)
+        .map(function (entity) {
+            return Object.assign({}, entity, { raw: xss(entity.raw) });
+        })
         .filter(function (entity) {
             return entity.raw !== '';
         });
