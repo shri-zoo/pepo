@@ -6,6 +6,11 @@
         padding: half-common-padding;
     }
 
+    &__attachment {
+        display: flex;
+        justify-content: center;
+    }
+
     &__footer {
         display: flex;
         justify-content: space-between;
@@ -17,11 +22,19 @@
         margin-left: half-common-padding;
     }
 
-    &__symbols-counter {
+    &__action_hidden&__action_hidden {
+        display: none;
+    }
+
+    &__counter {
         margin-left: auto;
         margin-right: half-common-padding;
         font-family: layout-font-family;
         color: theme-muted;
+
+        &_style_valid {
+            color: theme-success;
+        }
 
         &_style_attention {
             color: theme-main;
@@ -29,6 +42,13 @@
 
         &_style_error {
             color: theme-error;
+        }
+    }
+
+    &__submit {
+        &_requested {
+            pointer-events: none;
+            opacity: 0.6;
         }
     }
 }

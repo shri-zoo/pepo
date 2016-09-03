@@ -2,6 +2,8 @@ block('message').content()(function () {
     var block = this.block;
     var message = this.ctx.message;
 
+    // TODO add label that is reply
+
     return [
         {
             elem: 'header',
