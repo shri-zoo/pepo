@@ -4,7 +4,20 @@ block('message-attachment').mod('type', 'geo').content()(function () {
 
     content.push({
         elem: 'data',
-        content: 'GEO - lat: ' + geo.latitude + ', lon: ' + geo.longitude
+        content: [
+            {
+                elem: 'header',
+                content: 'Позиция'
+            },
+            {
+                elem: 'lat',
+                content: 'Широта: ' + geo.latitude.toFixed(3)
+            },
+            {
+                elem: 'lon',
+                content: 'Долгота: ' + geo.longitude.toFixed(3)
+            }
+        ]
     });
 
     return content;
