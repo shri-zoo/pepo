@@ -49,18 +49,7 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             Message
                 .paginate(query, {
-                    populate: [
-                        {
-                            path: 'replies',
-                            populate: {
-                                path: 'user',
-                                model: 'User'
-                            }
-                        },
-                        {
-                            path: 'user'
-                        }
-                    ],
+                    populate: ['user', 'replies'],
                     offset: pagination.offset,
                     limit: pagination.limit,
                     sort: '-createdAt'
