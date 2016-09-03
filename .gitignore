@@ -4,6 +4,8 @@ node_modules/
 .project
 .svn
 npm-debug.log
+server.crt
+server.key
 
 static/index.min.*
 server/configs/*.*
