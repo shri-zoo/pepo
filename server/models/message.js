@@ -6,6 +6,8 @@ var mongoosePaginate = require('mongoose-paginate');
 var postEntity = require('post-entity');
 var postEntityTypes = require('../../isomorphic/post-entity-types');
 
+moment.locale('ru');
+
 var TextFieldSchema = new Schema({
     index: {
         type: Number,
