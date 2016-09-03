@@ -43,7 +43,7 @@ var UserSchema = new Schema({
         id: String,
         raw: { type: String, select: false }
     },
-    subscribedTo: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    subscribedTo: [{ type: Schema.Types.ObjectId, ref: 'User', default: []}]
 }, {
     timestamps: true,
     toObject: { getters: true, virtuals: true }
