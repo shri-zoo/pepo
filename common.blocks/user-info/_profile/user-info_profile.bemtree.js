@@ -18,7 +18,7 @@ block('user-info').mod('profile', true).content()(function () {
                     username: username,
                     src: user.avatar,
                     url: url,
-                    size: 64
+                    size: 128
                 },
                 {
                     elem: 'text-elems',
