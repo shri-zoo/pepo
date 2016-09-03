@@ -14,12 +14,15 @@
             }
         },
         {
+            block: 'uploader'
+        },
+        {
             block: 'button',
             mods: {
                 theme: 'islands',
                 size: 'xl',
-                view: 'plain',
-                type: ['action', 'submit'],
+                view: ['plain', 'action'],
+                type: ['submit'],
                 disabled: true
             }
         },

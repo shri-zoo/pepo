@@ -12,10 +12,6 @@ block('form-message-write')(
     }),
     elem('content').content()(function () {
         var block = this.block;
-        var actions = [
-            { type: 'image', title: 'Загрузить фото' },
-            { type: 'geo', title: 'Местоположение' }
-        ];
 
         return [
             {
@@ -30,8 +26,15 @@ block('form-message-write')(
                     block: block,
                     elem: 'textarea'
                 },
-                placeholder: 'Что нового?',
+                placeholder: 'Чо, как?',
                 name: 'text'
+            },
+            {
+                block: block,
+                elem: 'attachments',
+                content: [
+
+                ]
             },
             {
                 block: block,
@@ -40,29 +43,54 @@ block('form-message-write')(
                     {
                         block: block,
                         elem: 'actions',
-                        content: actions.map(function (action) {
-                            return {
+                        content: [
+                            {
+                                block: 'uploader',
+                                js: { type: 'image' },
+                                mix: [
+                                    { block: block, elem: 'action' },
+                                    { block: block, elem: 'action-image' }
+                                ],
+                                template: {
+                                    block: 'button',
+                                    mods: {
+                                        theme: 'islands',
+                                        size: 'xl',
+                                        view: 'plain'
+                                    },
+                                    title: 'Загрузить изображение',
+                                    icon: {
+                                        block: 'icon',
+                                        mods: { type: 'image' },
+                                        mix: { block: block, elem: 'action-icon' },
+                                        size: 32
+
+                                    }
+                                }
+                            },
+                            {
                                 block: 'button',
                                 mods: {
                                     theme: 'islands',
                                     size: 'xl',
-                                    view: 'plain',
-                                    type: 'action'
+                                    view: 'plain'
                                 },
-                                mix: { block: block, elem: 'action' },
-                                url: action.url,
-                                title: action.title,
+                                mix: [
+                                    { block: block, elem: 'action' },
+                                    { block: block, elem: 'action-geo' }
+                                ],
+                                title: 'Добавить ваше местоположение',
                                 icon: {
                                     block: 'icon',
-                                    mods: { type: action.type },
+                                    mods: { type: 'geo' },
                                     mix: { block: block, elem: 'action-icon' },
                                     size: 32
                                 }
-                            };
-                        })
+                            }
+                        ]
                     },
                     {
-                        elem: 'symbols-counter',
+                        elem: 'counter',
                         content: 140
                     },
                     {
@@ -70,6 +98,7 @@ block('form-message-write')(
                         mods: {
                             theme: 'islands',
                             size: 'xl',
+                            view: 'action',
                             type: 'submit',
                             disabled: true
                         },
