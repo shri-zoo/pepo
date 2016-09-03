@@ -4,6 +4,9 @@ var program = require('commander');
 var faker = require('faker');
 var _ = require('lodash');
 var db = require('./common');
+var xss = require('xss');
+var postEntity = require('post-entity');
+var postEntityTypes = require('../../isomorphic/post-entity-types');
 
 program
     .option('-u, --users <n>', 'users count', parseInt)
@@ -157,10 +160,33 @@ function generateUserData(allUsers) {
 }
 
 function generateMessageData(userId) {
+    var geo = null;
+    var image = null;
+    var text = postEntity
+        .process(faker.lorem.sentence(), postEntityTypes)
+        .map(function (entity) {
+            return Object.assign({}, entity, { raw: xss(entity.raw) });
+        })
+        .filter(function (entity) {
+            return entity.raw !== '';
+        });
+    var random = Math.random();
+
+    if (random < 0.3) {
+        geo = {
+            latitude: faker.address.latitude(),
+            longitude: faker.address.longitude()
+        };
+    } else if (random > 0.7) {
+        image = faker.image.imageUrl();
+    }
+
     return {
         user: userId,
         parentId: null,
-        text: faker.lorem.sentence(),
-        replies: []
+        text: text,
+        replies: [],
+        image: image,
+        geo: geo
     };
 }
