@@ -20,6 +20,7 @@ block('page').mod('view', '404')(
                                 content: [
                                     {
                                         block: 'image',
+                                        width: 350,
                                         url: '/images/b_404.png'
                                     },
                                     {
