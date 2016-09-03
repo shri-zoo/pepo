@@ -40,7 +40,7 @@ block('message').content()(function () {
                                     },
                                     mix: { block: block, elem: 'is-reply' },
                                     url: '/m/' + message.parentId,
-                                    content: 'it\'s reply'
+                                    content: 'Это ответ на другое сообщение'
                                 }
                             ]
                         },
