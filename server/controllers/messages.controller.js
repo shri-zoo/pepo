@@ -9,6 +9,13 @@ exports.postCreate = function (req, res) {
     message
         .save()
         .then(function (data) {
+            if (data.parentId) {
+                return Message.findOneAndUpdate({ _id: data.parentId }, { $push: { replies: data._id }});
+            }
+
+            return data;
+        })
+        .then(function (data) {
             res.json(data);
         })
         .catch(function (err) {
@@ -42,7 +49,18 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             Message
                 .paginate(query, {
-                    populate: ['replies', 'user'],
+                    populate: [
+                        {
+                            path: 'replies',
+                            populate: {
+                                path: 'user',
+                                model: 'User'
+                            }
+                        },
+                        {
+                            path: 'user'
+                        }
+                    ],
                     offset: pagination.offset,
                     limit: pagination.limit,
                     sort: '-createdAt'

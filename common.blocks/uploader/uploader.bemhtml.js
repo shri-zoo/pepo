@@ -4,7 +4,8 @@ block('uploader')(
         tag()('input'),
         attrs()({
             type: 'file',
-            name: 'file'
+            name: 'file',
+            accept: 'image/*'
         })
     )
 );

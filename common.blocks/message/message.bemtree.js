@@ -19,14 +19,30 @@ block('message').content()(function () {
                     elem: 'header-right',
                     content: [
                         {
-                            block: 'link',
-                            mods: {
-                                theme: 'islands',
-                                size: 'l'
-                            },
-                            mix: { block: block, elem: 'date' },
-                            url: '/m/' + message._id,
-                            content: message.createdAtAgo
+                            block: block,
+                            elem: 'header-middle',
+                            content: [
+                                {
+                                    block: 'link',
+                                    mods: {
+                                        theme: 'islands',
+                                        size: 'l'
+                                    },
+                                    mix: { block: block, elem: 'date' },
+                                    url: '/m/' + message._id,
+                                    content: message.createdAtAgo
+                                },
+                                !!message.parentId && {
+                                    block: 'link',
+                                    mods: {
+                                        theme: 'islands',
+                                        size: 'l'
+                                    },
+                                    mix: { block: block, elem: 'is-reply' },
+                                    url: '/m/' + message.parentId,
+                                    content: 'it\'s reply'
+                                }
+                            ]
                         },
                         {
                             block: 'link',
@@ -48,7 +64,29 @@ block('message').content()(function () {
         },
         {
             elem: 'content',
-            content: message.text
+            content: [
+                {
+                    elem: 'content-text',
+                    content: message.text
+                },
+                message.image && {
+                    block: 'message-attachment',
+                    mix: { block: block, elem: 'content-image' },
+                    mods: {
+                        type: 'image'
+                    },
+                    src: message.image,
+                    isLink: true
+                },
+                message.geo && {
+                    block: 'message-attachment',
+                    mix: { block: block, elem: 'content-geo' },
+                    mods: {
+                        type: 'geo'
+                    },
+                    geo: message.geo
+                }
+            ]
         }
     ];
 });

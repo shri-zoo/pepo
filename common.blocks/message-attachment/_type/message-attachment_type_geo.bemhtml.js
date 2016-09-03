@@ -11,11 +11,11 @@ block('message-attachment').mod('type', 'geo').content()(function () {
             },
             {
                 elem: 'lat',
-                content: 'Широта: ' + geo.latitude.toFixed(3)
+                content: 'Широта: ' + geo.latitude
             },
             {
                 elem: 'lon',
-                content: 'Долгота: ' + geo.longitude.toFixed(3)
+                content: 'Долгота: ' + geo.longitude
             }
         ]
     });

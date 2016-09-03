@@ -128,8 +128,8 @@ modules.define(
                 this.setMod(this.geoActionAttach, 'requested', true);
                 navigator.geolocation.getCurrentPosition(function (position) {
                     _this.geo = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
+                        latitude: position.coords.latitude.toFixed(3),
+                        longitude: position.coords.longitude.toFixed(3)
                     };
 
                     BEMDOM.update(_this.attachment, BEMHTML.apply({
