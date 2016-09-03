@@ -6,6 +6,11 @@
         padding: half-common-padding;
     }
 
+    &__attachment {
+        display: flex;
+        justify-content: center;
+    }
+
     &__footer {
         display: flex;
         justify-content: space-between;
@@ -15,6 +20,10 @@
 
     &__action + &__action {
         margin-left: half-common-padding;
+    }
+
+    &__action_hidden&__action_hidden {
+        display: none;
     }
 
     &__counter {

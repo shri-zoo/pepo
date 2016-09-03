@@ -31,10 +31,7 @@ block('form-message-write')(
             },
             {
                 block: block,
-                elem: 'attachments',
-                content: [
-
-                ]
+                elem: 'attachment'
             },
             {
                 block: block,
@@ -47,10 +44,11 @@ block('form-message-write')(
                             {
                                 block: 'uploader',
                                 js: { type: 'image' },
-                                mix: [
-                                    { block: block, elem: 'action' },
-                                    { block: block, elem: 'action-image' }
-                                ],
+                                mix: {
+                                    block: block,
+                                    elem: 'action',
+                                    elemMods: { type: 'image'}
+                                },
                                 template: {
                                     block: 'button',
                                     mods: {
@@ -75,10 +73,14 @@ block('form-message-write')(
                                     size: 'xl',
                                     view: 'plain'
                                 },
-                                mix: [
-                                    { block: block, elem: 'action' },
-                                    { block: block, elem: 'action-geo' }
-                                ],
+                                mix: {
+                                    block: block,
+                                    elem: 'action',
+                                    elemMods: {
+                                        hidden: true,
+                                        type: 'geo'
+                                    }
+                                },
                                 title: 'Добавить ваше местоположение',
                                 icon: {
                                     block: 'icon',

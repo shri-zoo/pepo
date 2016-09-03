@@ -15,6 +15,13 @@
         {
             block: 'icon',
             mods: { type: 'reply' }
+        },
+        {
+            block: 'message-attachment',
+            mods: {
+                type: ['image', 'geo'],
+                editable: true
+            }
         }
     ]
 });
