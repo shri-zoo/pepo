@@ -17,7 +17,8 @@ block('page')
                             elem: 'subheader',
                             content: {
                                 block: 'user-info',
-                                user: profileUser
+                                user: profileUser,
+                                mods: { profile: true }
                             }
                         },
                         {
@@ -33,7 +34,7 @@ block('page')
                                             theme: 'islands',
                                             size: 'l'
                                         },
-                                        url: '/create-message',
+                                        url: '/write',
                                         content: 'Написать!'
                                     }
                                 ]
