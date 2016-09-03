@@ -1,5 +1,8 @@
 block('page').mod('view', 'reply')(
     content()(function () {
+        var block = this.block;
+        var message = this.data.message;
+
         return {
             block: 'layout',
             content: [
@@ -11,11 +14,12 @@ block('page').mod('view', 'reply')(
                     content: [
                         {
                             block: 'message',
-                            message: this.data.message
+                            message: message
                         },
                         {
                             block: 'form-message-write',
-                            js: { userId: this.data.user._id }
+                            mix: { block: block, elem: 'reply-form' },
+                            js: { parentId: message._id }
                         }
                     ]
                 }

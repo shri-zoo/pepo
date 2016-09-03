@@ -62,6 +62,7 @@
   },
   "scripts": {
     "start": "node server",
+    "dev": "nodemon -- --https",
     "postinstall": "npm run deps",
     "deps": "bower i",
     "make": "enb make",

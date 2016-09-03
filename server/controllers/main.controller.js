@@ -20,7 +20,7 @@ exports.getReply = function (req, res, next) {
     var Message = app.get('db').model('Message');
 
     return Message.findOne({ _id: req.params.id })
-        .populate('replies user')
+        .populate(['replies', 'user'])
         .then(function (message) {
             if (message === null) {
                 return next();

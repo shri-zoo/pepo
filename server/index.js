@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var https = require('https');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -14,9 +15,22 @@ var passportService = require('./services/passport');
 var conf = require('./services/conf')(path.join(__dirname, 'configs'), app.get('env'));
 var logger = require('./services/logger');
 var db;
+var ROOT = path.resolve(__dirname, '..');
 var PORT = process.env.PORT || conf.server.defaultPort;
 var UPLOADS_ROOT = path.resolve(__dirname, '..', 'uploads');
 var isSocket = isNaN(PORT);
+var isTestHttps = conf.https;
+var httpsOptions;
+
+if (isTestHttps) {
+    httpsOptions = {
+        key: fs.readFileSync(path.join(ROOT, 'server.key')),
+        cert: fs.readFileSync(path.join(ROOT, 'server.crt')),
+        requestCert: false,
+        rejectUnauthorized: false
+    };
+}
+
 
 app
     .set('APP_ROOT', __dirname)
@@ -51,8 +65,15 @@ passportService(app, conf.auth, '/auth', '/login')
     .use(require('./routes')(app))
     .use(require('./lib/error-handler')(app));
 
-isSocket && fs.existsSync(PORT) && fs.unlinkSync(PORT);
-app.listen(PORT, function () {
-    isSocket && fs.chmod(PORT, '0777');
-    logger.info(module, 'SERVER: is listening on %s', this.address().port);
-});
+if (isTestHttps) {
+    https.createServer(httpsOptions, app).listen(PORT, function () {
+        logger.info(module, 'SERVER: is listening on %s', this.address().port);
+    });
+} else {
+    isSocket && fs.existsSync(PORT) && fs.unlinkSync(PORT);
+    app.listen(PORT, function () {
+        isSocket && fs.chmod(PORT, '0777');
+        logger.info(module, 'SERVER: is listening on %s', this.address().port);
+    });
+}
+

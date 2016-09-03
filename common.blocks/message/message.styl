@@ -25,14 +25,39 @@
         }
     }
 
+    &__header-middle {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
     &__date {
         font-family: layout-font-family;
     }
 
-    &__content {
+    &__is-reply&__is-reply {
         font-family: layout-font-family;
-        margin-top: (common-padding / 2);
+        margin-top: 5px;
+        color: theme-text-muted;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        font-family: layout-font-family;
+        margin-top: common-padding;
+    }
+        
+    &__content-text {
         text-align: left;
+        font-size: 20px;
         color: theme-text-main;
+    }
+
+    &__content-image,
+    &__content-geo {
+        margin: (common-padding / 2) auto 0;
     }
 }

@@ -45,7 +45,7 @@ var MessageSchema = new Schema({
     },
     geo: GeoFieldSchema,
     image: String,
-    replies: [{ type: Schema.Types.ObjectId, ref: 'Message' }]
+    replies: [{ type: Schema.Types.ObjectId, ref: 'Message', default: [] }]
 }, {
     timestamps: true,
     toObject: { getters: true, virtuals: true }

@@ -1,5 +1,11 @@
 block('page').mod('view', 'message')(
     content()(function () {
+        var block = this.block;
+        var message = this.data.message;
+        var thereAreReplies = !!message.replies.length;
+
+        console.log(message);
+
         return {
             block: 'layout',
             content: [
@@ -8,10 +14,28 @@ block('page').mod('view', 'message')(
                 },
                 {
                     block: 'body',
-                    content: {
-                        block: 'message',
-                        message: this.data.message
-                    }
+                    content: [
+                        {
+                            block: 'message',
+                            message: message
+                        },
+                        thereAreReplies && {
+                            block: block,
+                            elem: 'replies-header',
+                            content: 'Ответы:'
+                        },
+                        thereAreReplies && {
+                            block: block,
+                            elem: 'replies',
+                            content: message.replies.map(function (message) {
+                                return {
+                                    block: 'message',
+                                    mods: { style: 'reply' },
+                                    message: message
+                                };
+                            })
+                        }
+                    ]
                 }
             ]
         };

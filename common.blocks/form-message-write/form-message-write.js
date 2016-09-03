@@ -52,7 +52,7 @@ modules.define(
                         this.bindTo(this.textarea.domElem, 'input', this._onInput);
                         this.bindTo(this.form.domElem, 'submit', this._onSubmit);
 
-                        this.geoAttachButton.bindTo('click', this._onAttachGeo);
+                        this.geoAttachButton.bindTo('click', this._onAttachGeo.bind(this));
                         this.imageUploader.on('uploading-success', this._onImageUploadingSuccess, this);
                         MessageAttachment.on(this.attachment, 'remove', this._onRemoveAttachment, this);
                     }
@@ -123,17 +123,29 @@ modules.define(
                 }));
             },
             _onAttachGeo: function () {
-                navigator.geolocation.getCurrentPosition(function (geo) {
-                    BEMDOM.update(this.attachment, BEMHTML.apply({
+                var _this = this;
+
+                this.setMod(this.geoActionAttach, 'requested', true);
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    _this.geo = {
+                        latitude: position.coords.latitude.toFixed(3),
+                        longitude: position.coords.longitude.toFixed(3)
+                    };
+
+                    BEMDOM.update(_this.attachment, BEMHTML.apply({
                         block: 'message-attachment',
                         mods: {
                             type: 'geo',
                             editable: true
                         },
-                        geo: geo
+                        geo: _this.geo
                     }));
-                    this._changeState();
-                    this._toggleActionsButtons();
+
+                    _this.delMod(_this.geoActionAttach, 'requested');
+                    _this._changeState();
+                    _this._toggleActionsButtons();
+                }, function () {
+                    _this.delMod(_this.geoActionAttach, 'requested');
                 });
             },
             _onRemoveAttachment: function () {
