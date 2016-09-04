@@ -1,16 +1,19 @@
 ({
-    mustDeps: 'stylus-vars',
     shouldDeps: [
         {
-            block: 'layout',
-            mods: { type: 'center-block' }
+            block: 'layout'
         },
         {
-            block: 'panel',
-            mods: { shadowed: true }
+            block: 'header'
         },
         {
-            block: 'image'
+            block: 'body'
+        },
+        {
+            block: 'infinite-list',
+            mods: {
+                type: 'user-messages'
+            }
         },
         {
             block: 'link',

@@ -1,45 +1,41 @@
-block('page').mod('view', '404')(
+block('page')
+    .mod('view', '404')(
     content()(function () {
+        var block = this.block;
+
         return {
             block: 'layout',
+            mods: { type: 'center-block' },
             content: [
-                // {
-                //     block: 'header'
-                // },
                 {
-                    block: 'body',
-                    content: {
-                        block: 'b-404',
-                        content: [
-                            {
-                                block: 'error-header',
-                                content: 'BEM NOT FOUND!'
+                    block: 'panel',
+                    mods: { shadowed: true },
+                    header: '404. Страница не найдена',
+                    content: [
+                        {
+                            block: 'image',
+                            mix: {
+                                block: block,
+                                elem: 'image'
                             },
-                            {
-                                block: 'error-image',
-                                content: [
-                                    {
-                                        block: 'image',
-                                        url: '/images/b_404.png'
-                                    },
-                                    {
-                                        block: 'error-text',
-                                        content: ['Cтраница не найдена!<br>Перейди ',
-                                            {
-                                                block: 'link',
-                                                mods: { theme: 'islands' },
-                                                url: '/',
-                                                content: 'на главную!'
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
+                            url: '/images/b_404.png'
+                        },
+                        {
+                            block: 'link',
+                            mix: {
+                                block: block,
+                                elem: 'link'
+                            },
+                            mods: {
+                                theme: 'islands',
+                                size: 'l'
+                            },
+                            url: '/',
+                            content: 'Перейти на главную!'
+                        }
+                    ]
                 }
             ]
-        }
-            ;
+        };
     })
 );

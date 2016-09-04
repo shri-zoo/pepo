@@ -12,11 +12,12 @@ var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 var passportService = require('./services/passport');
 
-var conf = require('./services/conf')(path.join(__dirname, 'configs'), app.get('env'));
+var ENV = app.get('env');
+var ROOT = path.resolve(__dirname, '..');
+var conf = require('./services/conf')(path.join(__dirname, 'configs'), ENV);
+var PORT = process.env.PORT || conf.server.defaultPort;
 var logger = require('./services/logger');
 var db;
-var ROOT = path.resolve(__dirname, '..');
-var PORT = process.env.PORT || conf.server.defaultPort;
 var UPLOADS_ROOT = path.resolve(__dirname, '..', 'uploads');
 var isSocket = isNaN(PORT);
 var isTestHttps = conf.https;
@@ -31,13 +32,14 @@ if (isTestHttps) {
     };
 }
 
+logger.info(module, 'server run in env mode', ENV);
 
 app
     .set('APP_ROOT', __dirname)
     .set('UPLOADS_ROOT', UPLOADS_ROOT)
     .set('conf', conf)
     .set('logger', logger)
-    .set('isDev', app.get('env') === 'development')
+    .set('isDev', ENV === 'development')
     .set('helpers', require('./helpers'))
     .set('db', (db = require('./services/db')(app)))
     .set('bem', require('./services/bem')(app))

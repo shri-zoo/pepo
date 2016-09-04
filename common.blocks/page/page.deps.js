@@ -2,17 +2,19 @@
     shouldDeps: [
         {
             mods: {
-                view: ['404', 'login', 'username-select', 'write', 'reply', 'message', 'search', 'settings', 'profile']
+                view: [
+                    'login',
+                    'username-select',
+                    'index',
+                    'message',
+                    'write',
+                    'reply',
+                    'search',
+                    'profile',
+                    'settings',
+                    '404'
+                ]
             }
-        },
-        {
-            block: 'layout'
-        },
-        {
-            block: 'header'
-        },
-        {
-            block: 'body'
         }
     ]
 });

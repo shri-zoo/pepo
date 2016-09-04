@@ -16,8 +16,5 @@
     "desktop.bundles",
     "server"
   ],
-  "env": {
-    "NODE_ENV": "development"
-  },
   "ext": "js"
 }
