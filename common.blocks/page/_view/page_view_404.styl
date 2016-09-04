@@ -1,25 +1,13 @@
-.b-404 {
-    .error-header {
-        color: black;
-        text-align: center;
-        font-size: 20pt;
-
-        &:first-letter {
-            color: red;
-        }
+.page {
+    &__image {
+        max-width: 100%;
     }
 
-    img {
+    &__link {
         display: block;
-        margin: 0 auto;
-        @media (max-width: layout-width) {
-            width: 200px;
-        }
-    }
-
-    .error-text {
-        color: black;
+        margin-top: (common-padding / 2);
+        font-family: layout-font-family;
         text-align: center;
-        font-size: 16pt;
+        font-size: 20px;
     }
 }
