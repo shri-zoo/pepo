@@ -10,6 +10,7 @@ block('root').replace()(function () {
 
     return {
         block: 'page',
+        js: true,
         title: data.title,
         favicon: '/favicon.ico',
         styles: [
@@ -29,12 +30,11 @@ block('root').replace()(function () {
             { elem: 'meta', attrs: { property: 'og:title', content: og.title || data.title }},
             { elem: 'meta', attrs: { property: 'og:url', content: og.url }},
             { elem: 'meta', attrs: { property: 'og:site_name', content: og.siteName }},
-            { elem: 'meta', attrs: { property: 'og:locale', content: og.locale || 'en_US' }},
+            { elem: 'meta', attrs: { property: 'og:locale', content: og.locale || 'ru_RU' }},
             { elem: 'meta', attrs: { property: 'og:type', content: 'website' }},
             { elem: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' }}
         ],
         mods: {
-            theme: 'islands',
             view: data.view
         }
     };

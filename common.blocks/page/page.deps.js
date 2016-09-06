@@ -1,4 +1,11 @@
 ({
+    mustDeps: [
+        {
+            block: 'i-bem',
+            mods: { init: 'auto' },
+            elem: 'dom'
+        }
+    ],
     shouldDeps: [
         {
             mods: {
