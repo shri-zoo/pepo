@@ -17,11 +17,16 @@
         }
     }
 
-    &__popup {
+    &__popup&__popup {
         width: dropdown-menu-width;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 5px 20px -5px rgba(0,0,0,0.4);
 
-        @media (max-width: layout-width) {
+        @media (max-width: media[tablet]) {
             width: 100%;
+        }
+
+        @media (max-width: media[phone]) {
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 -5px 20px -5px rgba(0,0,0,0.4);
         }
     }
 
