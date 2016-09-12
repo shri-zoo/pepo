@@ -2,6 +2,9 @@
     mustDeps: 'stylus-vars',
     shouldDeps: [
         {
+            block: 'utils'
+        },
+        {
             block: 'form',
             elems: ['label', 'row']
         },

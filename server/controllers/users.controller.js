@@ -109,21 +109,32 @@ exports.getLoadOne = function (req, res) {
         });
 };
 
-exports.putUpdate = function (req, res) {
+exports.putUpdate = function (req, res, next) {
     var app = req.app;
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
 
     User
-        .findOneAndUpdate({ _id: req.user._id }, req.body, { new: true, runValidators: true })
-        .then(function (user) {
-            req.login(user, function (err) {
+        .findById(req.user._id)
+        .then(function (doc) {
+            if (!doc) {
+                return next();
+            }
+
+            Object.keys(req.body).forEach(function (key) {
+                doc[key] = req.body[key];
+            });
+
+            return doc.save();
+        })
+        .then(function (doc) {
+            req.login(doc, function (err) {
                 if (err) {
                     return handleError(req, res, err);
                 }
 
-                res.json(user);
+                res.json(doc);
             });
         })
         .catch(function (err) {

@@ -1,8 +1,8 @@
 modules
     .define(
         'form-settings',
-        ['conf', 'i-bem__dom', 'jquery'],
-        function (provide, conf, BEMDOM, $) {
+        ['conf', 'utils', 'i-bem__dom', 'jquery'],
+        function (provide, conf, utils, BEMDOM, $) {
             var blockName = this.name;
 
             provide(BEMDOM.decl({ block: blockName },
@@ -43,12 +43,15 @@ modules
                             dataType: 'json',
                             data: JSON.stringify(data)
                         })
-                            .fail(function (err) {
-                                console.error(err); // eslint-disable-line no-console
-                            })
-                            .always(function () {
-                                _this.spinner.hide();
-                            });
+                        .done(function (user) {
+                            utils.setFormValues(_this.form.domElem[0], user);
+                        })
+                        .fail(function (err) {
+                            console.error(err); // eslint-disable-line no-console
+                        })
+                        .always(function () {
+                            _this.spinner.hide();
+                        });
                     }
                 }
             ));

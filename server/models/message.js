@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
-var xss = require('xss');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
 var postEntity = require('post-entity');
+var sanitizeSetter = require('./utils/sanitize-setter');
 var postEntityTypes = require('../../isomorphic/post-entity-types');
 
 moment.locale('ru');
@@ -48,7 +48,7 @@ var MessageSchema = new Schema({
     },
     geo: GeoFieldSchema,
     image: String,
-    replies: [{ type: Schema.Types.ObjectId, ref: 'Message', default: [] }]
+    replies: [{ type: Schema.Types.ObjectId, ref: 'Message', default: []}]
 }, {
     timestamps: true,
     toObject: { getters: true, virtuals: true }
@@ -65,7 +65,7 @@ function textSetter(value) {
     return postEntity
         .process(value, postEntityTypes)
         .map(function (entity) {
-            return Object.assign({}, entity, { raw: xss(entity.raw) });
+            return Object.assign({}, entity, { raw: sanitizeSetter(entity.raw) });
         })
         .filter(function (entity) {
             return entity.raw !== '';

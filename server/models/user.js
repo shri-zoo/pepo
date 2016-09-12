@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
+var sanitizeSetter = require('./utils/sanitize-setter');
 var usernameValidator = require('../../isomorphic/validators/username');
 
 var UserSchema = new Schema({
@@ -12,17 +13,22 @@ var UserSchema = new Schema({
     },
     firstName: {
         type: String,
+        set: sanitizeSetter,
         required: true
     },
     lastName: {
         type: String,
+        set: sanitizeSetter,
         required: true
     },
     avatar: {
         type: String,
         default: '/images/default-avatar.png'
     },
-    description: String,
+    description: {
+        type: String,
+        set: sanitizeSetter
+    },
     provider: {
         type: String,
         required: true
