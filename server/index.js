@@ -48,7 +48,7 @@ app
     // common setup
     .disable('x-powered-by')
     .enable('trust proxy')
-    .use(favicon(path.join(conf.server.staticFolder, 'favicon.ico')))
+    .use(favicon(path.join(conf.server.staticFolder, 'favicons', 'favicon.ico')))
     .use(serveStatic(conf.server.staticFolder))
     .use(serveStatic(path.resolve(UPLOADS_ROOT, '..')))
     .use(morgan('combined'))
