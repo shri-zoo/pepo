@@ -49,7 +49,7 @@ block('navbar').content()(function () {
                     mainOffset: 0,
                     mix: { block: block, elem: 'popup' },
                     mods: { autoclosable: true },
-                    directions: ['bottom-right'],
+                    directions: ['top-right', 'bottom-right'],
                     content: {
                         block: block,
                         elem: 'dropdown-menu',

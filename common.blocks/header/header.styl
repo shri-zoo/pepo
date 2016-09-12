@@ -9,4 +9,11 @@
     height: header-height;
     background-color: layout-secondary-bg;
     border-bottom: 1px solid layout-border-color;
+
+    @media (max-width: media[phone]) {
+        top: auto;
+        bottom: 0;
+        border-bottom: none;
+        border-top: 1px solid layout-border-color;
+    }
 }
