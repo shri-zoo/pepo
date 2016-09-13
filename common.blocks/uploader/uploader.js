@@ -11,6 +11,8 @@ modules
 
                             this.fileInput = this.elem('file-input');
                             this.templateWrapper = this.elem('template-wrapper');
+                            this.progressBar = this.elem('progress-bar');
+                            this.progressPercents = this.elem('progress-percents');
 
                             this.bindTo(this.fileInput, 'change', this._onFileChange);
                             this.bindTo(this.templateWrapper, 'click', this._onTemplateWrapperClick);
@@ -31,21 +33,44 @@ modules
                         url: conf.API + '/uploader/' + this.params.type,
                         data: formData,
                         contentType: false,
-                        processData: false
-                    })
-                        .done(function (data) {
-                            _this.emit('uploading-success', data.url);
-                        })
-                        .fail(function (err) {
-                            if (err.status === 400) {
-                                return _this.emit('uploading-failed', err.responseJSON.errors);
-                            }
+                        processData: false,
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            var xhrUpload = xhr.upload;
 
-                            _this.emit('uploading-failed', err.responseJSON.errors);
-                        })
-                        .always(function () {
-                            _this.fileInput.val('');
-                        });
+                            xhrUpload.addEventListener('loadstart', function () {
+                                _this.setMod('in-progress', true);
+                            });
+                            xhrUpload.addEventListener('progress', function (e) {
+                                if (e.lengthComputable) {
+                                    var progress = (e.loaded / e.total * 100).toFixed(0) + '%';
+
+                                    _this.progressBar.css({ width: progress });
+                                    BEMDOM.update(_this.progressPercents, progress);
+                                }
+                            });
+                            xhrUpload.addEventListener('loadend', function () {
+                                BEMDOM.update(_this.progressPercents, '');
+                                _this.progressBar.removeAttr('style');
+                                _this.delMod('in-progress');
+                            });
+
+                            return xhr;
+                        }
+                    })
+                    .done(function (data) {
+                        _this.emit('uploading-success', data.url);
+                    })
+                    .fail(function (err) {
+                        if (err.status === 400) {
+                            return _this.emit('uploading-failed', err.responseJSON.errors);
+                        }
+
+                        _this.emit('uploading-failed', err.responseJSON.errors);
+                    })
+                    .always(function () {
+                        _this.fileInput.val('');
+                    });
                 }
             }
         ));
