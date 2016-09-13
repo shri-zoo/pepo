@@ -13,13 +13,13 @@ server/configs/*.*
 # bem
 .enb/tmp/
 libs/
+common.tests/*
 *bundles*/*/*.*
 !*bundles*/*/*.bemdecl.js
 *bundles*/*/*.tmpl.bemdecl.js
 *bundles*/*/*.bemhtml-tmpl.bemdecl.js
 *bundles*/*/*.bemtree-tmpl.bemdecl.js
 !*bundles*/.bem/*
-common.blocks/page/_view/.page_view_404.bemtree.js.swp
 uploads/avatars/*
 uploads/images/*
 !.gitkeep
