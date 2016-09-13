@@ -6,7 +6,8 @@ var techs = {
         stylus: require('enb-stylus/techs/stylus'),
         browserJs: require('enb-js/techs/browser-js'),
         bemtree: require('enb-bemxjst/techs/bemtree'),
-        bemhtml: require('enb-bemxjst/techs/bemhtml')
+        bemhtml: require('enb-bemxjst/techs/bemhtml'),
+        bemjsonToHtml: require('enb-bemxjst/techs/bemjson-to-html')
     },
     enbBemTechs = require('enb-bem-techs'),
     levels = [
@@ -24,34 +25,23 @@ var isProd = process.env.YENV === 'production';
 isProd || levels.push('development.blocks');
 
 module.exports = function(config) {
-    config.nodes('*.bundles/*', function(nodeConfig) {
+    config.includeConfig('enb-bem-examples');
+
+    var examples = config.module('enb-bem-examples') // Создаём конфигуратор сетов
+        .createConfigurator('examples');             //  в рамках `examples`-таска.
+
+    examples.configure({
+        destPath: 'common.tests',
+        levels: ['common.blocks'],
+        techSuffixes: ['tests'],
+        fileSuffixes: ['bemjson.js']
+    });
+
+    config.nodes('{*.tests/*/*,*.bundles/*}', function(nodeConfig) {
         nodeConfig.addTechs([
-            // essential
             [enbBemTechs.levels, { levels: levels }],
-            [techs.fileProvider, { target: '?.bemdecl.js' }],
             [enbBemTechs.deps],
             [enbBemTechs.files],
-
-            // css
-            [techs.stylus, {
-                target: '?.no-grid.css',
-                sourcemap: false,
-                autoprefixer: {
-                    browsers: ['ie >= 10', 'last 2 versions', 'opera 12.1', '> 2%']
-                }
-            }],
-
-            [require('sharps').enb, {
-                config: {
-                    maxWidth: '1100px',
-                    gutter: '10px',
-                    flex: 'flex'
-                },
-                source: '?.no-grid.css' // there is the source
-            }],
-
-            // bemtree
-            [techs.bemtree, { sourceSuffixes: ['bemtree', 'bemtree.js'] }],
 
             // templates
             [techs.bemhtml, { sourceSuffixes: ['bemhtml', 'bemhtml.js'] }],
@@ -78,6 +68,57 @@ module.exports = function(config) {
                 forceBaseTemplates: true
             }],
 
+            // css
+            [techs.stylus, {
+                target: '?.no-grid.css',
+                sourcemap: false,
+                autoprefixer: {
+                    browsers: ['ie >= 10', 'last 2 versions', 'opera 12.1', '> 2%']
+                }
+            }],
+
+            [require('sharps').enb, {
+                config: {
+                    maxWidth: '1100px',
+                    gutter: '10px',
+                    flex: 'flex'
+                },
+                source: '?.no-grid.css' // there is the source
+            }],
+
+            // js
+            [techs.browserJs, { includeYM: true }],
+            [techs.fileMerge, {
+                target: '?.js',
+                sources: ['?.browser.js', '?.browser.bemhtml.js']
+            }],
+
+            // borschik
+            [techs.borschik, { source: '?.js', target: '?.min.js', minify: isProd }],
+            [techs.borschik, { source: '?.css', target: '?.min.css', minify: isProd }],
+        ]);
+    });
+
+    config.nodes('*.tests/*/*', function(nodeConfig) {
+        nodeConfig.addTechs([
+            // [techs.fileProvider, { target: '?.bemjson.js' }],
+
+            [enbBemTechs.bemjsonToBemdecl],
+
+            [techs.bemjsonToHtml]
+        ]);
+
+        nodeConfig.addTargets(['?.html', '?.min.js', '?.min.css']);
+    });
+
+    config.nodes('*.bundles/*', function(nodeConfig) {
+        nodeConfig.addTechs([
+            [techs.fileProvider, { target: '?.bemdecl.js' }],
+
+            // bemtree
+            [techs.bemtree, { sourceSuffixes: ['bemtree', 'bemtree.js'] }],
+
+            // client templates
             [enbBemTechs.depsByTechToBemdecl, {
                 target: '?.bemtree-tmpl.bemdecl.js',
                 sourceTech: 'js',
@@ -98,17 +139,6 @@ module.exports = function(config) {
                 sourceSuffixes: ['bemtree', 'bemtree.js'],
                 forceBaseTemplates: true
             }],
-
-            // js
-            [techs.browserJs, { includeYM: true }],
-            [techs.fileMerge, {
-                target: '?.js',
-                sources: ['?.browser.js', '?.browser.bemhtml.js', '?.browser.bemtree.js']
-            }],
-
-            // borschik
-            [techs.borschik, { source: '?.js', target: '?.min.js', minify: isProd }],
-            [techs.borschik, { source: '?.css', target: '?.min.css', minify: isProd }],
 
             [techs.fileCopy, { source: '?.min.js', target: '../../static/?.min.js' }],
             [techs.fileCopy, { source: '?.min.css', target: '../../static/?.min.css' }]
