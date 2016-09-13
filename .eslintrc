@@ -4,7 +4,8 @@
     "pedant"
   ],
   "globals": {
-    "modules": false
+    "modules": false,
+    "gemini": false
   },
   "parserOptions": {
     "ecmaVersion": 6
