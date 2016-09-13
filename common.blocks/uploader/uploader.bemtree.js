@@ -6,6 +6,15 @@ block('uploader').content()(function () {
         {
             elem: 'template-wrapper',
             content: this.ctx.template
+        },
+        {
+            elem: 'progress-overlay'
+        },
+        {
+            elem: 'progress-bar'
+        },
+        {
+            elem: 'progress-percents'
         }
     ];
 });
