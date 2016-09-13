@@ -21,6 +21,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "lodash": "^4.15.0",
+    "meta-scrape": "0.0.4",
     "minimist": "^1.2.0",
     "moment": "^2.14.1",
     "mongoose": "^4.5.8",

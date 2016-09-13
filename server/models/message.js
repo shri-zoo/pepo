@@ -3,6 +3,7 @@ var moment = require('moment');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
 var postEntity = require('post-entity');
+var MetaScrape = require('meta-scrape');
 var sanitizeSetter = require('./utils/sanitize-setter');
 var postEntityTypes = require('../../isomorphic/post-entity-types');
 
@@ -48,6 +49,9 @@ var MessageSchema = new Schema({
     },
     geo: GeoFieldSchema,
     image: String,
+    website: {
+        type: Schema.Types.ObjectId, ref: 'WebsiteInfo', default: null
+    },
     replies: [{ type: Schema.Types.ObjectId, ref: 'Message', default: []}]
 }, {
     timestamps: true,
@@ -59,6 +63,8 @@ MessageSchema.virtual('createdAtAgo').get(function () {
 });
 
 MessageSchema.plugin(mongoosePaginate);
+MessageSchema.pre('save', preSaveHook);
+MessageSchema.post('save', postSaveHook);
 mongoose.model('Message', MessageSchema);
 
 function textSetter(value) {
@@ -85,4 +91,86 @@ function textGetter(value) {
                 return '';
         }
     }).join('');
+}
+
+function preSaveHook(next) {
+    // if exists image or geo attachment, then don't try load website dataд
+    if (this.image || this.geo) {
+        return next();
+    }
+
+    var _this = this;
+    var docObj = this.toObject({ getters: false });
+    var websiteUrl = docObj.text.find(function (entity) {
+        return entity.type === 'link';
+    });
+    var WebsiteInfo = mongoose.model('WebsiteInfo');
+
+    if (websiteUrl) {
+        return WebsiteInfo
+            .findOne({ url: websiteUrl.raw }, '_id')
+            .then(function (doc) {
+                if (doc) {
+                    return doc;
+                }
+
+                return (new WebsiteInfo({ url: websiteUrl.raw, isLoading: true })).save();
+            })
+            .then(function (websiteInfoDoc) {
+                _this.website = websiteInfoDoc._id;
+                next();
+            })
+            .catch(function (error) {
+                console.error('Error on WebsiteInfo#findOne: %s. Error: %s', websiteUrl, error.stack); // eslint-disable-line max-len, no-console
+                next();
+            });
+    }
+
+    next();
+}
+
+function postSaveHook(doc) {
+    var WebsiteInfo = mongoose.model('WebsiteInfo');
+
+    WebsiteInfo
+        .findOne({ _id: doc.website }, '_id url isLoading')
+        .then(function (doc) {
+            if (!doc) {
+                return Promise.reject('Can\'t load website info in postSaveHook');
+            }
+
+            if (doc.isLoading) {
+                return scrapeWebsite(doc.url);
+            }
+        })
+        .then(function (scrapedData) {
+            return WebsiteInfo.findOneAndUpdate(
+                { _id: doc.website },
+                Object.assign({ isLoading: false }, scrapedData),
+                { runValidators: true }
+            );
+        })
+        .catch(function (error) {
+            console.error('Can\'t scrape data for url: %s. Error: %s', doc.website, error.stack); // eslint-disable-line max-len, no-console
+        });
+}
+
+function scrapeWebsite(url) {
+    return new Promise(function (resolve, reject) {
+        const metaScrape = new MetaScrape(url);
+
+        metaScrape
+            .on('fetch', function () {
+                resolve({
+                    url: metaScrape.url,
+                    rootUrl: metaScrape.rootUrl,
+                    title: metaScrape.title,
+                    description: metaScrape.description,
+                    image: metaScrape.image,
+                    images: metaScrape.images
+                });
+            })
+            .on('error', reject)
+            .fetch();
+    });
 }

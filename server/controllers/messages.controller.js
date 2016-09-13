@@ -49,7 +49,7 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             Message
                 .paginate(query, {
-                    populate: ['user', 'replies'],
+                    populate: ['user', 'replies', 'website'],
                     offset: pagination.offset,
                     limit: pagination.limit,
                     sort: '-createdAt'
@@ -87,7 +87,7 @@ exports.getLoadOne = function (req, res) {
 
     Message
         .findOne({ _id: req.params.id })
-        .populate(['replies', 'user'])
+        .populate(['replies', 'user', 'website'])
         .then(function (message) {
             if (message === null) {
                 return res.sendStatus(404);

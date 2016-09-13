@@ -55,6 +55,9 @@ exports.getMessage = function (req, res, next) {
             },
             {
                 path: 'user'
+            },
+            {
+                path: 'website'
             }
         ])
         .then(function (message) {
