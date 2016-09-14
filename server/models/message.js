@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
+var fetch = require('node-fetch');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
 var postEntity = require('post-entity');
@@ -94,39 +95,57 @@ function textGetter(value) {
 }
 
 function preSaveHook(next) {
-    // if exists image or geo attachment, then don't try load website dataд
-    if (this.image || this.geo) {
-        return next();
-    }
-
     var _this = this;
     var docObj = this.toObject({ getters: false });
-    var websiteUrl = docObj.text.find(function (entity) {
-        return entity.type === 'link';
-    });
+    var imageOrGeoExists = this.image || this.geo;
+    var websiteUrl = imageOrGeoExists
+        ? null
+        : docObj.text.find(function (entity) {
+            return entity.type === 'link';
+        });
     var WebsiteInfo = mongoose.model('WebsiteInfo');
+    var promises = [];
 
     if (websiteUrl) {
-        return WebsiteInfo
-            .findOne({ url: websiteUrl.raw }, '_id')
-            .then(function (doc) {
-                if (doc) {
-                    return doc;
-                }
+        promises.push(
+            WebsiteInfo
+                .findOne({ url: websiteUrl.raw }, '_id')
+                .then(function (doc) {
+                    if (doc) {
+                        return doc;
+                    }
 
-                return (new WebsiteInfo({ url: websiteUrl.raw, isLoading: true })).save();
-            })
-            .then(function (websiteInfoDoc) {
-                _this.website = websiteInfoDoc._id;
-                next();
-            })
-            .catch(function (error) {
-                console.error('Error on WebsiteInfo#findOne: %s. Error: %s', websiteUrl, error.stack); // eslint-disable-line max-len, no-console
-                next();
-            });
+                    return (new WebsiteInfo({ url: websiteUrl.raw, isLoading: true })).save();
+                })
+                .then(function (websiteInfoDoc) {
+                    _this.website = websiteInfoDoc._id;
+                })
+                .catch(function (error) {
+                    console.error('Error on WebsiteInfo#findOne: %s. Error: %s', websiteUrl, error.stack); // eslint-disable-line max-len, no-console
+                })
+        );
     }
 
-    next();
+    docObj.text.forEach(function (entity, index) {
+        if (entity.type === 'link') {
+            promises.push(
+                getShortLink(entity.raw).then(function (shortUrl) {
+                    docObj.text[index].raw = shortUrl;
+                })
+            );
+        }
+    });
+
+    Promise
+        .all(promises)
+        .then(function () {
+            _this.text = docObj.text.map(function (entity) { return entity.raw; }).join('');
+            next();
+        })
+        .catch(function (error) {
+            console.error('Some of promises in Message#preSaveHook was rejected. Error: %s', websiteUrl, error.stack); // eslint-disable-line max-len, no-console
+            next();
+        });
 }
 
 function postSaveHook(doc) {
@@ -173,4 +192,14 @@ function scrapeWebsite(url) {
             .on('error', reject)
             .fetch();
     });
+}
+
+function getShortLink(url) {
+    return fetch('https://clck.ru/--?url=' + url)
+        .then(function (res) {
+            return res.text();
+        })
+        .catch(function () {
+            return url;
+        });
 }
