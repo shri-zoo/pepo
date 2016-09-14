@@ -53,10 +53,23 @@
         font-family: layout-font-family;
         margin-top: common-padding;
     }
-        
+
+    &__mention {
+        stylus-mixins__link(theme-link-blue);
+    }
+
+    &__link {
+        stylus-mixins__link(theme-link-blue);
+    }
+
+    &__attachments-container {
+        margin-top: (common-padding / 2);
+    }
+
     &__content-text {
         text-align: left;
-        font-size: 20px;
+        font-size: 18px;
+        word-break: break-word;
         color: theme-text-main;
     }
 

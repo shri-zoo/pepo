@@ -1,6 +1,7 @@
 block('message').content()(function () {
     var block = this.block;
     var message = this.ctx.message;
+    var thereIsAttachment = message.image || message.geo || message.website;
 
     // TODO add label that is reply
 
@@ -69,22 +70,36 @@ block('message').content()(function () {
                     elem: 'content-text',
                     content: message.text
                 },
-                message.image && {
-                    block: 'message-attachment',
-                    mix: { block: block, elem: 'content-image' },
-                    mods: {
-                        type: 'image'
-                    },
-                    src: message.image,
-                    isLink: true
-                },
-                message.geo && {
-                    block: 'message-attachment',
-                    mix: { block: block, elem: 'content-geo' },
-                    mods: {
-                        type: 'geo'
-                    },
-                    geo: message.geo
+                thereIsAttachment && {
+                    block: block,
+                    elem: 'attachments-container',
+                    content: [
+                        message.image && {
+                            block: 'message-attachment',
+                            mix: { block: block, elem: 'content-image' },
+                            mods: {
+                                type: 'image'
+                            },
+                            src: message.image,
+                            isLink: true
+                        },
+                        message.geo && {
+                            block: 'message-attachment',
+                            mix: { block: block, elem: 'content-geo' },
+                            mods: {
+                                type: 'geo'
+                            },
+                            geo: message.geo
+                        },
+                        message.website && {
+                            block: 'message-attachment',
+                            mix: { block: block, elem: 'content-website' },
+                            mods: {
+                                type: 'website'
+                            },
+                            website: message.website
+                        }
+                    ]
                 }
             ]
         }

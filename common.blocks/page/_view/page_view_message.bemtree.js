@@ -4,8 +4,6 @@ block('page').mod('view', 'message')(
         var message = this.data.message;
         var thereAreReplies = !!message.replies.length;
 
-        console.log(message);
-
         return {
             block: 'layout',
             content: [

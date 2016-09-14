@@ -1,5 +1,8 @@
 ({
-    mustDeps: 'stylus-vars',
+    mustDeps: [
+        'stylus-vars',
+        'stylus-mixins'
+    ],
     shouldDeps: [
         {
             block: 'user-info',
@@ -19,7 +22,7 @@
         {
             block: 'message-attachment',
             mods: {
-                type: ['image', 'geo'],
+                type: ['image', 'geo', 'website'],
                 editable: true
             }
         }
