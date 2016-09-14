@@ -1,0 +1,16 @@
+stylus-mixins__link(link-color) {
+    color: link-color;
+    transition: color 0.15s ease-out;
+
+    &:hover {
+        color: darken(link-color, 20%);
+    }
+
+    &:focus {
+        color: darken(link-color, 30%);
+    }
+
+    &:active {
+        color: lighten(link-color, 15%);
+    }
+}
