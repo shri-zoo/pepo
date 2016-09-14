@@ -76,7 +76,6 @@ block('message').content()(function () {
                     content: [
                         message.image && {
                             block: 'message-attachment',
-                            mix: { block: block, elem: 'content-image' },
                             mods: {
                                 type: 'image'
                             },
@@ -85,7 +84,6 @@ block('message').content()(function () {
                         },
                         message.geo && {
                             block: 'message-attachment',
-                            mix: { block: block, elem: 'content-geo' },
                             mods: {
                                 type: 'geo'
                             },
@@ -93,7 +91,6 @@ block('message').content()(function () {
                         },
                         message.website && {
                             block: 'message-attachment',
-                            mix: { block: block, elem: 'content-website' },
                             mods: {
                                 type: 'website'
                             },

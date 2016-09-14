@@ -1,14 +1,19 @@
 .message-attachment {
     &_type_image {
-        max-width: 240px;
-        width: 100%;
-        padding: layout-border-radius;
-        border-radius: layout-border-radius;
-        border: 1px solid layout-border-light-color;
-        font-size: 0;
+        text-align: center;
+    }
+
+    &__link-container {
+        display: inline-block;
     }
 
     &__image {
-        width: 100%;
+        display: block;
+        max-width: 100%;
+        max-height: message-attachment-max-height;
+        margin: 0 auto;
+        padding: layout-border-radius;
+        border-radius: layout-border-radius;
+        border: 1px solid layout-border-light-color;
     }
 }
