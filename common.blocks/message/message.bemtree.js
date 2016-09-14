@@ -94,7 +94,8 @@ block('message').content()(function () {
                             mods: {
                                 type: 'website'
                             },
-                            website: message.website
+                            website: message.website,
+                            js: message.website.isLoading && { website: message.website }
                         }
                     ]
                 }

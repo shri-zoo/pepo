@@ -1,5 +1,8 @@
-block('message-attachment')
-    .mod('type', 'website')(
+block('message-attachment')(
+    elem('website-title').tag()('h5'),
+    elem('website-description').tag()('p'),
+    elem('website-url').tag()('span'),
+    mod('type', 'website')(
         content()(function () {
             var content = applyNext() || [];
             var block = this.block;
@@ -14,6 +17,7 @@ block('message-attachment')
             };
 
             if (website.isLoading) {
+                container.mix.elemMods = { loading: true };
                 container.content.push(
                     {
                         block: 'spin',
@@ -71,4 +75,5 @@ block('message-attachment')
 
             return content;
         })
-    );
+    )
+);

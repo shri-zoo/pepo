@@ -39,6 +39,16 @@
                     type: ['image', 'geo'],
                     editable: true
                 }
+            },
+            {
+                block: 'conf'
+            },
+            {
+                block: 'i-bem',
+                elem: 'dom'
+            },
+            {
+                block: 'jquery'
             }
         ]
     },
