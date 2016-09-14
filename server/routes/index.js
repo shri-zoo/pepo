@@ -3,6 +3,7 @@ var authRoutes = require('./auth');
 var userRoutes = require('./users');
 var messageRoutes = require('./messages');
 var uploaderRoutes = require('./uploader');
+var websiteInfoRoutes = require('./website-info');
 var mainController = require('../controllers/main.controller');
 
 module.exports = function (app) {
@@ -17,6 +18,7 @@ module.exports = function (app) {
         .use('/api/users', isAuth, userRoutes(app))
         .use('/api/messages', isAuth, messageRoutes(app))
         .use('/api/uploader', isAuth, uploaderRoutes(app))
+        .use('/api/website-info', isAuth, websiteInfoRoutes(app))
         .get('/', isAuth, mainController.getIndexPage)
         .get('/search', isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
