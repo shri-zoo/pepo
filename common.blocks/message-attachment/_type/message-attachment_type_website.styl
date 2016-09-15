@@ -1,10 +1,15 @@
 .message-attachment {
-    &__website-container {
-        display: flex;
-        align-items: center;
+    &_type_website {
         padding: layout-border-radius;
         border-radius: layout-border-radius;
         border: 1px solid layout-border-light-color;
+    }
+
+    &__website-container {
+        display: flex;
+        align-items: center;
+        border-radius: (layout-border-radius - 2);
+        background-color: layout-panel-light-bg;
         cursor: pointer;
 
         &_loading {
@@ -38,6 +43,7 @@
 
         @media (max-width: media[tablet]) {
             max-height: message-attachment-max-height;
+            margin: (common-padding / 3) 0;
         }
     }
 

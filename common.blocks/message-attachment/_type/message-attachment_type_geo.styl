@@ -1,7 +1,41 @@
-.message-attachment_type_geo {
-    min-width: 200px;
-    padding: layout-border-radius;
-    border-radius: layout-border-radius;
-    border: 1px solid layout-border-light-color;
-    text-align: center;
+.message-attachment {
+    &_type_geo {
+        text-align: center;
+    }
+
+    &__map-container {
+        display: inline-block;
+        position: relative;
+        padding: layout-border-radius;
+        border-radius: layout-border-radius;
+        border: 1px solid layout-border-light-color;
+    }
+
+    &__map-image {
+        display: block;
+        max-width: 100%;
+        max-height: 270px; // from message-attachment_type_geo.bemhmtl.js
+        // reserve rectangle for coords and remove button
+        min-width: 200px;
+        min-height: 50px;
+    }
+
+    &__map-coords-container {
+        position: absolute;
+        bottom: layout-border-radius;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    &__map-coords {
+        display: inline-block;
+        padding: layout-border-radius (layout-border-radius * 2);
+        border-top-left-radius: layout-border-radius;
+        border-top-right-radius: layout-border-radius;
+        font-family: layout-font-family;
+        font-size: 12px;
+        color: theme-text-muted;
+        background-color: layout-secondary-bg;
+    }
 }
