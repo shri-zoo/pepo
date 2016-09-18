@@ -28,7 +28,8 @@ block('form-username-select')(
                     theme: 'islands',
                     size: 'xl',
                     width: 'available',
-                    'has-clear': true
+                    'has-clear': true,
+                    focused: true
                 },
                 placeholder: 'Введите имя пользователя',
                 name: 'username'
