@@ -1,16 +1,19 @@
-block('user-info').mod('subscribe', true)(
+block('subscribe')(
     js()(true),
     content()(function () {
-        var tree = applyNext();
+        var block = this.block;
         var subscribed = this.ctx.subscribed;
 
-        tree.push(
+        return [
             {
                 block: 'button',
                 mix: {
-                    block: this.block,
-                    elem: 'subscribe-button',
-                    elemMods: { hidden: subscribed }
+                    block: block,
+                    elem: 'button',
+                    elemMods: {
+                        type: 'subscribe',
+                        hidden: subscribed
+                    }
                 },
                 mods: {
                     theme: 'islands',
@@ -22,9 +25,12 @@ block('user-info').mod('subscribe', true)(
             {
                 block: 'button',
                 mix: {
-                    block: this.block,
-                    elem: 'unsubscribe-button',
-                    elemMods: { hidden: !subscribed }
+                    block: block,
+                    elem: 'button',
+                    elemMods: {
+                        type: 'unsubscribe',
+                        hidden: !subscribed
+                    }
                 },
                 mods: {
                     theme: 'islands',
@@ -32,8 +38,6 @@ block('user-info').mod('subscribe', true)(
                 },
                 text: 'Отписаться'
             }
-        );
-
-        return tree;
+        ];
     })
 );

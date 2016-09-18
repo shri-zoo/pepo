@@ -1,0 +1,40 @@
+.user {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: media[phone]) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    &__user-data {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    &__userpic {
+        flex-shrink: 0;
+        margin-right: (common-padding / 3);
+    }
+
+    &__user-info {
+        margin-right: (common-padding / 3);
+    }
+
+    &__subscribe-button-container {
+        margin-left: auto;
+
+        @media (max-width: media[phone]) {
+            margin-left: 0;
+        }
+    }
+
+    &__subscribe-button {
+        min-width: 120px;
+
+        @media (max-width: media[phone]) {
+            margin-top: (common-padding / 2);
+            width: 100%;
+        }
+    }
+}

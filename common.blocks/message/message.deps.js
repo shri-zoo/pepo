@@ -5,8 +5,7 @@
     ],
     shouldDeps: [
         {
-            block: 'user-info',
-            mods: { 'text-in-column': true }
+            block: 'user-info'
         },
         {
             block: 'link',

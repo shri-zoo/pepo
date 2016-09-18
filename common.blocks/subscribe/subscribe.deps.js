@@ -1,6 +1,10 @@
 ({
     shouldDeps: [
         {
+            block: 'i-bem',
+            elem: 'dom'
+        },
+        {
             block: 'button',
             mods: {
                 theme: 'islands',

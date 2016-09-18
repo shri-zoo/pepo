@@ -1,6 +1,18 @@
 .message {
     display: flex;
-    flex-direction: column;
+
+    &__column {
+        &_type_userpic {
+            flex-basis: 48px;
+            margin-right: (common-padding / 3);
+        }
+
+        &_type_message-data {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+    }
 
     &__header {
         display: flex;
