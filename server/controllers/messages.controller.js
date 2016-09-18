@@ -9,8 +9,8 @@ exports.postCreate = function (req, res) {
     message
         .save()
         .then(function (data) {
-            if (data.parentId) {
-                return Message.findOneAndUpdate({ _id: data.parentId }, { $push: { replies: data._id }});
+            if (data.parent) {
+                return Message.findOneAndUpdate({ _id: data.parent }, { $push: { replies: data._id }});
             }
 
             return data;
@@ -49,7 +49,24 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             Message
                 .paginate(query, {
-                    populate: ['user', 'replies', 'website'],
+                    populate: [
+                        {
+                            path: 'parent',
+                            populate: {
+                                path: 'user',
+                                model: 'User'
+                            }
+                        },
+                        {
+                            path: 'user'
+                        },
+                        {
+                            path: 'replies'
+                        },
+                        {
+                            path: 'website'
+                        }
+                    ],
                     offset: pagination.offset,
                     limit: pagination.limit,
                     sort: '-createdAt'

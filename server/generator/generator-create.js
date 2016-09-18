@@ -9,6 +9,7 @@ var postEntity = require('post-entity');
 var postEntityTypes = require('../../isomorphic/post-entity-types');
 
 program
+    .option('-d, --database [n]', 'database name')
     .option('-u, --users <n>', 'users count', parseInt)
     .option('-m, --messages <n>', 'messages count', parseInt)
     .parse(process.argv);
@@ -19,7 +20,7 @@ if (!_.isNumber(program.users) || !_.isNumber(program.messages)) {
 }
 
 
-db.connect(function (err, mongoose) {
+db.connect(program.database, function (err, mongoose) {
     if (err) {
         console.error('error on db connection', err.stack); // eslint-disable-line no-console
         process.exit(1); // eslint-disable-line no-process-exit
@@ -91,7 +92,7 @@ db.connect(function (err, mongoose) {
                     randomMessage = getRandomItem(otherUsersMessages);
 
                     message.replies.push(randomMessage._id);
-                    randomMessage.parentId = message._id;
+                    randomMessage.parent = message._id;
                 }
             });
 
@@ -183,7 +184,7 @@ function generateMessageData(userId) {
 
     return {
         user: userId,
-        parentId: null,
+        parent: null,
         text: text,
         replies: [],
         image: image,

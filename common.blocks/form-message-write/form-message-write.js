@@ -176,8 +176,8 @@ modules.define(
                 var _this = this;
                 var messageData = { text: this.text };
 
-                if (this.params.parentId) {
-                    messageData.parentId = this.params.parentId;
+                if (this.params.parent) {
+                    messageData.parent = this.params.parent;
                 }
 
                 if (this.image) {

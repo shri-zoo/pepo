@@ -37,7 +37,10 @@ var GeoFieldSchema = new Schema({
 });
 
 var MessageSchema = new Schema({
-    parentId: Schema.Types.ObjectId,
+    parent: {
+        type: Schema.Types.ObjectId,
+        ref: 'Message'
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',

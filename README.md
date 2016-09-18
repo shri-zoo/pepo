@@ -8,7 +8,7 @@ enb make
 
 ### Генерация тестовых данных
 ```
-./server/generator/generator.js create -u 20 -m 10 - Создание 20 тестовых пользователей и по 10 сообщений для каждого
+./server/generator/generator.js create -u 20 -m 10 - Создание 20 тестовых пользователей и по 10 сообщений для каждого. Также ключом -d(--database) можно изменить базу для наполнения (По-умолчанию это база из dev-конфига).
 ./server/generator/generator.js drop - Удаление коллекций users && messages
 ```
 
