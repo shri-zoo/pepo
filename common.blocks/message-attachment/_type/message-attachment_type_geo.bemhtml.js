@@ -34,7 +34,7 @@ block('message-attachment').mod('type', 'geo').content()(function () {
                 content: {
                     block: block,
                     elem: 'map-coords',
-                    content: latitude + '&deg;, ' + longitude + '&deg;'
+                    content: parseFloat(latitude).toFixed(5) + '&deg;, ' + parseFloat(longitude).toFixed(5) + '&deg;'
                 }
             }
         ]
@@ -43,6 +43,7 @@ block('message-attachment').mod('type', 'geo').content()(function () {
     if (this.ctx.isLink) {
         image = {
             block: 'link',
+            mix: { block: block, elem: 'link' },
             attrs: {
                 target: '_blank',
                 rel: 'nofollow'

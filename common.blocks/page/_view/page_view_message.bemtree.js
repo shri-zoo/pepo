@@ -2,6 +2,7 @@ block('page').mod('view', 'message')(
     content()(function () {
         var block = this.block;
         var message = this.data.message;
+        var parent = message.parent;
         var thereAreReplies = !!message.replies.length;
 
         return {
@@ -12,15 +13,16 @@ block('page').mod('view', 'message')(
                 },
                 {
                     block: 'body',
+                    noPadding: true,
                     content: [
+                        parent && {
+                            block: 'message',
+                            mods: { style: 'parent' },
+                            message: parent
+                        },
                         {
                             block: 'message',
                             message: message
-                        },
-                        thereAreReplies && {
-                            block: block,
-                            elem: 'replies-header',
-                            content: 'Ответы:'
                         },
                         thereAreReplies && {
                             block: block,
@@ -29,7 +31,9 @@ block('page').mod('view', 'message')(
                                 return {
                                     block: 'message',
                                     mods: { style: 'reply' },
-                                    message: message
+                                    mix: { block: block, elem: 'reply' },
+                                    message: message,
+                                    hideParent: true
                                 };
                             })
                         }

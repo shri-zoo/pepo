@@ -11,6 +11,7 @@ block('page')
                 },
                 {
                     block: 'body',
+                    noPadding: true,
                     content: [
                         {
                             block: this.block,

@@ -15,6 +15,7 @@ block('message-attachment').mod('type', 'image').content()(function () {
     if (this.ctx.isLink) {
         image = {
             block: 'link',
+            mix: { block: block, elem: 'link' },
             attrs: {
                 target: '_blank',
                 rel: 'nofollow'

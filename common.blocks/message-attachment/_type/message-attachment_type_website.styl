@@ -9,7 +9,7 @@
         display: flex;
         align-items: center;
         border-radius: (layout-border-radius - 2);
-        background-color: layout-panel-light-bg;
+        background-color: layout-secondary-bg;
         cursor: pointer;
 
         &_loading {
@@ -49,17 +49,20 @@
 
     &__website-title {
         margin: 0;
-        color: theme-text-main;
+        font-family: layout-font-family;
         font-size: 16px;
         font-weight: bold;
+        color: theme-text-main;
     }
 
     &__website-description {
-        margin: 15px 0;
         color: theme-text-muted;
+        font-family: layout-font-family;
+        margin: 15px 0;
     }
 
     &__website-url {
+        font-family: layout-font-family;
         color: theme-link;
     }
 }

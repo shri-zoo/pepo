@@ -3,20 +3,23 @@
         text-align: center;
     }
 
+    &__link {
+        display: block
+    }
+
     &__map-container {
         display: inline-block;
         position: relative;
         padding: layout-border-radius;
         border-radius: layout-border-radius;
         border: 1px solid layout-border-light-color;
+        background-color: layout-secondary-bg;
     }
 
     &__map-image {
         display: block;
         max-width: 100%;
         max-height: 270px; // from message-attachment_type_geo.bemhmtl.js
-        // reserve rectangle for coords and remove button
-        min-width: 200px;
         min-height: 50px;
     }
 

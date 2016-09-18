@@ -1,65 +1,134 @@
 block('message').content()(function () {
     var block = this.block;
-    var message = this.ctx.message;
+    var ctx = this.ctx;
+    var message = ctx.message;
+    var parent = message.parent;
     var user = message.user;
     var thereIsAttachment = message.image || message.geo || message.website;
 
-    // TODO add label that is reply
-
     return [
-        {
-            elem: 'column',
-            elemMods: { type: 'userpic' },
-            content: {
-                block: 'userpic',
-                size: 48,
-                src: user.avatar,
-                username: user.username
-            }
-        },
-        {
-            elem: 'column',
-            elemMods: { type: 'message-data' },
+        (parent && !ctx.hideParent) &&  {
+            block: block,
+            elem: 'columns',
+            elemMods: { reply: true },
             content: [
                 {
-                    elem: 'header',
+                    elem: 'column',
+                    elemMods: { type: 'left' },
+                    content: {
+                        block: 'icon',
+                        mods: {
+                            type: 'reply'
+                        },
+                        mix: { block: block, elem: 'reply-text-icon' }
+                    }
+                },
+                {
+                    elem: 'column',
+                    elemMods: { type: 'right' },
                     content: [
                         {
-                            block: 'user-info',
-                            mix: { block: block, elem: 'user-info' },
-                            user: message.user
+                            block: block,
+                            elem: 'reply-text',
+                            content: [
+                                {
+                                    block: 'link',
+                                    mods: {
+                                        theme: 'islands',
+                                        size: 'l'
+                                    },
+                                    mix: { block: block, elem: 'reply-text-link' },
+                                    url: '/m/' + parent._id,
+                                    content: ' в ответ пользователю @' + parent.user.username
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            block: block,
+            elem: 'columns',
+            content: [
+                {
+                    elem: 'column',
+                    elemMods: { type: 'left' },
+                    content: {
+                        block: 'userpic',
+                        mix: { block: block, elem: 'userpic' },
+                        src: user.avatar,
+                        username: user.username
+                    }
+                },
+                {
+                    elem: 'column',
+                    elemMods: { type: 'right' },
+                    content: [
+                        {
+                            elem: 'header',
+                            content: [
+                                {
+                                    block: 'user-info',
+                                    mix: { block: block, elem: 'user-info' },
+                                    user: message.user
+                                }
+                            ]
+                        },
+                        {
+                            elem: 'content',
+                            content: [
+                                {
+                                    elem: 'content-text',
+                                    content: message.text
+                                },
+                                thereIsAttachment && {
+                                    block: block,
+                                    elem: 'attachments-container',
+                                    content: [
+                                        message.image && {
+                                            block: 'message-attachment',
+                                            mods: {
+                                                type: 'image'
+                                            },
+                                            src: message.image,
+                                            isLink: true
+                                        },
+                                        message.geo && {
+                                            block: 'message-attachment',
+                                            mods: {
+                                                type: 'geo'
+                                            },
+                                            geo: message.geo,
+                                            isLink: true
+                                        },
+                                        message.website && {
+                                            block: 'message-attachment',
+                                            mods: {
+                                                type: 'website'
+                                            },
+                                            website: message.website,
+                                            js: message.website.isLoading && { website: message.website }
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             block: block,
-                            elem: 'header-right',
+                            elem: 'footer',
                             content: [
                                 {
-                                    block: block,
-                                    elem: 'header-middle',
-                                    content: [
-                                        {
-                                            block: 'link',
-                                            mods: {
-                                                theme: 'islands',
-                                                size: 'l'
-                                            },
-                                            mix: { block: block, elem: 'date' },
-                                            url: '/m/' + message._id,
-                                            content: message.createdAtAgo
-                                        },
-                                        !!message.parent && {
-                                            block: 'link',
-                                            mods: {
-                                                theme: 'islands',
-                                                size: 'l'
-                                            },
-                                            mix: { block: block, elem: 'is-reply' },
-                                            url: '/m/' + message.parent,
-                                            content: 'Это ответ на другое сообщение'
-                                        }
-                                    ]
+                                    block: 'link',
+                                    mods: {
+                                        theme: 'islands',
+                                        size: 'l'
+                                    },
+                                    mix: { block: block, elem: 'date' },
+                                    url: '/m/' + message._id,
+                                    content: message.createdAtAgo
                                 },
-                                {
+                                !ctx.hideReply && {
                                     block: 'link',
                                     mix: { block: block, elem: 'reply' },
                                     mods: {
@@ -67,50 +136,18 @@ block('message').content()(function () {
                                         size: 'xl'
                                     },
                                     url: '/m/' + message._id + '/reply',
-                                    content: {
-                                        block: 'icon',
-                                        size: 32,
-                                        mods: { type: 'reply' }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    elem: 'content',
-                    content: [
-                        {
-                            elem: 'content-text',
-                            content: message.text
-                        },
-                        thereIsAttachment && {
-                            block: block,
-                            elem: 'attachments-container',
-                            content: [
-                                message.image && {
-                                    block: 'message-attachment',
-                                    mods: {
-                                        type: 'image'
-                                    },
-                                    src: message.image,
-                                    isLink: true
-                                },
-                                message.geo && {
-                                    block: 'message-attachment',
-                                    mods: {
-                                        type: 'geo'
-                                    },
-                                    geo: message.geo,
-                                    isLink: true
-                                },
-                                message.website && {
-                                    block: 'message-attachment',
-                                    mods: {
-                                        type: 'website'
-                                    },
-                                    website: message.website,
-                                    js: message.website.isLoading && { website: message.website }
+                                    content: [
+                                        {
+                                            block: 'icon',
+                                            size: 24,
+                                            mods: { type: 'reply' }
+                                        },
+                                        {
+                                            block: block,
+                                            elem: 'replies-count',
+                                            content: ' ' + message.replies.length
+                                        }
+                                    ]
                                 }
                             ]
                         }

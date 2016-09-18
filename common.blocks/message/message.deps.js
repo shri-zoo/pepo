@@ -5,6 +5,12 @@
     ],
     shouldDeps: [
         {
+            block: 'icon',
+            mods: {
+                type: 'reply'
+            }
+        },
+        {
             block: 'user-info'
         },
         {
