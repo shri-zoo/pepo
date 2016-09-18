@@ -1,15 +1,27 @@
 block('username')(
-    tag()(function () {
-        return this.ctx.url ? 'a' : 'span';
-    }),
-    attrs()(function () {
-        var attrs = applyNext() || {};
+    content()(function () {
+        var url = this.ctx.url;
 
-        if (this.ctx.url) {
-            attrs.href = this.ctx.url;
+        if (url) {
+            return {
+                block: 'link',
+                mods: {
+                    theme: 'islands',
+                    size: 'l'
+                },
+                mix: { block: this.block, elem: 'text' },
+                url: url,
+                content: this.ctx.content
+            };
         }
 
-        return attrs;
+        return {
+            elem: 'text',
+            content: this.ctx.content
+        };
+    }),
+    elem('text').tag()(function () {
+        return this.ctx.elemMods && this.ctx.elemMods.link ? 'a' : 'span';
     })
 );
 
