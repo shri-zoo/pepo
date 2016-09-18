@@ -113,11 +113,6 @@ modules
                                 _this._onRequestStateChange(false);
                             });
                     }
-                },
-                {
-                    live: function () {
-                        this.liveInitOnBlockInsideEvent({ modName: 'focused', modVal: true }, 'input');
-                    }
                 }
             ));
         }
