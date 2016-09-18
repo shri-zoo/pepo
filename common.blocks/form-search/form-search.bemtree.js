@@ -30,7 +30,7 @@ block('form-search')(
                         type: 'search',
                         'has-clear': true
                     },
-                    placeholder: 'Начни поиск',
+                    placeholder: 'Поиск по имени пользователя',
                     name: 'search'
                 }
             },

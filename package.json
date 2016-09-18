@@ -60,7 +60,6 @@
     "nodemon": "^1.9.2",
     "pm2": "^1.1.3",
     "sanitize-html": "^1.13.0",
-    "sharps": "^3.0.3",
     "stylint": "psdcoder/stylint#2a7e0673b0d45af011b097fdf552a90df4eb552d",
     "ym": "^0.1.2"
   },
