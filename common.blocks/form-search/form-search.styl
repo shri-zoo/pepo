@@ -1,7 +1,15 @@
 .form-search {
     half-common-padding = common-padding / 2;
 
+    &__username-input-container {
+        padding: common-padding common-padding 0;
+
+        @media (max-width: media[tablet]) {
+            padding: half-common-padding half-common-padding 0;
+        }
+    }
+
     &__infinite-list {
-        margin-top: common-padding;
+        margin-top: half-common-padding;
     }
 }

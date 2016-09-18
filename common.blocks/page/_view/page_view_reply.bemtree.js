@@ -11,15 +11,17 @@ block('page').mod('view', 'reply')(
                 },
                 {
                     block: 'body',
+                    noPadding: true,
                     content: [
                         {
                             block: 'message',
-                            message: message
+                            message: message,
+                            hideReply: true
                         },
                         {
                             block: 'form-message-write',
                             mix: { block: block, elem: 'reply-form' },
-                            js: { parentId: message._id }
+                            js: { parent: message._id }
                         }
                     ]
                 }

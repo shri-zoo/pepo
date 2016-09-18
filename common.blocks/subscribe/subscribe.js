@@ -1,10 +1,10 @@
-modules.define('user-info', ['conf', 'jquery'], function (provide, conf, $, UserInfo) {
-    provide(UserInfo.decl({ modName: 'subscribe', modVal: true }, {
+modules.define('subscribe', ['i-bem__dom', 'conf', 'jquery'], function (provide, BEMDOM, conf, $) {
+    provide(BEMDOM.decl(this.name, {
         onSetMod: {
             js: {
                 inited: function () {
-                    this.subscribeBtn = this.elem('subscribe-button');
-                    this.unsubscribeBtn = this.elem('unsubscribe-button');
+                    this.subscribeBtn = this.elem('button', 'type', 'subscribe');
+                    this.unsubscribeBtn = this.elem('button', 'type', 'unsubscribe');
 
                     this.bindTo(this.subscribeBtn, 'click', this._onClick);
                     this.bindTo(this.unsubscribeBtn, 'click', this._onClick);
@@ -13,7 +13,7 @@ modules.define('user-info', ['conf', 'jquery'], function (provide, conf, $, User
         },
         _onClick: function () {
             var _this = this;
-            var activeButton = this.hasMod(this.subscribed, 'hidden')
+            var activeButton = this.hasMod(this.subscribeBtn, 'hidden')
                 ? this.unsubscribeBtn
                 : this.subscribeBtn;
 

@@ -1,42 +1,18 @@
 .user-info {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-    @media (max-width: media[tablet]) {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    &__left {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    &__userpic {
-        margin-right: 10px;
-    }
-
-    &__text-elems {
-        font-family: layout-font-family;
-        margin-bottom: auto;
-        flex-shrink: 100;
-        text-align: left;
-
-        @media (max-width: media[tablet]) {
-            margin-bottom: 0;
-        }
-    }
+    flex-direction: column;
+    align-items: flex-start;
 
     &__fullname {
-        margin-right: 10px;
+        margin-bottom: 2px;
+        font-family: layout-font-family;
+        font-size: 15px;
         font-weight: bold;
-        font-size: 16px;
         color: theme-text-main;
     }
 
     &__username {
+        font-family: layout-font-family;
         font-size: 13px;
     }
 }

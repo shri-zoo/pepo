@@ -7,19 +7,25 @@ var walk = require('../lib/walk');
 
 mongoose.Promise = global.Promise;
 
-module.exports.connect = function (cb) {
+module.exports.connect = function (databaseName, cb) {
+    var dbUri = conf.db.uri;
+
+    if (databaseName) {
+        dbUri = dbUri.replace(/\/[^\/]+$/, '/' + databaseName);
+    }
+
     mongoose.connection.on('error', function (err) {
         console.error('DB: error', err); // eslint-disable-line no-console
         cb(err);
     });
 
     mongoose.connection.once('open', function () {
-        console.log('DB: connected to %s', conf.db.uri); // eslint-disable-line no-console
+        console.log('DB: connected to %s', dbUri); // eslint-disable-line no-console
         cb(null, mongoose);
     });
 
     walk(path.join(ROOT, 'models'), require);
-    mongoose.connect(conf.db.uri, conf.db.options);
+    mongoose.connect(dbUri, conf.db.options);
 };
 
 module.exports.disconnect = function () {

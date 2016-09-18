@@ -8,6 +8,7 @@ block('page').mod('view', 'search')(
                 },
                 {
                     block: 'body',
+                    noPadding: true,
                     content: [
                         {
                             block: 'form-search'

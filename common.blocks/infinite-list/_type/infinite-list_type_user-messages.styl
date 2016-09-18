@@ -2,12 +2,10 @@
     half-common-padding = (common-padding / 2);
 
     .infinite-list__item + .infinite-list__item {
-        margin-top: (common-padding + half-common-padding);
+        border-top: 1px solid layout-border-light-color ;
 
         @media (max-width: media[tablet]) {
-            margin-top: half-common-padding;
             padding-top: half-common-padding;
-            border-top: 1px solid layout-border-light-color ;
         }
     }
 }

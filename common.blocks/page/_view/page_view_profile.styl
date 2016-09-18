@@ -1,5 +1,9 @@
 .page_view_profile {
     .page__subheader {
-        margin-bottom: common-padding;
+        padding: common-padding;
+
+        @media (max-width: media[tablet]) {
+            padding: (common-padding / 2);
+        }
     }
 }

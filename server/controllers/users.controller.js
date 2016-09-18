@@ -68,17 +68,14 @@ exports.getLoadList = function (req, res) {
                         limit: result.limit,
                         offset: result.offset,
                         html: result.docs.map(function (user) {
-                            return bem.applyHtml(bem.applyTree({
-                                block: 'user-info',
-                                mods: { subscribe: true },
-                                mix: {
-                                    block: 'infinite-list',
-                                    elem: 'item'
-                                },
-                                user: user,
-                                js: { userId: user._id },
-                                subscribed: sessionUser.subscribedTo.indexOf(user._id.toString()) !== -1
-                            }));
+                            return bem.applyHtml(bem.applyTree([
+                                {
+                                    block: 'user',
+                                    mix: { block: 'infinite-list', elem: 'item' },
+                                    user: user,
+                                    subscribed: sessionUser.subscribedTo.indexOf(user._id.toString()) !== -1
+                                }
+                            ]));
                         }).join('')
                     });
                 })

@@ -15,7 +15,7 @@ module.exports = function (app) {
         var query = req.query;
         var user = req.user;
 
-        var cacheKey = req.originalUrl + (context ? JSON.stringify(context) : '') + (user ? user._id : '');
+        var cacheKey = req.originalUrl + (context ? JSON.stringify(context) : '') + (user ? JSON.stringify(user) : '');
         var cached = cache[cacheKey];
 
         if (useCache && cached && (new Date() - cached.timestamp < conf.templates.cacheTTL)) {

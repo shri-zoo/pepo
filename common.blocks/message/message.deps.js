@@ -1,9 +1,17 @@
 ({
-    mustDeps: 'stylus-vars',
+    mustDeps: [
+        'stylus-vars',
+        'stylus-mixins'
+    ],
     shouldDeps: [
         {
-            block: 'user-info',
-            mods: { 'text-in-column': true }
+            block: 'icon',
+            mods: {
+                type: 'reply'
+            }
+        },
+        {
+            block: 'user-info'
         },
         {
             block: 'link',
@@ -19,7 +27,7 @@
         {
             block: 'message-attachment',
             mods: {
-                type: ['image', 'geo'],
+                type: ['image', 'geo', 'website'],
                 editable: true
             }
         }

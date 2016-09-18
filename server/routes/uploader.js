@@ -2,10 +2,10 @@ var Router = require('express').Router;
 var uploaderController = require('../controllers/uploader.controller');
 
 module.exports = function () {
-    var usersRoutes = new Router();
+    var uploaderRoutes = new Router();
 
-    usersRoutes
+    uploaderRoutes
         .post('/:type', uploaderController.postUpload);
 
-    return usersRoutes;
+    return uploaderRoutes;
 };

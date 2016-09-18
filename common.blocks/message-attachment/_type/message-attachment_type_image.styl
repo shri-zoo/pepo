@@ -1,14 +1,23 @@
 .message-attachment {
+    &__link {
+        display: block
+    }
+
     &_type_image {
-        max-width: 240px;
-        width: 100%;
+        text-align: center;
+    }
+
+    &__image-container {
+        display: inline-block;
         padding: layout-border-radius;
         border-radius: layout-border-radius;
         border: 1px solid layout-border-light-color;
-        font-size: 0;
+        background-color: layout-secondary-bg;
     }
 
     &__image {
-        width: 100%;
+        display: block;
+        max-width: 100%;
+        max-height: message-attachment-max-height;
     }
 }

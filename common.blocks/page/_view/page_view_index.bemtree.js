@@ -39,6 +39,7 @@ block('page')
                 },
                 {
                     block: 'body',
+                    noPadding: true,
                     content: {
                         block: 'infinite-list',
                         mods: { type: 'user-messages' },

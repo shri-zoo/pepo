@@ -1,5 +1,9 @@
 .page {
     &__reply-form {
-        margin-top: common-padding;
+        padding: common-padding;
+
+        @media (max-width: media[tablet]) {
+            padding: (common-padding / 2);
+        }
     }
 }

@@ -1,24 +1,31 @@
 block('message-attachment').mod('type', 'image').content()(function () {
     var content = applyNext() || [];
-    var link = {
-        block: 'image',
-        mix: { block: this.block, elem: 'image' },
-        url: this.ctx.src
+    var block = this.block;
+
+    var image =  {
+        block: block,
+        elem: 'image-container',
+        content: {
+            block: 'image',
+            mix: { block: this.block, elem: 'image' },
+            url: this.ctx.src
+        }
     };
 
     if (this.ctx.isLink) {
-        link = {
+        image = {
             block: 'link',
+            mix: { block: block, elem: 'link' },
             attrs: {
                 target: '_blank',
                 rel: 'nofollow'
             },
             url: this.ctx.src,
-            content: link
+            content: image
         };
     }
 
-    content.push(link);
+    content.push(image);
 
     return content;
 });

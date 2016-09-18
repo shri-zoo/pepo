@@ -1,9 +1,11 @@
 .username {
     display: inline-block;
-    color: theme-muted;
-    text-decoration: none;
-}
 
-.username::before {
-    content: "@";
+    &__text {
+        color: theme-text-light-muted;
+
+        &::before {
+            content: "@";
+        }
+    }
 }

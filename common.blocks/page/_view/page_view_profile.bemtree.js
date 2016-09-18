@@ -11,15 +11,32 @@ block('page')
                 },
                 {
                     block: 'body',
+                    noPadding: true,
                     content: [
                         {
                             block: this.block,
                             elem: 'subheader',
-                            content: {
-                                block: 'user-info',
-                                user: profileUser,
-                                mods: { profile: true }
-                            }
+                            content: [
+                                {
+                                    block: 'userpic',
+                                    mix: {
+                                        block: block,
+                                        elem: 'userpic'
+                                    },
+                                    username: profileUser.username,
+                                    src: profileUser.avatar,
+                                    size: 128
+                                },
+                                {
+                                    block: 'user-info',
+                                    user: profileUser,
+                                    mods: { profile: true }
+                                },
+                                {
+                                    elem: 'description',
+                                    content: profileUser.description
+                                }
+                            ]
                         },
                         {
                             block: 'infinite-list',

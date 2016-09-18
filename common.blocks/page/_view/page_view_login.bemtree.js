@@ -5,7 +5,7 @@ block('page').mod('view', 'login').content()(function () {
         content: [
             {
                 block: 'logo',
-                size: 144
+                size: 108
             },
             {
                 block: 'panel',

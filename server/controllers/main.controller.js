@@ -20,7 +20,24 @@ exports.getReply = function (req, res, next) {
     var Message = app.get('db').model('Message');
 
     return Message.findOne({ _id: req.params.id })
-        .populate(['replies', 'user'])
+        .populate([
+            {
+                path: 'parent',
+                populate: {
+                    path: 'user',
+                    model: 'User'
+                }
+            },
+            {
+                path: 'user'
+            },
+            {
+                path: 'replies'
+            },
+            {
+                path: 'website'
+            }
+        ])
         .then(function (message) {
             if (message === null) {
                 return next();
@@ -47,6 +64,13 @@ exports.getMessage = function (req, res, next) {
     return Message.findOne({ _id: req.params.id })
         .populate([
             {
+                path: 'parent',
+                populate: {
+                    path: 'user',
+                    model: 'User'
+                }
+            },
+            {
                 path: 'replies',
                 populate: {
                     path: 'user',
@@ -55,6 +79,9 @@ exports.getMessage = function (req, res, next) {
             },
             {
                 path: 'user'
+            },
+            {
+                path: 'website'
             }
         ])
         .then(function (message) {
