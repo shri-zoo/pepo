@@ -109,7 +109,6 @@ exports.getUserProfile = function (req, res, next) {
 
     User
         .findOne({ username: req.params.username })
-        .populate('subscribers')
         .then(function (user) {
             if (!user) {
                 next();
@@ -123,6 +122,7 @@ exports.getUserProfile = function (req, res, next) {
                 title: isOwnProfile ? 'Ваш профиль' : 'Профиль пользователя ' + user.username,
                 user: req.user,
                 isOwnProfile: isOwnProfile,
+                isSubscribed: isOwnProfile ? null : user.subscribers.indexOf(sessionUser._id) !== -1,
                 profileUser: user
             });
         })

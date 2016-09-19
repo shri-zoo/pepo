@@ -4,14 +4,12 @@
         'layout',
         'header',
         'body',
-        'username',
+        {
+            block: 'user-profile'
+        },
         {
             block: 'infinite-list',
             mods: { type: 'user-messages' }
-        },
-        {
-            block: 'user-info',
-            mods: { profile: true }
         },
         {
             block: 'link',
