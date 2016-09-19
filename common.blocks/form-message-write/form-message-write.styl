@@ -13,14 +13,47 @@
 .form-message-write {
     half-common-padding = (common-padding / 2)
 
+    @media(max-width: media[tablet]) {
+        height: 100%;
+    }
+
+    &__form {
+        @media(max-width: media[tablet]) {
+            height: 100%;
+        }
+    }
+
+    &__content {
+        @media(max-width: media[tablet]) {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            height: 100%;
+        }
+    }
+
     &__textarea&__textarea {
+        width: 100%;
         min-height: (22px * 5 + common-padding + 2); // 5 lines + padding + borders
         padding: half-common-padding;
+
+        @media(max-width: media[tablet]) {
+            flex-grow: 1;
+            resize: none;
+        }
     }
 
     &__attachment {
         display: flex;
         justify-content: center;
+
+        &:not(:empty) {
+            margin-top: (common-padding / 2);
+        }
+
+        @media(max-width: media[tablet]) {
+            flex-shrink: 0;
+        }
     }
 
     &__footer {
@@ -28,6 +61,10 @@
         justify-content: space-between;
         align-items: center;
         margin-top: half-common-padding;
+
+        @media(max-width: media[tablet]) {
+            flex-shrink: 0;
+        }
     }
 
     &__action + &__action {

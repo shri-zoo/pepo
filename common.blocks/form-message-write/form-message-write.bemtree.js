@@ -4,6 +4,7 @@ block('form-message-write')(
 
         return {
             block: 'form',
+            mix: { block: block, elem: 'form' },
             content: {
                 block: block,
                 elem: 'content'
@@ -19,7 +20,6 @@ block('form-message-write')(
                 mods: {
                     theme: 'islands',
                     size: 'xl',
-                    width: 'available',
                     focused: true
                 },
                 mix: {
@@ -47,7 +47,7 @@ block('form-message-write')(
                                 mix: {
                                     block: block,
                                     elem: 'action',
-                                    elemMods: { type: 'image'}
+                                    elemMods: { type: 'image' }
                                 },
                                 template: {
                                     block: 'button',

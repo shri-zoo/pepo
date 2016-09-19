@@ -1,4 +1,9 @@
 ({
     mustDeps: 'stylus-vars',
-    shouldDeps: 'image'
+    shouldDeps: [
+        {
+            block: 'i-bem',
+            elem: 'dom'
+        }
+    ]
 });

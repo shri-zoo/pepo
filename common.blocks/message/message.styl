@@ -7,7 +7,7 @@
 
     &_style_parent,
     &_style_reply {
-        background-color: #f5f5f5;
+        background-color: #f4f6fb;
 
         &:last-child {
             border-bottom-left-radius: (layout-border-radius - 1);
@@ -24,20 +24,20 @@
         font-size: 14px;
         line-height: 20px;
         text-align: left;
-        color: theme-text-light-muted;
+        color: theme-text-muted-light;
     }
 
     &__reply-text-icon {
-        fill: theme-text-light-muted;
+        fill: theme-text-muted-light;
 
         &:hover,
         &:focus {
-            fill: theme-text-light-muted;
+            fill: theme-text-muted-light;
         }
     }
 
     &__reply-text-link {
-        color: theme-text-light-muted;
+        color: theme-text-muted-light;
     }
 
     &__columns {
@@ -51,6 +51,7 @@
     &__column {
         &_type_left {
             flex-basis: 48px;
+            flex-shrink: 0;
             margin-right: (common-padding / 3);
             text-align: right;
 
@@ -128,11 +129,14 @@
         font-family: layout-font-family;
     }
 
+    &__reply {
+        display: flex;
+        align-items: center;
+    }
+
     &__replies-count {
         display: inline-block;
         margin-left: 5px;
         font-family: layout-font-family;
-        line-height: 24px;
-        vertical-align: middle;
     }
 }

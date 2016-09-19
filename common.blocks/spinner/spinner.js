@@ -8,7 +8,7 @@ modules
                     js: {
                         inited: function () {
                             this.animationStartDuration = 150;
-                            this.delay = 300;
+                            this.delay = 500;
                             this.startWithDelay = this.animationStartDuration + this.delay;
                             this.animationEndDuration = 150;
                         }

@@ -10,7 +10,6 @@
                 mods: {
                     theme: 'islands',
                     size: 'xl',
-                    width: 'available',
                     focused: true
                 }
             },
