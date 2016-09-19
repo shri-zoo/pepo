@@ -12,8 +12,7 @@ modules
                             inited: function () {
                                 this.form = this.findBlockInside('form');
                                 this.avatarInput = this.elem('avatar-input');
-                                // Костыль, но нет времени =)
-                                this.avatar = this.findBlockInside('userpic').findBlockInside('image');
+                                this.avatar = this.findBlockInside('userpic');
                                 this.uploader = this.findBlockInside('uploader');
                                 this.spinner = this.findBlockInside('spinner');
 
@@ -24,7 +23,7 @@ modules
                     },
                     _onUploadingSuccess: function (e, url) {
                         this.avatarInput.val(url);
-                        this.avatar.domElem.attr('src', url);
+                        this.avatar.setImage(url);
                     },
                     _onSubmit: function (e) {
                         e.preventDefault();
