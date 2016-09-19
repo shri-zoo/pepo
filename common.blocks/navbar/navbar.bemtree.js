@@ -67,7 +67,7 @@ block('navbar').content()(function () {
                                         block: 'username',
                                         mix: {
                                             block: block,
-                                            elem: 'dropdown-user-usename'
+                                            elem: 'dropdown-user-username'
                                         },
                                         content: _this.data.user.username
                                     }
@@ -79,10 +79,6 @@ block('navbar').content()(function () {
                                     mix: {
                                         block: block,
                                         elem: 'dropdown-menu-item'
-                                    },
-                                    mods: {
-                                        theme: 'islands',
-                                        size: 'xl'
                                     },
                                     url: dropdownLink.url,
                                     content: dropdownLink.type

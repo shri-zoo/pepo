@@ -4,6 +4,10 @@
     align-items: flex-start;
     background-color: layout-bg;
 
+    @media (max-width: media[phone]) {
+        background-color: layout-secondary-bg;
+    }
+
     &__inner {
         display: flex;
         flex-direction: column;

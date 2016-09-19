@@ -4,12 +4,12 @@
     align-items: center;
 
     &__item {
-        padding: (common-padding / 3) common-padding;
+        padding: ((header-height - header-icon-size) / 2) common-padding;
         outline: none;
         cursor: pointer;
 
         @media (max-width: layout-width) {
-            padding: (common-padding / 3)
+            padding: ((header-height - header-icon-size) / 2);
         }
 
         &_profile {
@@ -17,16 +17,29 @@
         }
     }
 
+    &__icon {
+        fill: navbar-icon-color[normal];
+
+        &:hover,
+        &:focus {
+            fill: navbar-icon-color[hover];
+        }
+
+        &:active {
+            fill: navbar-icon-color[active];
+        }
+    }
+
     &__popup&__popup {
         width: dropdown-menu-width;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 5px 20px -5px rgba(0, 0, 0, .4);
+        box-shadow: 0 5px 20px -5px rgba(0, 0, 0, .4);
 
         @media (max-width: media[tablet]) {
             width: 100%;
         }
 
         @media (max-width: media[phone]) {
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 -5px 20px -5px rgba(0, 0, 0, .4);
+            box-shadow: 0 -5px 20px -5px rgba(0, 0, 0, .4);
         }
     }
 
@@ -35,6 +48,11 @@
         flex-direction: column;
         align-items: stretch;
         font-family: layout-font-family;
+        background-color: layout-bg-dark;
+
+        @media (max-width: media[phone]) {
+            border-bottom: 1px solid layout-border-dark;
+        }
     }
 
     &__dropdown-user-info {
@@ -43,17 +61,30 @@
     }
 
     &__dropdown-user-fullname {
-        font-weight: bold;
         margin-bottom: 5px;
+        font-weight: bold;
+        color: theme-text-light;
     }
 
-    &__dropdown-user-username {
-        font-size: 12px;
+    &__dropdown-user-username&__dropdown-user-username {
+        font-size: 14px;
+        color: mix(layout-border-dark, theme-text-light, 30%);
     }
 
-    &__dropdown-menu-item {
+    &__dropdown-menu-item&__dropdown-menu-item {
         padding: (common-padding / 2) common-padding;
         text-align: center;
-        border-top: 1px solid lighten(layout-border-color, 50%);
+        border-top: 1px solid layout-border-dark;
+        color: navbar-icon-color[normal];
+
+        &:hover,
+        &:focus {
+            background-color: layout-border-dark;
+            color: navbar-icon-color[hover];
+        }
+
+        &:active {
+            color: navbar-icon-color[active];
+        }
     }
 }

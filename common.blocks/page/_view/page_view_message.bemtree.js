@@ -31,7 +31,7 @@ block('page').mod('view', 'message')(
                                 return {
                                     block: 'message',
                                     mods: { style: 'reply' },
-                                    mix: { block: block, elem: 'reply' },
+                                    mix: { block: block, elem: 'message-reply' },
                                     message: message,
                                     hideParent: true
                                 };

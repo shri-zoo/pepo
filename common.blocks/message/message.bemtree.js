@@ -39,7 +39,7 @@ block('message').content()(function () {
                                     },
                                     mix: { block: block, elem: 'reply-text-link' },
                                     url: '/m/' + parent._id,
-                                    content: ' в ответ пользователю @' + parent.user.username
+                                    content: ' в ответ @' + parent.user.username
                                 }
                             ]
                         }
