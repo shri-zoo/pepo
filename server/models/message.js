@@ -7,6 +7,7 @@ var postEntity = require('post-entity');
 var MetaScrape = require('meta-scrape');
 var sanitizeSetter = require('./utils/sanitize-setter');
 var postEntityTypes = require('../../isomorphic/post-entity-types');
+var websiteDescriptionSetter = require('./website-info').descriptionSetter;
 
 moment.locale('ru');
 
@@ -187,7 +188,7 @@ function scrapeWebsite(url) {
                     url: metaScrape.url,
                     rootUrl: metaScrape.rootUrl,
                     title: metaScrape.title,
-                    description: metaScrape.description,
+                    description: websiteDescriptionSetter(metaScrape.description),
                     image: metaScrape.image,
                     images: metaScrape.images
                 });

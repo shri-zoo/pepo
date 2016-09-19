@@ -70,10 +70,15 @@ modules.define(
 
                 this._changeState();
             },
+            _thereIsLink: function () {
+                return this.entities && this.entities.filter(function (entity) {
+                    return entity.type === 'link';
+                }).length;
+            },
             _calcState: function () {
                 var length = this.length;
 
-                if (length === 0 && !this.image && !this.geo) {
+                if (length === 0 && !this.image && !this.geo && !this._thereIsLink()) {
                     this.state = STATES.EMPTY;
                 } else if (length > MESSAGE_ATTENTION_LENGTH && length <= MESSAGE_MAX_LENGTH) {
                     this.state = STATES.ATTENTION;
