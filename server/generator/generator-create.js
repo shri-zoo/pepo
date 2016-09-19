@@ -151,6 +151,7 @@ function generateUserData(allUsers) {
         username: getUniqueUsername(allUsers),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
+        description: faker.lorem.paragraph(),
         avatar: faker.image.avatar(),
         provider: ['facebook', 'vkontakte', 'yandex', 'google'][Math.floor(Math.random() * 4)],
         subscribedTo: [],

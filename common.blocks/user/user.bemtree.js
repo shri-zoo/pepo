@@ -2,7 +2,8 @@ block('user').content()(function () {
     var block = this.block;
     var ctx = this.ctx;
     var user = ctx.user;
-    var subsribed = this.ctx.subscribed;
+    var subsribed = ctx.subscribed;
+    var isYou = ctx.isYou;
 
     return [
         {
@@ -26,7 +27,7 @@ block('user').content()(function () {
         {
             block: block,
             elem: 'subscribe-button-container',
-            content: {
+            content: !isYou && {
                 block: 'subscribe',
                 mix: { block: block, elem: 'subscribe-button' },
                 js: { userId: user._id },

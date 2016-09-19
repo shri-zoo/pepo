@@ -2,6 +2,8 @@ block('page')
     .mod('view', 'profile')
     .content()(function () {
         var profileUser = this.data.profileUser;
+        var isOwnProfile = this.data.isOwnProfile;
+        var isSubscribed = this.data.isSubscribed;
 
         return {
             block: 'layout',
@@ -14,35 +16,16 @@ block('page')
                     noPadding: true,
                     content: [
                         {
-                            block: this.block,
-                            elem: 'subheader',
-                            content: [
-                                {
-                                    block: 'userpic',
-                                    mix: {
-                                        block: block,
-                                        elem: 'userpic'
-                                    },
-                                    username: profileUser.username,
-                                    src: profileUser.avatar,
-                                    size: 128
-                                },
-                                {
-                                    block: 'user-info',
-                                    user: profileUser,
-                                    mods: { profile: true }
-                                },
-                                {
-                                    elem: 'description',
-                                    content: profileUser.description
-                                }
-                            ]
+                            block: 'user-profile',
+                            user: profileUser,
+                            isOwnProfile: isOwnProfile,
+                            isSubscribed: isSubscribed
                         },
                         {
                             block: 'infinite-list',
                             mods: { type: 'user-messages' },
                             js: { url: '/messages?html&userId=' + profileUser._id },
-                            onEmpty: this.data.isOwnProfile
+                            onEmpty: isOwnProfile
                                 ? [
                                     'Вы еще не опубликовали ни одного сообщения. ',
                                     {

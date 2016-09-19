@@ -13,7 +13,7 @@ exports.getWrite = function (req, res) {
     render(req, res, { view: 'write', user: req.user });
 };
 
-exports.getReply = function (req, res, next) {
+exports.getReply = function (req, res) {
     var app = req.app;
     var handleError = app.get('helpers').handleError;
     var render = app.get('bem').render;
@@ -40,7 +40,10 @@ exports.getReply = function (req, res, next) {
         ])
         .then(function (message) {
             if (message === null) {
-                return next();
+                return Promise.reject({
+                    status: 404,
+                    title: 'Сообщение не найдено'
+                });
             }
 
             render(req, res, {
@@ -54,7 +57,7 @@ exports.getReply = function (req, res, next) {
         });
 };
 
-exports.getMessage = function (req, res, next) {
+exports.getMessage = function (req, res) {
     var app = req.app;
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
@@ -86,7 +89,10 @@ exports.getMessage = function (req, res, next) {
         ])
         .then(function (message) {
             if (message === null) {
-                return next();
+                return Promise.reject({
+                    status: 404,
+                    title: 'Сообщение не найдено'
+                });
             }
 
             render(req, res, {
@@ -100,36 +106,17 @@ exports.getMessage = function (req, res, next) {
         });
 };
 
-exports.getUserProfile = function (req, res, next) {
-    var app = req.app;
-    var helpers = app.get('helpers');
-    var handleError = helpers.handleError;
-    var User = app.get('db').model('User');
-    var sessionUser = req.user;
+exports.getUserProfile = getUserRequestHandler('profile', function (user, isOwnProfile) {
+    return isOwnProfile ? 'Ваш профиль' : 'Профиль пользователя ' + user.username;
+});
 
-    User
-        .findOne({ username: req.params.username })
-        .populate('subscribers')
-        .then(function (user) {
-            if (!user) {
-                next();
-                return;
-            }
+exports.getUserSubscriptions = getUserRequestHandler('subscriptions', function (user, isOwnProfile) {
+    return isOwnProfile ? 'Ваши подписки' : 'Подписки пользователя ' + user.username;
+});
 
-            var isOwnProfile = sessionUser._id.toString() === user._id.toString();
-
-            req.app.get('bem').render(req, res, {
-                view: 'profile',
-                title: isOwnProfile ? 'Ваш профиль' : 'Профиль пользователя ' + user.username,
-                user: req.user,
-                isOwnProfile: isOwnProfile,
-                profileUser: user
-            });
-        })
-        .catch(function (err) {
-            handleError(req, res, err);
-        });
-};
+exports.getUserSubscribers = getUserRequestHandler('subscribers', function (user, isOwnProfile) {
+    return isOwnProfile ? 'Ваши подписчики' : 'Подписчики пользователя ' + user.username;
+});
 
 exports.getSettingsPage = function (req, res) {
     req.app.get('bem').render(req, res, {
@@ -182,3 +169,39 @@ exports.getSelectUsernamePage = function (req, res) {
 exports.get404 = function (req, res) {
     req.app.get('bem').render(req, res.status(404), { view: '404' });
 };
+
+function getUserRequestHandler(view, title) {
+    return function (req, res) {
+        var app = req.app;
+        var helpers = app.get('helpers');
+        var bem = app.get('bem');
+        var handleError = helpers.handleError;
+        var User = app.get('db').model('User');
+        var sessionUser = req.user;
+
+        User
+            .findOne({ username: req.params.username })
+            .then(function (user) {
+                if (!user) {
+                    return Promise.reject({
+                        status: 404,
+                        title: 'Пользователь не найден'
+                    });
+                }
+
+                var isOwnProfile = user._id.equals(sessionUser._id);
+
+                bem.render(req, res, {
+                    view: view,
+                    title: title(user, isOwnProfile),
+                    user: req.user,
+                    isOwnProfile: isOwnProfile,
+                    isSubscribed: isOwnProfile ? null : user.subscribers.indexOf(sessionUser._id) !== -1,
+                    profileUser: user
+                });
+            })
+            .catch(function (err) {
+                handleError(req, res, err);
+            });
+    };
+}

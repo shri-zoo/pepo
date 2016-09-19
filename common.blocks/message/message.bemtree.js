@@ -57,6 +57,7 @@ block('message').content()(function () {
                     content: {
                         block: 'userpic',
                         mix: { block: block, elem: 'userpic' },
+                        size: false,
                         src: user.avatar,
                         username: user.username
                     }

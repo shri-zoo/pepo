@@ -4,9 +4,12 @@ block('userpic')(
     }),
     attrs()(function () {
         var attrs = applyNext() || {};
-        var size = this.ctx.size || 32;
+        var size = this.ctx.size;
 
-        attrs.style = 'width: ' + size + 'px; height: ' + size + 'px;';
+        if (size !== false) {
+            size = size || 32;
+            attrs.style = 'width: ' + size + 'px; height: ' + size + 'px;';
+        }
 
         return attrs;
     }),

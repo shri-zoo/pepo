@@ -73,6 +73,7 @@ exports.getLoadList = function (req, res) {
                                     block: 'user',
                                     mix: { block: 'infinite-list', elem: 'item' },
                                     user: user,
+                                    isYou: user._id.equals(sessionUser._id),
                                     subscribed: sessionUser.subscribedTo.indexOf(user._id.toString()) !== -1
                                 }
                             ]));
@@ -84,6 +85,10 @@ exports.getLoadList = function (req, res) {
                 });
         });
 };
+
+exports.getSubscribers = getRelatedUsers('subscribers');
+exports.getSubscriptions = getRelatedUsers('subscribedTo');
+
 
 exports.getLoadOne = function (req, res) {
     var app = req.app;
@@ -106,7 +111,7 @@ exports.getLoadOne = function (req, res) {
         });
 };
 
-exports.putUpdate = function (req, res, next) {
+exports.putUpdate = function (req, res) {
     var app = req.app;
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
@@ -116,7 +121,7 @@ exports.putUpdate = function (req, res, next) {
         .findById(req.user._id)
         .then(function (doc) {
             if (!doc) {
-                return next();
+                return res.sendStatus(404);
             }
 
             Object.keys(req.body).forEach(function (key) {
@@ -144,23 +149,30 @@ exports.postSubscribe = function (req, res) {
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
+    var sessionUserId = req.user._id;
     var userId = req.params.id;
 
-    var updateQuery = {};
+    var subscribingUserQuery = {};
+    var sessionUserQuery = {};
     var subscribed;
 
     if (req.user.subscribedTo.indexOf(userId) === -1) {
-        updateQuery.$push = { subscribedTo: userId };
+        subscribingUserQuery.$push = { subscribers: sessionUserId };
+        sessionUserQuery.$push = { subscribedTo: userId };
         subscribed = true;
     } else {
-        updateQuery.$pull = { subscribedTo: { $in: [userId]}};
+        subscribingUserQuery.$pull = { subscribers: { $in: [sessionUserId]}};
+        sessionUserQuery.$pull = { subscribedTo: { $in: [userId]}};
         subscribed = false;
     }
 
-    User
-        .findOneAndUpdate({ _id: req.user._id }, updateQuery, { new: true, runValidators: true })
-        .then(function (user) {
-            req.login(user, function (err) {
+    var subscribingUserUpdate = User.findOneAndUpdate({ _id: userId }, subscribingUserQuery, { runValidators: true });
+    var currentUserUpdate = User
+        .findOneAndUpdate({ _id: sessionUserId }, sessionUserQuery, { new: true, runValidators: true });
+
+    Promise.all([subscribingUserUpdate, currentUserUpdate])
+        .then(function (results) {
+            req.login(results[1], function (err) {
                 if (err) {
                     return handleError(req, res, err);
                 }
@@ -172,3 +184,71 @@ exports.postSubscribe = function (req, res) {
             handleError(req, res, err);
         });
 };
+
+function getRelatedUsers(usersField) {
+    return function (req, res) {
+        var app = req.app;
+        var helpers = app.get('helpers');
+        var handleError = helpers.handleError;
+        var bem = helpers.bem;
+        var User = app.get('db').model('User');
+        var sessionUser = req.user;
+
+        helpers
+            .checkPaginationParams(req, res, app.get('conf').db.limits.users)
+            .then(function (pagination) {
+                return User
+                    .findOne({ _id: req.params.id })
+                    .then(function (user) {
+                        if (user === null) {
+                            return Promise.reject(404);
+                        }
+
+                        return { pagination: pagination, user: user };
+                    });
+            })
+            .then(function (data) {
+                var pagination = data.pagination;
+                var offset = pagination.offset;
+                var limit = pagination.limit;
+                var user = data.user;
+                var usersList = user[usersField];
+                var paginatedUsers = usersList.slice(offset, offset + limit);
+
+                return User.find({ _id: { $in: paginatedUsers }}).then(function (results) {
+                    return {
+                        total: usersList.length,
+                        docs: results,
+                        offset: offset,
+                        limit: limit
+                    };
+                });
+            })
+            .then(function (result) {
+                if (!req.query.hasOwnProperty('html')) {
+                    return res.json(result);
+                }
+
+                res.json({
+                    total: result.total,
+                    count: result.docs.length,
+                    limit: result.limit,
+                    offset: result.offset,
+                    html: result.docs.map(function (user) {
+                        return bem.applyHtml(bem.applyTree([
+                            {
+                                block: 'user',
+                                mix: { block: 'infinite-list', elem: 'item' },
+                                user: user,
+                                isYou: user._id.equals(sessionUser._id),
+                                subscribed: sessionUser.subscribedTo.indexOf(user._id.toString()) !== -1
+                            }
+                        ]));
+                    }).join('')
+                });
+            })
+            .catch(function (err) {
+                handleError(req, res, err);
+            });
+    };
+}
