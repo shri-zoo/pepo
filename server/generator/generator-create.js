@@ -56,6 +56,7 @@ db.connect(program.database, function (err, mongoose) {
 
                     if (user !== randomUser) {
                         randomUser.subscribedTo.push(user._id);
+                        user.subscribers.push(randomUser._id);
                     }
                 }
             });
@@ -155,6 +156,7 @@ function generateUserData(allUsers) {
         avatar: faker.image.avatar(),
         provider: ['facebook', 'vkontakte', 'yandex', 'google'][Math.floor(Math.random() * 4)],
         subscribedTo: [],
+        subscribers: [],
         facebook: {
             id: faker.random.number()
         }
