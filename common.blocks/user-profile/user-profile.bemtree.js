@@ -84,7 +84,7 @@ block('user-profile').content()(function () {
                         block: block,
                         elem: 'relations-link'
                     },
-                    url: '/u/' + username + '/subscribsions',
+                    url: '/u/' + username + '/subscriptions',
                     content: [
                         {
                             block: block,

@@ -8,7 +8,7 @@ exports.getLoadOne = function (req, res) {
         .findOne({ _id: req.params.id })
         .then(function (info) {
             if (info === null) {
-                return res.sendStatus(404);
+                return Promise.reject(404);
             }
 
             return res.json(info);

@@ -19,6 +19,8 @@
                     'search',
                     'profile',
                     'settings',
+                    'subscriptions',
+                    'subscribers',
                     '404'
                 ]
             }

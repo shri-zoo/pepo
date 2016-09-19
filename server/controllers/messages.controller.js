@@ -107,7 +107,7 @@ exports.getLoadOne = function (req, res) {
         .populate(['replies', 'user', 'website'])
         .then(function (message) {
             if (message === null) {
-                return res.sendStatus(404);
+                return Promise.reject(404);
             }
 
             return res.json(message);

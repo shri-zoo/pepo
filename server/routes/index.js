@@ -23,6 +23,8 @@ module.exports = function (app) {
         .get('/search', isAuth, mainController.getSearchPage)
         .get('/settings', isAuth, mainController.getSettingsPage)
         .get('/write', isAuth, mainController.getWrite)
+        .use('/u/:username/subscribers', isAuth, mainController.getUserSubscribers)
+        .use('/u/:username/subscriptions', isAuth, mainController.getUserSubscriptions)
         .use('/u/:username', isAuth, mainController.getUserProfile)
         .get('/m/:id/reply', isAuth, isValidId, mainController.getReply)
         .use('/m/:id', isAuth, isValidId, mainController.getMessage)
