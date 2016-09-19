@@ -49,6 +49,7 @@ var UserSchema = new Schema({
         id: String,
         raw: { type: String, select: false }
     },
+    subscribers: [{ type: Schema.Types.ObjectId, ref: 'User', default: []}],
     subscribedTo: [{ type: Schema.Types.ObjectId, ref: 'User', default: []}]
 }, {
     timestamps: true,

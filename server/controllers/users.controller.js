@@ -144,23 +144,30 @@ exports.postSubscribe = function (req, res) {
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
+    var sessionUserId = req.user._id;
     var userId = req.params.id;
 
-    var updateQuery = {};
+    var subscribingUserQuery = {};
+    var sessionUserQuery = {};
     var subscribed;
 
     if (req.user.subscribedTo.indexOf(userId) === -1) {
-        updateQuery.$push = { subscribedTo: userId };
+        subscribingUserQuery.$push = { subscribers: sessionUserId };
+        sessionUserQuery.$push = { subscribedTo: userId };
         subscribed = true;
     } else {
-        updateQuery.$pull = { subscribedTo: { $in: [userId]}};
+        subscribingUserQuery.$pull = { subscribers: { $in: [sessionUserId]}};
+        sessionUserQuery.$pull = { subscribedTo: { $in: [userId]}};
         subscribed = false;
     }
 
-    User
-        .findOneAndUpdate({ _id: req.user._id }, updateQuery, { new: true, runValidators: true })
-        .then(function (user) {
-            req.login(user, function (err) {
+    var subscribingUserUpdate = User.findOneAndUpdate({ _id: userId }, subscribingUserQuery, { runValidators: true });
+    var currentUserUpdate = User
+        .findOneAndUpdate({ _id: sessionUserId }, sessionUserQuery, { new: true, runValidators: true });
+
+    Promise.all([subscribingUserUpdate, currentUserUpdate])
+        .then(function (results) {
+            req.login(results[1], function (err) {
                 if (err) {
                     return handleError(req, res, err);
                 }
