@@ -68,7 +68,7 @@ modules.define(
 
                 setTimeout(function () {
                     _this.setMod($notification, 'visible', true);
-                });
+                }, 100);
 
                 if (_this._isClickable(data)) {
                     $notification.on('click', function () {

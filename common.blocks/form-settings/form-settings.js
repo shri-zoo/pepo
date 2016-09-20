@@ -1,8 +1,8 @@
 modules
     .define(
         'form-settings',
-        ['conf', 'utils', 'i-bem__dom', 'jquery'],
-        function (provide, conf, utils, BEMDOM, $) {
+        ['conf', 'utils', 'i-bem__dom', 'jquery', 'notifications'],
+        function (provide, conf, utils, BEMDOM, $, notifications) {
             var blockName = this.name;
 
             provide(BEMDOM.decl({ block: blockName },
@@ -46,6 +46,10 @@ modules
                             utils.setFormValues(_this.form.domElem[0], user);
                         })
                         .fail(function (err) {
+                            if (err.status === 400) {
+                                notifications.error(err.responseJSON.message);
+                            }
+
                             console.error(err); // eslint-disable-line no-console
                         })
                         .always(function () {
