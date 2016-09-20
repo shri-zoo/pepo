@@ -1,6 +1,6 @@
 modules.define('infinite-list',
-    ['i-bem__dom', 'conf', 'url', 'BEMTREE', 'BEMHTML', 'jquery', 'functions__throttle'],
-    function (provide, BEMDOM, conf, url, BEMTREE, BEMHTML, $, throttle) {
+    ['i-bem__dom', 'conf', 'url', 'BEMTREE', 'BEMHTML', 'jquery', 'functions__throttle', 'notifications'],
+    function (provide, BEMDOM, conf, url, BEMTREE, BEMHTML, $, throttle, notifications) {
         provide(BEMDOM.decl(this.name,
             {
                 onSetMod: {
@@ -88,6 +88,9 @@ modules.define('infinite-list',
                             _this._onRequestStateChange(false);
                             console.error(err); // eslint-disable-line no-console
                         });
+                },
+                _requestNew: function () {
+                    notifications;
                 },
                 _onRequestStateChange: function (value) {
                     this._requested = value;

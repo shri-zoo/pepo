@@ -1,6 +1,11 @@
 ({
     mustDeps: 'stylus-vars',
     shouldDeps: [
-        'width-container'
+        {
+            block: 'notifications-renderer'
+        },
+        {
+            block: 'width-container'
+        }
     ]
 });
