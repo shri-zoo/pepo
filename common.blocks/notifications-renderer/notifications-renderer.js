@@ -9,10 +9,20 @@ modules.define(
             onSetMod: {
                 js: {
                     inited: function () {
+                        var _this = this;
+
                         this.items = this.elem('items');
                         this.notificationsTimers = [];
 
-                        notifications.subscribe(this.showNotification.bind(this));
+                        notifications.subscribe(function (e, data) {
+                            switch (e.type) {
+                                case 'show':
+                                    return _this.showNotification(data);
+                                case 'replace':
+                                    return _this.replaceNotificationText(data);
+                                default:
+                            }
+                        });
                     }
                 }
             },
@@ -86,6 +96,16 @@ modules.define(
                 }
 
                 _this.delMod($notification, 'visible');
+            },
+            replaceNotificationText: function (data) {
+                var id = data.id;
+                var $notification = this.elem('item', 'id', id);
+
+                if ($notification.length) {
+                    BEMDOM.update($notification, data.html);
+                } else {
+                    this.showNotification(data);
+                }
             }
         }));
     }

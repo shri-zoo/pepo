@@ -56,7 +56,7 @@ modules
                                 console.error(err); // eslint-disable-line no-console
                             });
                     },
-                    _onRequestStateChange: function (value) {
+                    _changeSpinnerState: function (value) {
                         this._requested = value;
                         return value ? this.spinner.show() : this.spinner.hide();
                     },
@@ -95,13 +95,13 @@ modules
 
                         var _this = this;
 
-                        this._onRequestStateChange(true);
+                        this._changeSpinnerState(true);
 
                         $.ajax({ url: conf.API + '/users/check-uniqueness', data: { username: username }})
                             .done(function (data) {
                                 var isAvailable = data.available;
 
-                                _this._onRequestStateChange(false).then(function () {
+                                _this._changeSpinnerState(false).then(function () {
                                     _this._setValidity(
                                         isAvailable,
                                         !isAvailable ? { username: 'Данное имя пользователя занято' } : null
@@ -110,7 +110,7 @@ modules
                             })
                             .fail(function (err) {
                                 console.error(err); // eslint-disable-line no-console
-                                _this._onRequestStateChange(false);
+                                _this._changeSpinnerState(false);
                             });
                     }
                 }
