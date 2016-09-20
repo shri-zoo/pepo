@@ -4,7 +4,7 @@ module.exports = function (app) {
     var bem = app.get('helpers').bem;
     var logger = app.get('logger');
     var isDev = app.get('isDev');
-    var useCache = !isDev;
+    var useCache = conf.templates.cacheEnabled;
 
     return {
         render: render,
