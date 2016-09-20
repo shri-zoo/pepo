@@ -31,6 +31,7 @@ exports.getLoadList = function (req, res) {
     var mongoose = app.get('db');
     var Message = mongoose.model('Message');
     var userId = req.query.userId;
+    var upToId = req.query.upToId;
     var query = {};
 
     if (userId) {
@@ -42,6 +43,10 @@ exports.getLoadList = function (req, res) {
     } else {
         query.parentId = null;
         query.user = { $in: req.user.subscribedTo };
+    }
+
+    if (upToId) {
+        query._id = { $gt: upToId };
     }
 
     helpers
@@ -69,14 +74,14 @@ exports.getLoadList = function (req, res) {
                     ],
                     offset: pagination.offset,
                     limit: pagination.limit,
-                    sort: '-createdAt'
+                    sort: '-_id'
                 })
                 .then(function (result) {
                     if (!req.query.hasOwnProperty('html')) {
                         return res.json(result);
                     }
 
-                    res.json({
+                    var resJson = {
                         total: result.total,
                         count: result.docs.length,
                         limit: result.limit,
@@ -88,7 +93,13 @@ exports.getLoadList = function (req, res) {
                                 message: message
                             }));
                         }).join('')
-                    });
+                    };
+
+                    if (result.offset === 0 && result.docs.length) {
+                        resJson.firstId = result.docs[0]._id;
+                    }
+
+                    res.json(resJson);
                 })
                 .catch(function (err) {
                     handleError(req, res, err);

@@ -30,6 +30,7 @@ module.exports = {
         }
     },
     templates: {
+        cacheEnabled: false,
         cacheTTL: 30000
     },
     db: {

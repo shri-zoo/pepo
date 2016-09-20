@@ -3,7 +3,12 @@ block('layout')(
         return {
             elem: 'inner',
             mix: { block: 'width-container' },
-            content: this.ctx.content
+            content: [
+                {
+                    block: 'notifications-renderer'
+                },
+                this.ctx.content
+            ]
         };
     })
 );

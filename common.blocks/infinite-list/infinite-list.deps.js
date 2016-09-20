@@ -17,6 +17,9 @@
         },
         {
             block: 'spinner'
+        },
+        {
+            block: 'notifications'
         }
     ]
 });

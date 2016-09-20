@@ -43,7 +43,7 @@ block('page')
                     content: {
                         block: 'infinite-list',
                         mods: { type: 'user-messages' },
-                        js: { url: '/messages?html' },
+                        js: { url: '/messages?html', polling: 15000 },
                         onEmpty: onEmpty
                     }
                 }

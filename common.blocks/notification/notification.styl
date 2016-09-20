@@ -1,0 +1,25 @@
+.notification {
+    border-radius: layout-border-radius;
+    border: 1px solid;
+    padding: 10px 15px;
+    font-family: layout-font-family;
+    font-size: 16px;
+    line-height: 20px;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .2);
+
+    &_style_info {
+        background-color: theme-info;
+        border-color: darken(theme-info, 10%);
+        color: darken(theme-info, 35%);
+    }
+
+    &_style_error {
+        background-color: theme-error;
+        border-color: darken(theme-error, 20%);
+        color: darken(theme-error, 65%);
+    }
+
+    &_clickable {
+        cursor: pointer;
+    }
+}
