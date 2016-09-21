@@ -161,17 +161,11 @@ modules.define(
                 this._toggleActionsButtons();
             },
             _toggleActionsButtons: function () {
-                if (this.image) {
+                if (this.image || this.geo) {
                     this.geoAttachButton.setMod('disabled', true);
-                    this.imageAttachButton.delMod('disabled');
-                } else {
-                    this.geoAttachButton.delMod('disabled');
-                }
-
-                if (this.geo) {
                     this.imageAttachButton.setMod('disabled', true);
-                    this.geoAttachButton.delMod('disabled');
                 } else {
+                    this.geoAttachButton.delMod('disabled');
                     this.imageAttachButton.delMod('disabled');
                 }
             },
