@@ -8,8 +8,8 @@ modules.define('infinite-list', function (provide, InfiniteList) {
                 }
             }
         },
-        _buildUrl: function () {
-            this.__base();
+        _buildUrl: function (queryParams) {
+            this.__base(queryParams);
 
             if (this._url.hasQuery('search')) {
                 this._url.removeQuery('search');

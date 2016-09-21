@@ -46,17 +46,22 @@ db.connect(program.database, function (err, mongoose) {
             return data.ops;
         })
         .then(function (insertedUsers) {
-            var subscribesCount = Math.floor(Math.sqrt(program.users));
+            var maxSubscribersCount = Math.floor(Math.sqrt(program.users));
 
             insertedUsers.forEach(function (user) {
                 var randomUser;
 
-                for (var j = 0; j < subscribesCount; j++) {
+                for (var j = 0; j < maxSubscribersCount; j++) {
+                    if (Math.random() < 0.4) {
+                        continue;
+                    }
+
                     randomUser = getRandomItem(insertedUsers);
 
                     if (user !== randomUser) {
                         randomUser.subscribedTo.push(user._id);
                         user.subscribers.push(randomUser._id);
+                        user.subscribersCount += 1;
                     }
                 }
             });
@@ -157,6 +162,7 @@ function generateUserData(allUsers) {
         provider: ['facebook', 'vkontakte', 'yandex', 'google'][Math.floor(Math.random() * 4)],
         subscribedTo: [],
         subscribers: [],
+        subscribersCount: 0,
         facebook: {
             id: faker.random.number()
         }

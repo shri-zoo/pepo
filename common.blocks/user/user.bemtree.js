@@ -15,12 +15,30 @@ block('user').content()(function () {
                     username: user.username,
                     src: user.avatar,
                     url: '/u/' + user.username,
-                    size: 48
+                    size: 60
                 },
                 {
-                    block: 'user-info',
-                    mix: { block: block, elem: 'user-info' },
-                    user: user
+                    block: block,
+                    elem: 'user-data-text',
+                    content: [
+                        {
+                            block: 'user-info',
+                            mix: { block: block, elem: 'user-info' },
+                            user: user
+                        },
+                        {
+                            block: block,
+                            elem: 'subscribers-count',
+                            content: [
+                                'Подписчиков: ',
+                                {
+                                    block: block,
+                                    elem: 'subscribers-count-value',
+                                    content: user.subscribersCount
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
