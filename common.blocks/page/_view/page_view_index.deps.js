@@ -19,7 +19,7 @@
             block: 'link',
             mods: {
                 theme: 'islands',
-                size: 'l'
+                size: 'xl'
             }
         }
     ]

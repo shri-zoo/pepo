@@ -42,6 +42,7 @@ block('page')
                                     'Пользователь ',
                                     {
                                         block: 'username',
+                                        mods: { inline: true },
                                         content: profileUser.username
                                     },
                                     ' не опубликовал еще ни одного сообщения'
