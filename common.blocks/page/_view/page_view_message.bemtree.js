@@ -18,10 +18,12 @@ block('page').mod('view', 'message')(
                         parent && {
                             block: 'message',
                             mods: { style: 'parent' },
-                            message: parent
+                            message: parent,
+                            hideParent: true
                         },
                         {
                             block: 'message',
+                            mods: { main: !!(parent || thereAreReplies) },
                             message: message
                         },
                         thereAreReplies && {

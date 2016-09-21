@@ -5,9 +5,10 @@ block('message').content()(function () {
     var parent = message.parent;
     var user = message.user;
     var thereIsAttachment = message.image || message.geo || message.website;
+    var parentIsMessage = Object.prototype.toString.call(parent) === '[object Object]';
 
     return [
-        (parent && !ctx.hideParent) &&  {
+        (parentIsMessage && !ctx.hideParent) &&  {
             block: block,
             elem: 'columns',
             elemMods: { reply: true },

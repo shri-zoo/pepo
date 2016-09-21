@@ -12,6 +12,13 @@
         },
         {
             block: 'message'
+        },
+        {
+            block: 'i-bem',
+            elem: 'dom'
+        },
+        {
+            block: 'jquery'
         }
     ]
 });
