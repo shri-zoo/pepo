@@ -2,6 +2,7 @@ block('page')
     .mod('view', 'index')
     .content()(function () {
         var onEmpty;
+        var block = this.block;
 
         if (this.data.user.subscribedTo.length) {
             onEmpty = [
@@ -10,10 +11,11 @@ block('page')
                     block: 'link',
                     mods: {
                         theme: 'islands',
-                        size: 'l'
+                        size: 'xl'
                     },
+                    mix: { block: block, elem: 'search-users-link' },
                     url: '/search',
-                    content: 'Найдите еще пользователей!'
+                    content: 'Найти еще пользователей!'
                 }
             ];
         } else {
@@ -23,10 +25,11 @@ block('page')
                     block: 'link',
                     mods: {
                         theme: 'islands',
-                        size: 'l'
+                        size: 'xl'
                     },
+                    mix: { block: block, elem: 'search-users-link' },
                     url: '/search',
-                    content: 'Подписаться на пользователей'
+                    content: 'Найти интересных мне пользователей!'
                 }
             ];
         }

@@ -1,4 +1,4 @@
-modules.define('page', ['i-bem__dom'], function (provide, BEMDOM) {
+modules.define('page', ['i-bem__dom', 'messages-bus'], function (provide, BEMDOM) {
     provide(BEMDOM.decl(this.name, {
         onSetMod: {
             js: {

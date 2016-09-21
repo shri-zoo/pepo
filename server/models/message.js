@@ -153,6 +153,7 @@ function preSaveHook(next) {
 }
 
 function postSaveHook(doc) {
+    var Message = mongoose.model('Message');
     var WebsiteInfo = mongoose.model('WebsiteInfo');
 
     WebsiteInfo
@@ -175,6 +176,8 @@ function postSaveHook(doc) {
         })
         .catch(function (error) {
             console.error('Can\'t scrape data for url: %s. Error: %s', doc.website, error.stack); // eslint-disable-line max-len, no-console
+            WebsiteInfo.find({ _id: doc.website }).remove().exec();
+            Message.update({ _id: doc._id }, { website: undefined }).exec(); // eslint-disable-line no-undefined
         });
 }
 

@@ -73,10 +73,10 @@ modules.define('infinite-list',
 
                     return this._url;
                 },
-                _rawRequest: function (query) {
+                _rawRequest: function (queryParams) {
                     return $.ajax({
                         method: 'GET',
-                        url: this._buildUrl(query),
+                        url: this._buildUrl(queryParams),
                         dataType: 'json'
                     });
                 },
@@ -112,11 +112,11 @@ modules.define('infinite-list',
                         });
                 },
                 _requestNewItems: function () {
-                    var _this = this;
-
                     if (this._itemsLength === 0) {
-                        return this._request();
+                        return;
                     }
+
+                    var _this = this;
 
                     _this._rawRequest({ upToId: _this.firstId })
                         .done(function (data, status, jqXHR) {
@@ -126,13 +126,12 @@ modules.define('infinite-list',
                                 _this.newMessages = data;
 
                                 if (!_this.newMessagesNotification) {
-                                    _this.newMessagesNotification = notifications.info(notificationText, {
+                                    _this.newMessagesNotification =  notifications.info(notificationText, {
                                         autoHide: false,
                                         onClick: _this._onShowNewNotifications.bind(_this)
                                     });
                                 } else {
-                                    _this.newMessagesNotification.html = notificationText;
-                                    notifications.replace(_this.newMessagesNotification);
+                                    _this.newMessagesNotification.update(notificationText);
                                 }
                             }
                         })

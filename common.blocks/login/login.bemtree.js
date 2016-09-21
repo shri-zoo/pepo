@@ -40,7 +40,7 @@ block('login').content()(function () {
                                     type: 'link'
                                 },
                                 url: provider.authURL,
-                                title: providerTitle,
+                                title: 'Авторизация через ' + providerTitle,
                                 text: providerTitle
                             }
                         ]

@@ -1,8 +1,8 @@
 modules
     .define(
         'form-username-select',
-        ['conf', 'validator', 'i-bem__dom', 'BEMHTML', 'jquery', 'functions__debounce'],
-        function (provide, conf, validator, BEMDOM, BEMHTML, $, debounce) {
+        ['conf', 'validator', 'i-bem__dom', 'BEMHTML', 'jquery', 'functions__debounce', 'notifications'],
+        function (provide, conf, validator, BEMDOM, BEMHTML, $, debounce, notifications) {
             var blockName = this.name;
 
             provide(BEMDOM.decl({ block: blockName },
@@ -13,9 +13,9 @@ modules
                                 var debouncedOnChange = debounce(this._onInput, 250);
 
                                 this.usernameInput = this.elem('username-input');
-                                this.errors = this.elem('errors');
                                 this.spinner = this.findBlockInside('spinner');
                                 this.submitButton = this.findBlockInside('button');
+                                this.errorNotification = null;
 
                                 this.bindTo(this.usernameInput, 'input', debouncedOnChange);
                                 this.bindTo(this.findBlockInside('input').elem('clear'), 'click', this._onInputClear);
@@ -71,19 +71,24 @@ modules
                     },
                     _setErrors: function (errors) {
                         if (!errors) {
-                            BEMDOM.update(this.errors, '');
+                            if (this.errorNotification) {
+                                this.errorNotification.close();
+                                this.errorNotification = null;
+                            }
+
                             return;
                         }
 
-                        var errorsJson = Object.keys(errors).map(function (key) {
-                            return {
-                                block: blockName,
-                                elem: 'error',
-                                content: errors[key]
-                            };
-                        });
+                        var errorsText = errors.join(', ');
 
-                        BEMDOM.update(this.errors, BEMHTML.apply(errorsJson));
+                        if (this.errorNotification) {
+                            this.errorNotification.update(errorsText);
+                        } else {
+                            this.errorNotification = notifications.error(errorsText, {
+                                autoHide: false,
+                                closable: false
+                            });
+                        }
                     },
                     _isAlreadyRequested: function () {
                         return this._requested;
@@ -104,7 +109,7 @@ modules
                                 _this._changeSpinnerState(false).then(function () {
                                     _this._setValidity(
                                         isAvailable,
-                                        !isAvailable ? { username: 'Данное имя пользователя занято' } : null
+                                        !isAvailable ? ['Данное имя пользователя занято'] : null
                                     );
                                 });
                             })

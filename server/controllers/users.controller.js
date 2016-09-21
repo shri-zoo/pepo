@@ -52,10 +52,9 @@ exports.getLoadList = function (req, res) {
         .then(function (pagination) {
             User
                 .paginate(query, {
-                    populate: ['subscribers'],
                     offset: pagination.offset,
                     limit: pagination.limit,
-                    sort: 'createdAt'
+                    sort: { subscribersCount: -1 }
                 })
                 .then(function (result) {
                     if (!req.query.hasOwnProperty('html')) {
@@ -158,10 +157,14 @@ exports.postSubscribe = function (req, res) {
 
     if (req.user.subscribedTo.indexOf(userId) === -1) {
         subscribingUserQuery.$push = { subscribers: sessionUserId };
+        subscribingUserQuery.$inc = { subscribersCount: 1 };
+
         sessionUserQuery.$push = { subscribedTo: userId };
         subscribed = true;
     } else {
         subscribingUserQuery.$pull = { subscribers: { $in: [sessionUserId]}};
+        subscribingUserQuery.$inc = { subscribersCount: -1 };
+
         sessionUserQuery.$pull = { subscribedTo: { $in: [userId]}};
         subscribed = false;
     }
@@ -215,14 +218,17 @@ function getRelatedUsers(usersField) {
                 var usersList = user[usersField];
                 var paginatedUsers = usersList.slice(offset, offset + limit);
 
-                return User.find({ _id: { $in: paginatedUsers }}).then(function (results) {
-                    return {
-                        total: usersList.length,
-                        docs: results,
-                        offset: offset,
-                        limit: limit
-                    };
-                });
+                return User
+                    .find({ _id: { $in: paginatedUsers }})
+                    .sort({ subscribersCount: -1 })
+                    .then(function (results) {
+                        return {
+                            total: usersList.length,
+                            docs: results,
+                            offset: offset,
+                            limit: limit
+                        };
+                    });
             })
             .then(function (result) {
                 if (!req.query.hasOwnProperty('html')) {
