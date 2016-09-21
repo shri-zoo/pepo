@@ -1,7 +1,7 @@
 ({
     shouldDeps: [
         {
-            block: 'events'
+            block: 'messages-bus'
         }
     ]
 });

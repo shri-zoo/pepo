@@ -1,6 +1,4 @@
-modules.define('notifications', ['events'], function (provide, events) {
-    var emitter = new events.Emitter();
-
+modules.define('notifications', ['messages-bus'], function (provide, messagesBus) {
     provide({
         subscribe: subscribe,
         info: notification.bind(null, 'info'),
@@ -16,22 +14,22 @@ modules.define('notifications', ['events'], function (provide, events) {
     function notification(type, html, options) {
         var notification = Object.assign({}, options, { id: randomId(), type: type, html: html });
 
-        emitter.emit('show', notification);
+        messagesBus.emit('notification:show', notification);
 
         return Object.assign({}, notification);
     }
 
     function subscribe(handler) {
-        emitter.on('show', handler);
-        emitter.on('replace', handler);
+        var events = 'notification:show notification:replace';
+
+        messagesBus.on(events, handler);
 
         return function () {
-            emitter.un('show', handler);
-            emitter.un('replace', handler);
+            messagesBus.un(events, handler);
         };
     }
 
     function replace(data) {
-        emitter.emit('replace', data);
+        messagesBus.emit('notification:replace', data);
     }
 });

@@ -15,7 +15,9 @@ modules.define(
                         this.notificationsTimers = [];
 
                         notifications.subscribe(function (e, data) {
-                            switch (e.type) {
+                            var method = e.type.split(':')[1];
+
+                            switch (method) {
                                 case 'show':
                                     return _this.showNotification(data);
                                 case 'replace':
