@@ -44,7 +44,12 @@ modules
                         })
                         .done(function (user) {
                             utils.setFormValues(_this.form.domElem[0], user);
-                            messagesBus.emit('avatar:updated', data.avatar);
+
+                            messagesBus.emit('user-updated:avatar', data.avatar);
+                            messagesBus.emit('user-updated:first-last', {
+                                firstName: data.firstName,
+                                lastName: data.lastName
+                            });
                         })
                         .fail(function (err) {
                             if (err.status === 400) {
