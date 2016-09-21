@@ -4,6 +4,9 @@
             block: 'i-bem',
             mods: { init: 'auto' },
             elem: 'dom'
+        },
+        {
+            block: 'messages-bus'
         }
     ],
     shouldDeps: [

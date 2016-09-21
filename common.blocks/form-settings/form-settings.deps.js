@@ -5,6 +5,9 @@
             block: 'utils'
         },
         {
+            block: 'messages-bus'
+        },
+        {
             block: 'form',
             elems: ['label', 'row']
         },

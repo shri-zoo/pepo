@@ -1,8 +1,8 @@
 modules
     .define(
         'form-settings',
-        ['conf', 'utils', 'i-bem__dom', 'jquery', 'notifications'],
-        function (provide, conf, utils, BEMDOM, $, notifications) {
+        ['conf', 'utils', 'i-bem__dom', 'jquery', 'notifications', 'messages-bus'],
+        function (provide, conf, utils, BEMDOM, $, notifications, messagesBus) {
             var blockName = this.name;
 
             provide(BEMDOM.decl({ block: blockName },
@@ -44,6 +44,7 @@ modules
                         })
                         .done(function (user) {
                             utils.setFormValues(_this.form.domElem[0], user);
+                            messagesBus.emit('avatar:updated', data.avatar);
                         })
                         .fail(function (err) {
                             if (err.status === 400) {

@@ -32,6 +32,13 @@
             mods: {
                 type: ['home', 'message', 'search']
             }
+        },
+        {
+            block: 'i-bem',
+            elem: 'dom'
+        },
+        {
+            block: 'messages-bus'
         }
     ]
 });
