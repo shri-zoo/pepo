@@ -5,6 +5,9 @@
             block: 'conf'
         },
         {
+            block: 'notifications'
+        },
+        {
             block: 'i-bem',
             elem: 'dom'
         },

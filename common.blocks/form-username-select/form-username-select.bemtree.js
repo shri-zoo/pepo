@@ -15,10 +15,6 @@ block('form-username-select')(
 
         return [
             {
-                block: block,
-                elem: 'errors'
-            },
-            {
                 block: 'input',
                 mix: {
                     block: block,

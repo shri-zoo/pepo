@@ -126,13 +126,12 @@ modules.define('infinite-list',
                                 _this.newMessages = data;
 
                                 if (!_this.newMessagesNotification) {
-                                    _this.newMessagesNotification = notifications.info(notificationText, {
+                                    _this.newMessagesNotification =  notifications.info(notificationText, {
                                         autoHide: false,
                                         onClick: _this._onShowNewNotifications.bind(_this)
                                     });
                                 } else {
-                                    _this.newMessagesNotification.html = notificationText;
-                                    notifications.replace(_this.newMessagesNotification);
+                                    _this.newMessagesNotification.update(notificationText);
                                 }
                             }
                         })
