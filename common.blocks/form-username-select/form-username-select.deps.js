@@ -35,7 +35,8 @@
             }
         },
         {
-            block: 'spinner'
+            block: 'spinner',
+            mods: { animation: 'opacity' }
         },
         {
             block: 'button',

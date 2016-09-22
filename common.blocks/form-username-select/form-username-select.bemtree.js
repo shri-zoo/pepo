@@ -47,6 +47,7 @@ block('form-username-select')(
             },
             {
                 block: 'spinner',
+                mods: { animation: 'opacity' },
                 mix: {
                     block: block,
                     elem: 'spinner'

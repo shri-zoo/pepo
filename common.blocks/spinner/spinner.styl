@@ -7,4 +7,14 @@
     &_visible {
         max-height: 28px;
     }
+
+    &_animation_opacity {
+        transition: opacity  .3s ease-out;
+        opacity: 0;
+        max-height: auto;
+
+        &.spinner_visible {
+            opacity: 1;
+        }
+    }
 }
