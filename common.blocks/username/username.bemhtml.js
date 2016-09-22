@@ -1,34 +1,23 @@
 block('username')(
-    replace()(function () {
+    content()(function () {
         var url = this.ctx.url;
-        var mixes = [{ block: this.block }];
-        var passedMix = this.ctx.mix;
-
-        if (passedMix) {
-            if (!Array.isArray(passedMix)) {
-                passedMix = [passedMix];
-            }
-
-            mixes = mixes.concat(passedMix);
-        }
 
         if (url) {
             return {
                 block: 'link',
                 mods: { theme: 'islands' },
-                mix: mixes,
+                mix: { block: this.block, elem: 'text' },
                 url: url,
                 content: this.ctx.content
             };
         }
 
         return {
-            block: 'username-text',
-            mix: mixes,
+            elem: 'text',
             content: this.ctx.content
         };
     }),
-    tag()(function () {
+    elem('text').tag()(function () {
         return this.ctx.elemMods && this.ctx.elemMods.link ? 'a' : 'span';
     })
 );
