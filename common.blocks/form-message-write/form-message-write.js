@@ -1,7 +1,7 @@
 modules.define(
     'form-message-write',
-    ['i-bem__dom', 'conf', 'jquery', 'BEMHTML', 'message-attachment'],
-    function (provide, BEMDOM, conf, $, BEMHTML, MessageAttachment) {
+    ['i-bem__dom', 'conf', 'jquery', 'BEMHTML', 'message-attachment', 'notifications'],
+    function (provide, BEMDOM, conf, $, BEMHTML, MessageAttachment, notifications) {
         var postEntity = (function (module) {
             /* borschik:include:../../node_modules/post-entity/lib/post-entity.js */
             return module.exports;
@@ -150,10 +150,15 @@ modules.define(
                     _this._changeState();
                     _this._toggleActionsButtons();
                 }, function (err) {
+                    notifications.error(
+                        'Ошибка при получении геолокации.' +
+                        (err.code === 2 ? '<br>Возможно вы из Крыма?) ¯\\_(ツ)_/¯' : '')
+                    );
                     console.warn('Geolocation error(' + err.code + '): ' + err.message); // eslint-disable-line no-console, max-len
                     _this.delMod(_this.geoActionAttach, 'requested');
                 }, {
-                    timeout: 10000,
+                    enableHighAccuracy: true,
+                    timeout: 30000,
                     maximumAge: 0
                 });
             },
