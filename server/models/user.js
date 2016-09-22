@@ -60,5 +60,7 @@ var UserSchema = new Schema({
     toObject: { getters: true, virtuals: true }
 });
 
+UserSchema.index({ username: 1, subscribersCount: -1 });
+
 UserSchema.plugin(mongoosePaginate);
 mongoose.model('User', UserSchema);
