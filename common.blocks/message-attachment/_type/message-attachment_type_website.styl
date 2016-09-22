@@ -29,6 +29,10 @@
         flex-basis: 25%;
         flex-grow: 1;
         font-size: 0;
+
+        @media (max-width: media[tablet]) {
+            flex-basis: auto;
+        }
     }
 
     &__website-text-column {
@@ -36,6 +40,10 @@
         flex-grow: 2;
         padding: 10px;
         text-align: left;
+
+        @media (max-width: media[tablet]) {
+            flex-basis: auto;
+        }
     }
 
     &__website-image {
