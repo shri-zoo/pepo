@@ -149,8 +149,12 @@ modules.define(
                     _this.delMod(_this.geoActionAttach, 'requested');
                     _this._changeState();
                     _this._toggleActionsButtons();
-                }, function () {
+                }, function (err) {
+                    console.warn('Geolocation error(' + err.code + '): ' + err.message); // eslint-disable-line no-console, max-len
                     _this.delMod(_this.geoActionAttach, 'requested');
+                }, {
+                    timeout: 10000,
+                    maximumAge: 0
                 });
             },
             _onRemoveAttachment: function () {
