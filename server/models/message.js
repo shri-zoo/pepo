@@ -67,6 +67,9 @@ MessageSchema.virtual('createdAtAgo').get(function () {
     return moment(this._id.getTimestamp()).fromNow();
 });
 
+MessageSchema.index({ username: 1 });
+MessageSchema.index({ _id: -1, user: 1, parentId: 1 }, { sparse: true });
+
 MessageSchema.plugin(mongoosePaginate);
 MessageSchema.pre('save', preSaveHook);
 MessageSchema.post('save', postSaveHook);
