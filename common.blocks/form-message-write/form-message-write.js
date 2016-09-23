@@ -115,6 +115,7 @@ modules.define(
             },
             _onImageUploadingSuccess: function (e, url) {
                 this.image = url;
+                this.geo = null;
                 this._changeState();
                 this._toggleActionsButtons();
 
@@ -136,6 +137,7 @@ modules.define(
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
                     };
+                    _this.image = null;
 
                     BEMDOM.update(_this.attachment, BEMHTML.apply({
                         block: 'message-attachment',

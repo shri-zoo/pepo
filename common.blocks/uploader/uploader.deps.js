@@ -1,3 +1,8 @@
 ({
-    mustDeps: 'stylus-vars'
+    mustDeps: 'stylus-vars',
+    shouldDeps: [
+        {
+            block: 'notifications'
+        }
+    ]
 });
