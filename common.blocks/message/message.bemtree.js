@@ -56,16 +56,12 @@ block('message').content()(function () {
                     elem: 'column',
                     elemMods: { type: 'left' },
                     content: {
-                        block: 'link',
-                        mix: { block: block, elem: 'userpic-link' },
+                        block: 'userpic',
+                        mix: { block: block, elem: 'userpic' },
+                        size: false,
                         url: '/u/' + user.username,
-                        content: {
-                            block: 'userpic',
-                            mix: { block: block, elem: 'userpic' },
-                            size: false,
-                            src: user.avatar,
-                            username: user.username
-                        }
+                        src: user.avatar,
+                        username: user.username
                     }
                 },
                 {

@@ -4,11 +4,17 @@ block('userpic')(
     }),
     attrs()(function () {
         var attrs = applyNext() || {};
-        var size = this.ctx.size;
+        var ctx = this.ctx;
+        var size = ctx.size;
+        var url = ctx.url;
 
         if (size !== false) {
             size = size || 32;
             attrs.style = 'width: ' + size + 'px; height: ' + size + 'px;';
+        }
+
+        if (url) {
+            attrs.href = url;
         }
 
         return attrs;
