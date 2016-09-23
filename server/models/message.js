@@ -167,6 +167,7 @@ function postSaveHook(doc) {
             }
 
             if (doc.isLoading) {
+                console.log('Scrape website %s', doc.url); // eslint-disable-line no-console
                 return scrapeWebsite(doc.url);
             }
         })
