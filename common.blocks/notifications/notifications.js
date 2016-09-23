@@ -20,6 +20,7 @@ modules.define(
         function Notification(opts) {
             this.id = this._generateId();
             this.opts = opts;
+            this.closed = false;
             messagesBus.emit('notification:show', this);
         }
 
@@ -28,7 +29,12 @@ modules.define(
         };
 
         Notification.prototype.close = function () {
+            this.closed = true;
             messagesBus.emit('notification:hide', this);
+        };
+
+        Notification.prototype.isClosed = function () {
+            return this.closed;
         };
 
         // Methods for renderer

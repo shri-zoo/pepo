@@ -19,6 +19,7 @@ modules.define('infinite-list',
                             this._originalQuery = this._url.query(true);
                             this.firstId = null;
                             this._requested = false;
+                            this._requestedNotification = null;
                             this._itemsLength = 0;
                             this._total = 0;
 
@@ -106,9 +107,22 @@ modules.define('infinite-list',
                                 });
                             }
                         })
-                        .fail(function (err) {
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            if (
+                                jqXHR.readyState === 0
+                                && (
+                                    !_this._requestedNotification
+                                    || (_this._requestedNotification && _this._requestedNotification.isClosed())
+                                )
+                            ) {
+                                _this._requestedNotification = notifications.error(
+                                    'Не удалось произвести загрузку, проверьте ваше интернет-соединение'
+                                );
+                            }
+
+                            jqXHR.readyState !== 0 && console.error(errorThrown); // eslint-disable-line no-console
+                            _this._changeRequestState(false);
                             _this._changeSpinnerState(false);
-                            console.error(err); // eslint-disable-line no-console
                         });
                 },
                 _requestNewItems: function () {
