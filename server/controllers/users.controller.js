@@ -148,39 +148,45 @@ exports.postSubscribe = function (req, res) {
     var helpers = app.get('helpers');
     var handleError = helpers.handleError;
     var User = app.get('db').model('User');
-    var sessionUserId = req.user._id;
-    var userId = req.params.id;
+    var currentUserId = req.user._id;
+    var subscribeToUserId = req.params.id;
+    var resultSubscribeState;
 
-    var subscribingUserQuery = {};
-    var sessionUserQuery = {};
-    var subscribed;
+    User
+        .findById(req.user._id, { subscribedTo: 1 })
+        .then(function (user) {
+            var alreadySubscribed = user.subscribedTo.indexOf(subscribeToUserId) !== -1;
+            var subscribingUserQuery = {};
+            var currentUserQuery = {};
 
-    if (req.user.subscribedTo.indexOf(userId) === -1) {
-        subscribingUserQuery.$push = { subscribers: sessionUserId };
-        subscribingUserQuery.$inc = { subscribersCount: 1 };
+            if (alreadySubscribed) {
+                subscribingUserQuery.$pull = { subscribers: currentUserId };
+                subscribingUserQuery.$inc = { subscribersCount: -1 };
 
-        sessionUserQuery.$push = { subscribedTo: userId };
-        subscribed = true;
-    } else {
-        subscribingUserQuery.$pull = { subscribers: { $in: [sessionUserId]}};
-        subscribingUserQuery.$inc = { subscribersCount: -1 };
+                currentUserQuery.$pull = { subscribedTo: subscribeToUserId };
+                resultSubscribeState = false;
+            } else {
+                subscribingUserQuery.$push = { subscribers: currentUserId };
+                subscribingUserQuery.$inc = { subscribersCount: 1 };
 
-        sessionUserQuery.$pull = { subscribedTo: { $in: [userId]}};
-        subscribed = false;
-    }
+                currentUserQuery.$push = { subscribedTo: subscribeToUserId };
+                resultSubscribeState = true;
+            }
 
-    var subscribingUserUpdate = User.findOneAndUpdate({ _id: userId }, subscribingUserQuery, { runValidators: true });
-    var currentUserUpdate = User
-        .findOneAndUpdate({ _id: sessionUserId }, sessionUserQuery, { new: true, runValidators: true });
+            var subscribingUserUpdate = User
+                .findOneAndUpdate({ _id: subscribeToUserId }, subscribingUserQuery, { runValidators: true });
+            var currentUserUpdate = User
+                .findOneAndUpdate({ _id: currentUserId }, currentUserQuery, { new: true, runValidators: true });
 
-    Promise.all([subscribingUserUpdate, currentUserUpdate])
+            return Promise.all([subscribingUserUpdate, currentUserUpdate]);
+        })
         .then(function (results) {
             req.login(results[1], function (err) {
                 if (err) {
                     return handleError(req, res, err);
                 }
 
-                res.json({ subscribed: subscribed });
+                res.json({ subscribed: resultSubscribeState });
             });
         })
         .catch(function (err) {
