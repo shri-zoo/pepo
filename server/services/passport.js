@@ -24,11 +24,11 @@ module.exports = function (app) {
     app.use(passport.session());
 
     passport.serializeUser(function (user, done) {
-        done(null, JSON.stringify(user));
+        done(null, user._id);
     });
 
-    passport.deserializeUser(function (user, done) {
-        done(null, JSON.parse(user));
+    passport.deserializeUser(function (id, done) {
+        User.findById(id, done);
     });
 
     authConf.providers.forEach(function (provider) {
