@@ -7,7 +7,7 @@
     {
       "name"      : "pepo-node",
       "script"    : "server/index.js",
-      "max_memory_restart": "256M",
+      "max_memory_restart": "400M",
       "env" : {
         "NODE_ENV": "production",
         "PORT": "/srv/pepo/sock"
